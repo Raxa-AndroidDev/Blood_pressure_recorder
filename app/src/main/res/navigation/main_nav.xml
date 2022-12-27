@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.vboard.bp_recorder_app.ui.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_BPMainFragment"
+            app:destination="@id/BPMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="com.vboard.bp_recorder_app.ui.info_module.InfoFragment"
+        android:label="fragment_info"
+        tools:layout="@layout/fragment_info" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.vboard.bp_recorder_app.ui.settings_module.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/BPMainFragment"
+        android:name="com.vboard.bp_recorder_app.ui.blood_pressure.BPMainFragment"
+        android:label="BPMainFragment" >
+        <action
+            android:id="@+id/action_BPMainFragment_to_addBPRecordFragment"
+            app:destination="@id/addBPRecordFragment" />
+        <action
+            android:id="@+id/action_BPMainFragment_to_showBPRecordFragment"
+            app:destination="@id/showBPRecordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addBPRecordFragment"
+        android:name="com.vboard.bp_recorder_app.ui.blood_pressure.add_bp_record.AddBPRecordFragment"
+        android:label="fragment_add_b_p_record"
+        tools:layout="@layout/fragment_add_b_p_record" />
+    <fragment
+        android:id="@+id/showBPRecordFragment"
+        android:name="com.vboard.bp_recorder_app.ui.blood_pressure.show_bp_record.ShowBPRecordFragment"
+        android:label="ShowBPRecordFragment" />
+</navigation>
