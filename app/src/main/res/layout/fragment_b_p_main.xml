@@ -12,29 +12,98 @@
         android:layout_height="match_parent"
         tools:context=".ui.blood_pressure.BPMainFragment">
 
+        <RelativeLayout
+            android:id="@+id/top_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:background="@color/splash_bg"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+            <ImageView
+                android:id="@+id/back_arrow"
+                android:paddingStart="@dimen/_18sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_arrow_back"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Blood Pressure"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="@dimen/_15ssp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/back_arrow"/>
+        </RelativeLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_add_bp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:text="ANALYZE"
+            app:cornerRadius="@dimen/_7sdp"
+            app:icon="@drawable/ic_add"
+            app:layout_constraintBottom_toTopOf="@+id/button_view_bp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_view_bp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cornerRadius="@dimen/_10sdp"
-            android:text="View Blood Pressure Record"
+            android:text="History"
+            app:icon="@drawable/ic_add"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_add_bp"
+            android:id="@+id/button_view_bp_trends"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cornerRadius="@dimen/_10sdp"
-            android:text="Add Blood Pressure Record"
+            android:text="Trends"
             android:layout_marginTop="@dimen/_15sdp"
-            app:layout_constraintTop_toBottomOf="@+id/button_view_bp"
+            app:icon="@drawable/ic_add"
+           app:layout_constraintTop_toBottomOf="@+id/button_view_bp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_export_bp_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cornerRadius="@dimen/_10sdp"
+            android:text="Export Data"
+            android:layout_marginTop="@dimen/_15sdp"
+            app:icon="@drawable/ic_add"
+            app:layout_constraintTop_toBottomOf="@+id/button_view_bp_trends"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_set_alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cornerRadius="@dimen/_10sdp"
+            android:text="Set Alarm"
+            android:layout_marginTop="@dimen/_15sdp"
+            app:icon="@drawable/ic_add"
+            app:layout_constraintTop_toBottomOf="@+id/button_export_bp_record"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

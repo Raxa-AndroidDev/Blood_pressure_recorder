@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_mainFragment_to_BPMainFragment"
             app:destination="@id/BPMainFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_heartRateFragment"
+            app:destination="@id/heartRateFragment" />
     </fragment>
     <fragment
         android:id="@+id/infoFragment"
@@ -34,6 +37,12 @@
         <action
             android:id="@+id/action_BPMainFragment_to_showBPRecordFragment"
             app:destination="@id/showBPRecordFragment" />
+        <action
+            android:id="@+id/action_BPMainFragment_to_BPGraphsFragment"
+            app:destination="@id/BPGraphsFragment" />
+        <action
+            android:id="@+id/action_BPMainFragment_to_createAlarmFragment"
+            app:destination="@id/createAlarmFragment" />
     </fragment>
     <fragment
         android:id="@+id/addBPRecordFragment"
@@ -44,4 +53,26 @@
         android:id="@+id/showBPRecordFragment"
         android:name="com.vboard.bp_recorder_app.ui.blood_pressure.show_bp_record.ShowBPRecordFragment"
         android:label="ShowBPRecordFragment" />
+    <fragment
+        android:id="@+id/heartRateFragment"
+        android:name="com.vboard.bp_recorder_app.ui.heart_rate.HeartRateMainFragment"
+        android:label="HeartRateFragment" >
+
+        <action
+            android:id="@+id/action_heartRateFragment_to_addHeartRateFragment"
+            app:destination="@id/addHeartRateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/BPGraphsFragment"
+        android:name="com.vboard.bp_recorder_app.ui.blood_pressure.BPGraphsFragment"
+        android:label="BPGraphsFragment" />
+    <fragment
+        android:id="@+id/addHeartRateFragment"
+        android:name="com.example.bloodpressureapp.fragments.heartrate.AddHeartRateFragment"
+        android:label="AddHeartRateFragment" />
+    <fragment
+        android:id="@+id/createAlarmFragment"
+        android:name="com.vboard.bp_recorder_app.ui.Alarm.CreateAlarmFragment"
+        android:label="CreateAlarmFragment" />
+
 </navigation>

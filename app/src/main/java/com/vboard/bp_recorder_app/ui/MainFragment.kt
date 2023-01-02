@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.vboard.bp_recorder_app.R
 import com.vboard.bp_recorder_app.databinding.FragmentMainBinding
 
@@ -25,6 +26,10 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initListeners()
 
+        val navController = findNavController()
+
+        binding.bottomNavView.setupWithNavController(navController)
+
 
     }
 
@@ -32,5 +37,13 @@ class MainFragment : Fragment() {
         binding.constBloodpressureRed.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_BPMainFragment)
         }
+
+        binding.constHeartrateblue.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_heartRateFragment)
+        }
+
+
+
+
     }
 }

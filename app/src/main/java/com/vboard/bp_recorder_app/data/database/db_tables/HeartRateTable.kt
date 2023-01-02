@@ -11,7 +11,7 @@ data class HeartRateTable(
     val date: String,
     val time: String,
     val DateAndTime: String,
-    val oxygen: String,
+
     val BPM: String,
     val label: String
 )

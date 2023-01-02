@@ -16,12 +16,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        bottomNavSetup()
+
     }
 
-    private fun bottomNavSetup() {
-        val navController = findNavController(R.id.main_nav_graph)
 
-        binding.bottomNavView.setupWithNavController(navController)
-    }
 }

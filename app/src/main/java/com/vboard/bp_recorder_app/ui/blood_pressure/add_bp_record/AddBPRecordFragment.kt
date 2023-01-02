@@ -1,7 +1,6 @@
 package com.vboard.bp_recorder_app.ui.blood_pressure.add_bp_record
 
 import android.annotation.SuppressLint
-import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,9 +14,10 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.vboard.bp_recorder_app.data.database.db_tables.BloodPressureTable
 import com.vboard.bp_recorder_app.databinding.FragmentAddBPRecordBinding
-import com.vboard.bp_recorder_app.ui.blood_pressure.show_bp_record.BPRecordViewModel
+import com.vboard.bp_recorder_app.ui.blood_pressure.BPRecordViewModel
 import com.vboard.bp_recorder_app.utils.CurrentDate
 import com.vboard.bp_recorder_app.utils.DatePickerDialog
+import com.vboard.bp_recorder_app.utils.GetTime
 import java.text.Format
 import java.text.SimpleDateFormat
 import java.util.*
@@ -95,8 +95,8 @@ sDate = CurrentDate(myCalendar)
                 mTimePicker =
                     TimePickerDialog(requireContext(),
                         { _, hourOfDay, minute ->
-                            sTime = getTime(hourOfDay, minute)
-                            btnTimePicker.text = getTime(hourOfDay, minute)
+                            sTime = GetTime(hourOfDay, minute)
+                            btnTimePicker.text = GetTime(hourOfDay, minute)
                         }, hour, minute, false)
                 mTimePicker.show()
             }
@@ -113,7 +113,11 @@ sDate = CurrentDate(myCalendar)
             }
 
             btnOk.setOnClickListener {
-              label = "default"
+
+
+                label = "default"
+
+
                 if (sDate != null && sTime != null && systolicNumberpicker.value != null && diastolicNumberpicker.value != null && pulseNumberpicker.value != null && label!=null) {
 
                     viewModel.StoreBPRecordInDB(
@@ -184,13 +188,6 @@ sDate = CurrentDate(myCalendar)
 
     }
 
-    private fun getTime(hr: Int, min: Int): String? {
-        val cal = Calendar.getInstance()
-        cal[Calendar.HOUR_OF_DAY] = hr
-        cal[Calendar.MINUTE] = min
-        val formatter: Format
-        formatter = SimpleDateFormat("h:mm a")
-        return formatter.format(cal.time)
-    }
+
 
 }

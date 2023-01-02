@@ -27,6 +27,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+
+                <!--date and time picker layout-->
                 <LinearLayout
                     android:id="@+id/ln_main"
                     android:layout_width="match_parent"
@@ -41,7 +43,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="insert"
+                        android:text="Add"
+                        android:drawableTint="@color/black"
+                        android:drawableLeft="@drawable/ic_add"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold" />
@@ -71,6 +75,7 @@
                         app:drawableStartCompat="@drawable/ic_baseline_access_time_24" />
                 </LinearLayout>
 
+                <!--number pickers layout-->
                 <LinearLayout
                     android:id="@+id/ln_picker"
                     android:layout_width="match_parent"
@@ -91,7 +96,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:text="SYS"
+                            android:text="Systolic"
+                            android:textStyle="bold"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_12ssp" />
 
@@ -101,6 +107,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_5sdp"
                             app:np_order="ascending"
+
+                            app:np_selectedTextColor="@color/red"
                             app:np_wrapSelectorWheel="false"
                             android:descendantFocusability="blocksDescendants" />
                     </LinearLayout>
@@ -116,7 +124,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:text="DIA"
+                            android:text="Diastolic"
+                            android:textStyle="bold"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_12ssp" />
 
@@ -126,6 +135,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_5sdp"
                             app:np_order="ascending"
+                            app:np_selectedTextColor="@color/red"
                             app:np_wrapSelectorWheel="false"
                             android:descendantFocusability="blocksDescendants" />
                     </LinearLayout>
@@ -141,7 +151,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:text="PUL"
+                            android:text="Pulse"
+                            android:textStyle="bold"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_12ssp" />
 
@@ -151,11 +162,14 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_5sdp"
                             app:np_order="ascending"
+                            app:np_selectedTextColor="@color/red"
                             app:np_wrapSelectorWheel="false"
                             android:descendantFocusability="blocksDescendants" />
                     </LinearLayout>
                 </LinearLayout>
 
+
+                <!--textview for bp type-->
                 <TextView
                     android:id="@+id/tv_instructions"
                     android:layout_width="0dp"
@@ -170,17 +184,32 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ln_picker" />
 
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:id="@+id/bp_type_colors_rcv"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_instructions"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+
+
                 <TextView
                     android:id="@+id/tv_addlabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:paddingStart="@dimen/_5sdp"
-                    android:text="Add Labels"
+                    android:text="Tags"
+                    android:textSize="@dimen/_15ssp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_instructions"
+                    app:layout_constraintTop_toBottomOf="@+id/bp_type_colors_rcv"
 
                     />
 
@@ -261,27 +290,32 @@
                     android:weightSum="2"
                     app:layout_constraintTop_toBottomOf="@id/chip_group">
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_cancel"
                         android:layout_width="@dimen/_150sdp"
                         android:layout_height="@dimen/_40sdp"
                         android:layout_margin="@dimen/_10sdp"
                         android:layout_weight="1"
-                        android:background="@color/black"
+                        android:backgroundTint="@color/red"
+                        app:cornerRadius="@dimen/_6sdp"
                         android:gravity="center"
                         android:text="Cancel"
+                        android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_15ssp" />
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_ok"
                         android:layout_width="@dimen/_150sdp"
                         android:layout_height="@dimen/_40sdp"
                         android:layout_margin="@dimen/_10sdp"
                         android:layout_weight="1"
-                        android:background="#8BC34A"
                         android:gravity="center"
-                        android:text="Insert"
+
+                        android:textAllCaps="false"
+                        app:cornerRadius="@dimen/_6sdp"
+                        android:text="Add"
+                        android:backgroundTint="@color/black"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_15ssp" />
                 </LinearLayout>

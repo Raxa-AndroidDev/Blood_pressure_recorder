@@ -2,6 +2,7 @@ package com.vboard.bp_recorder_app.utils
 
 import android.app.DatePickerDialog
 import android.content.Context
+import java.text.Format
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -31,3 +32,15 @@ fun DatePickerDialog(context: Context,calendar: Calendar):String{
 
     return choosenDate!!
 }
+
+
+ fun GetTime(hr: Int, min: Int): String? {
+    val cal = Calendar.getInstance()
+    cal[Calendar.HOUR_OF_DAY] = hr
+    cal[Calendar.MINUTE] = min
+
+    val formatter: Format = SimpleDateFormat("h:mm a",Locale.getDefault())
+    return formatter.format(cal.time)
+}
+
+

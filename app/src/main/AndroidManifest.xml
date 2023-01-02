@@ -2,7 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.flash" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -25,6 +33,29 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+
+         <activity android:name=".ui.heart_rate.HeartRateMonitor"
+             android:label="Measure"
+             android:parentActivityName=".ui.MainActivity">
+
+         </activity>
+
+
+        <receiver
+            android:name=".ui.Alarm.AlarmBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".alarm_service.AlarmService" />
+        <service android:name=".alarm_service.RescheduleAlarmsService" />
+
+        <receiver android:name=".ui.Alarm.notificationBroadcast" />
     </application>
 
 </manifest>

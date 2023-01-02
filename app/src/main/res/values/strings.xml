@@ -2,4 +2,12 @@
     <string name="app_name">BP_Recorder_App</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="arg_alarm_obj" translatable="false">AlarmObject</string>
+    <string name="bundle_alarm_obj" translatable="false">BundleAlarmObject</string>
+    <string name="alarm_title" translatable="false">My Alarm</string>
+    <string name="dayNightTheme" translatable="false">DayNightTheme</string>
+    <string name="alarmwithvibration" translatable="false">Reminder with Vibration</string>
+
 </resources>
