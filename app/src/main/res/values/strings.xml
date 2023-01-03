@@ -1,7 +1,9 @@
 <resources>
-    <string name="app_name">BP_Recorder_App</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Blood Pressure Tracker</string>
+
+    <string name="main_title">BLOOD PRESSURE</string>
+    <string name="sub_title">TRACKER</string>
+
 
 
     <string name="arg_alarm_obj" translatable="false">AlarmObject</string>

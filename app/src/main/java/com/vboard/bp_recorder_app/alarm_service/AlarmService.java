@@ -28,6 +28,7 @@ import com.vboard.bp_recorder_app.R;
 import com.vboard.bp_recorder_app.RingActivity;
 import com.vboard.bp_recorder_app.data.Alarm;
 import com.vboard.bp_recorder_app.ui.Alarm.AlarmViewHolder;
+import com.vboard.bp_recorder_app.ui.MainActivity;
 
 import java.io.IOException;
 
@@ -63,11 +64,20 @@ public class AlarmService extends Service {
         Log.d("Bundle", "Bundle " + bundle);
         if (bundle != null)
             alarm = (Alarm) bundle.getSerializable(getString(R.string.arg_alarm_obj));
-        Intent notificationIntent = new Intent(this, RingActivity.class);
+
+
+        Intent notificationIntent = new Intent(this, MainActivity.class);
         notificationIntent.putExtra(getString(R.string.bundle_alarm_obj), bundle);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Log.e("alarmm", "onStartCommand: "+alarm.getAlarmId() );
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, alarm.getAlarmId(), notificationIntent, 0);
         String alarmTitle = getString(R.string.alarm_title);
-        if (alarm != null) {
+
+
+
+
+        /*if (alarm != null) {
             alarmTitle = alarm.getTitle();
             try {
                 mediaPlayer.setDataSource(this.getBaseContext(), Uri.parse(alarm.getTone()));
@@ -83,24 +93,31 @@ public class AlarmService extends Service {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }
+        }*/
 
         RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.customnotification);
+         remoteViews.setTextViewText(R.id.tv_alarm_notify_title, "Track your Health");
+         remoteViews.setTextViewText(R.id.tv_subtitle, "Its time to record your blood pressure");
+
+
         NotificationCompat.Builder notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_alarm_white)
                 .setTicker("Alarm")
-                .setContent(remoteViews)
-                .setCategory(NotificationCompat.CATEGORY_ALARM)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+               .setContent(remoteViews)
+                .setAutoCancel(true)
+                //.setCategory(NotificationCompat.CATEGORY_ALARM)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+               // .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                //.setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setFullScreenIntent(pendingIntent, true);
-
-        remoteViews.setTextViewText(R.id.tv_subtitle, "Reminder: "+"'"+alarmTitle+"''");
-        remoteViews.setTextViewText(R.id.tv_time, AlarmViewHolder.convert24To12System(alarm.getHour(), alarm.getMinute()));
+                //.setFullScreenIntent(pendingIntent, true);
+                .setContentIntent(pendingIntent);
 
 
 
-        mediaPlayer.setOnPreparedListener(mediaPlayer -> mediaPlayer.start());
+
+
+        //mediaPlayer.setOnPreparedListener(mediaPlayer -> mediaPlayer.start());
 
         if (alarm.isVibrate()) {
             long[] pattern = {0, 100, 1000};

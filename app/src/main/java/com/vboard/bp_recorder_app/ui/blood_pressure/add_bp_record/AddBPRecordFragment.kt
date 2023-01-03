@@ -75,8 +75,11 @@ sDate = CurrentDate(myCalendar)
 
             btnDatePick.setOnClickListener {
 
-                sDate =DatePickerDialog(requireContext(),myCalendar)
-                btnDatePick.text = sDate
+               DatePickerDialog(requireContext(),myCalendar).observe(viewLifecycleOwner){
+                    btnDatePick.text = it
+                   sDate = it
+                }
+
             }
 
 

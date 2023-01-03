@@ -1,20 +1,51 @@
 package com.vboard.bp_recorder_app.ui.blood_pressure
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.vboard.bp_recorder_app.data.Alarm
 import com.vboard.bp_recorder_app.data.repos.BPRepository
 import com.vboard.bp_recorder_app.data.database.DatabaseClass
 import com.vboard.bp_recorder_app.data.database.db_tables.BloodPressureTable
+import com.vboard.bp_recorder_app.utils.DatePickerDialog
+import com.vboard.bp_recorder_app.utils.TimePickerDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Calendar
 
 class BPRecordViewModel(application: Application):AndroidViewModel(application) {
 
     val repository = BPRepository(DatabaseClass.getDBInstance(application.applicationContext).bpDao())
     val alarmsLiveData: LiveData<List<Alarm>> = repository.alarmsLiveData
+
+
+
+
+
+
+
+
+
+
+    fun getUpdatedDateFromPicker(context: Context, calendar: Calendar) : MutableLiveData<String>{
+        return DatePickerDialog(context,calendar)
+    }
+
+    fun getTimeFromPicker(context: Context):MutableLiveData<String>{
+
+        return TimePickerDialog(context)
+    }
+
+
+
+
+
+
+
+
 
 
     fun StoreBPRecordInDB(bloodPressureTable: BloodPressureTable){

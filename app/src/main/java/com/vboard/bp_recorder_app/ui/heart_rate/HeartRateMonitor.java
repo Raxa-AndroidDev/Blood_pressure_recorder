@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.PowerManager;
 import android.util.Log;
 import android.view.Menu;
@@ -160,6 +162,10 @@ public class HeartRateMonitor extends AppCompatActivity {
                 newType = TYPE.RED;
                 if (newType != currentType) {
                     beats++;
+                    Log.e("TAG", "onPreviewFrame: beats"+beats);
+                    Log.e("TAG", "onPreviewFrame: beatsarray length"+beatsArray.length);
+
+
                     // Log.d(TAG, "BEAT!! beats="+beats);
                 }
             } else if (imgAvg > rollingAverage) {
@@ -178,12 +184,27 @@ public class HeartRateMonitor extends AppCompatActivity {
 
             long endTime = System.currentTimeMillis();
             double totalTimeInSecs = (endTime - startTime) / 1000d;
+
+           new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    progress =progress+10;
+
+                    heart_progressbar.setProgress(progress);
+                }
+            },10000);
+
+            Log.e("time", "onPreviewFrame: time in seconds"+totalTimeInSecs );
+
             if (totalTimeInSecs >= 10) {
+
                 double bps = (beats / totalTimeInSecs);
                 int dpm = (int) (bps * 60d);
                 if (dpm < 30 || dpm > 180) {
+
                     startTime = System.currentTimeMillis();
                     beats = 0;
+                    heart_progressbar.setProgress(0);
                     processing.set(false);
                     return;
                 }
@@ -194,6 +215,8 @@ public class HeartRateMonitor extends AppCompatActivity {
                 if (beatsIndex == beatsArraySize) beatsIndex = 0;
                 beatsArray[beatsIndex] = dpm;
                 beatsIndex++;
+                Log.e("TAG", "onPreviewFrame: beatsIndex"+beatsIndex);
+
 
                 int beatsArrayAvg = 0;
                 int beatsArrayCnt = 0;
@@ -201,7 +224,12 @@ public class HeartRateMonitor extends AppCompatActivity {
                     if (beatsArray[i] > 0) {
                         beatsArrayAvg += beatsArray[i];
                         beatsArrayCnt++;
-                        heart_progressbar.setProgress(progress++);
+                        Log.e("TAG", "onPreviewFrame: beatsarraycount"+beatsArrayCnt);
+
+
+
+
+
                     }
                 }
                 int beatsAvg = (beatsArrayAvg / beatsArrayCnt);

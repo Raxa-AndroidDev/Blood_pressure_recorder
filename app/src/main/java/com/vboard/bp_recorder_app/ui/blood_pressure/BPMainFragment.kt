@@ -1,18 +1,15 @@
 package com.vboard.bp_recorder_app.ui.blood_pressure
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.TimePicker
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.forEach
@@ -23,8 +20,8 @@ import com.google.android.material.chip.ChipGroup
 import com.vboard.bp_recorder_app.R
 import com.vboard.bp_recorder_app.data.database.db_tables.BloodPressureTable
 import com.vboard.bp_recorder_app.databinding.FragmentBPMainBinding
-import java.text.Format
-import java.text.SimpleDateFormat
+import com.vboard.bp_recorder_app.utils.CurrentDate
+import com.vboard.bp_recorder_app.utils.dateAndTime
 import java.util.*
 
 class BPMainFragment : Fragment() {
@@ -32,12 +29,10 @@ class BPMainFragment : Fragment() {
     lateinit var binding: FragmentBPMainBinding
     lateinit var viewModel: BPRecordViewModel
     val myCalendar: Calendar = Calendar.getInstance()
-    var sDate: String? = null
-    var sTime: String? = null
-    var sSYS: Int = 0
-    var sDIA: Int = 0
-    var sPUL: Int = 0
-    var label: String = "testable"
+    var choosenDate: String? = null
+    var choosenTime: String? = null
+
+    var label: String = "default"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -88,93 +83,60 @@ class BPMainFragment : Fragment() {
         val btnDate: TextView = view.findViewById(R.id.btn_datePick)
         val btnTime: TextView = view.findViewById(R.id.btn_timePicker)
         val tv_instructions: TextView = view.findViewById(R.id.tv_instructions)
-
-        val SYSNumberPicker: com.shawnlin.numberpicker.NumberPicker = view.findViewById(R.id.systolic_numberpicker)
-        val DIANumberPicker: com.shawnlin.numberpicker.NumberPicker = view.findViewById(R.id.diastolic_numberpicker)
-        val PULNumberPicker: com.shawnlin.numberpicker.NumberPicker = view.findViewById(R.id.pulse_numberpicker)
-
         val btnCancel: AppCompatButton = view.findViewById(R.id.btn_cancel)
         val btnYes: AppCompatButton = view.findViewById(R.id.btn_ok)
-
         val chipGroup: ChipGroup = view.findViewById(R.id.chip_group)
 
+        val systolicNumPicker: com.shawnlin.numberpicker.NumberPicker = view.findViewById(R.id.systolic_numberpicker)
+        systolicNumPicker.maxValue = 300
+        systolicNumPicker.minValue = 20
+        systolicNumPicker.value = 115
 
-        val myFormat = "MM/dd/yy"
-        val dateFormat = SimpleDateFormat(myFormat, Locale.US)
-        btnDate.text = dateFormat.format(myCalendar.time)
-        sDate = dateFormat.format(myCalendar.time)
+
+        val diastolicNumPicker: com.shawnlin.numberpicker.NumberPicker = view.findViewById(R.id.diastolic_numberpicker)
+        diastolicNumPicker.maxValue = 300
+        diastolicNumPicker.minValue = 20
+        diastolicNumPicker.value = 79
 
 
-        SYSNumberPicker.maxValue = 250
-        SYSNumberPicker.minValue = 1
-        SYSNumberPicker.value = 115
-        sSYS = 115
+        val pulseNumPicker: com.shawnlin.numberpicker.NumberPicker = view.findViewById(R.id.pulse_numberpicker)
+        pulseNumPicker.maxValue = 200
+        pulseNumPicker.minValue = 20
+        pulseNumPicker.value = 75
+
+
+        choosenDate = CurrentDate(myCalendar)
+
+        btnDate.text = choosenDate
+
+
+
+
         tv_instructions.text =
             "Your blood pressure is in good condition. Try to keep it the same way!"
-        DIANumberPicker.maxValue = 250
-        DIANumberPicker.minValue = 1
-        DIANumberPicker.value = 79
-        sDIA = 79
-        PULNumberPicker.maxValue = 200
-        PULNumberPicker.minValue = 1
-        PULNumberPicker.value = 75
-        sPUL = 75
 
-
-        btnCancel.setOnClickListener {
-            builder.dismiss()
-        }
-
-        val datecurrent = Date()
-        val dateFormatcurrent = SimpleDateFormat("dd-MM-yyyy hh:mm:ss")
-        val pasTime = dateFormatcurrent.format(datecurrent)
-
-        val date = DatePickerDialog.OnDateSetListener { view, year, month, day ->
-            myCalendar[Calendar.YEAR] = year
-            myCalendar[Calendar.MONTH] = month
-            myCalendar[Calendar.DAY_OF_MONTH] = day
-            val myFormat = "MM/dd/yy"
-            val dateFormat = SimpleDateFormat(myFormat, Locale.US)
-            btnDate.text = dateFormat.format(myCalendar.time)
-            sDate = dateFormat.format(myCalendar.time)
-        }
 
         btnDate.setOnClickListener {
-            DatePickerDialog(
-                requireContext(),
-                date,
-                myCalendar[Calendar.YEAR],
-                myCalendar[Calendar.MONTH],
-                myCalendar[Calendar.DAY_OF_MONTH]
-            ).show()
+            viewModel.getUpdatedDateFromPicker(requireContext(),myCalendar).observe(viewLifecycleOwner){
+                choosenDate = it
+                btnDate.text = it
+            }
+
+
         }
-
-
-        val currentDateTime = System.currentTimeMillis()
-        @SuppressLint("SimpleDateFormat") val simpleDateFormat = SimpleDateFormat("h:mm a")
-        val currentTime = simpleDateFormat.format(currentDateTime)
-        btnTime.text = currentTime
-        sTime = currentTime
 
         btnTime.setOnClickListener {
-            val mTimePicker: TimePickerDialog
-            val mcurrentTime = Calendar.getInstance()
-            val hour = mcurrentTime.get(Calendar.HOUR_OF_DAY)
-            val minute = mcurrentTime.get(Calendar.MINUTE)
 
-            mTimePicker =
-                TimePickerDialog(requireContext(), object : TimePickerDialog.OnTimeSetListener {
-                    override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-                        sTime = getTime(hourOfDay, minute)
-                        btnTime.text = getTime(hourOfDay, minute)
-                    }
-                }, hour, minute, false)
-            mTimePicker.show()
+           viewModel.getTimeFromPicker(requireContext()).observe(viewLifecycleOwner){
+               choosenTime = it
+               btnTime.text = it
+
+           }
+
         }
 
-
-        SYSNumberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
-            sSYS = newVal
+        systolicNumPicker.setOnValueChangedListener { picker, oldVal, newVal ->
+systolicNumPicker.value = newVal
             if (newVal in 0..89) {
                 tv_instructions.text =
                     "Your blood pressure seems a little low.If the situation continues, do not hesitate to consult your doctor."
@@ -202,10 +164,8 @@ class BPMainFragment : Fragment() {
             }
         }
 
+        diastolicNumPicker.setOnValueChangedListener { picker, oldVal, newVal ->
 
-
-        DIANumberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
-            sDIA = newVal
             if (newVal in 0..59) {
                 tv_instructions.text =
                     "Your blood pressure seems a little low.If the situation continues, do not hesitate to consult your doctor."
@@ -230,9 +190,9 @@ class BPMainFragment : Fragment() {
 
         }
 
-        PULNumberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
-            sPUL = newVal
-        }
+
+
+
 
         chipGroup.forEach { child ->
             (child as? Chip)?.setOnCheckedChangeListener { _, _ ->
@@ -241,20 +201,22 @@ class BPMainFragment : Fragment() {
         }
 
         btnYes.setOnClickListener {
-            if (sDate != null && sTime != null && sSYS != null && sDIA != null && sPUL != null) {
+            if (choosenDate != null && choosenTime != null ) {
 
                 viewModel.StoreBPRecordInDB(
                     BloodPressureTable(
                         0,
-                        sDate!!,
-                        sTime!!,
-                        pasTime,
-                        sSYS!!,
-                        sDIA!!,
-                        sPUL!!,
-                        label!!
+                        choosenDate!!,
+                        choosenTime!!,
+                        dateAndTime(),
+                        systolicNumPicker.value,
+                        diastolicNumPicker.value,
+                        pulseNumPicker.value,
+                        label
                     )
                 )
+                Log.e("TAG", "insertBPDialogue: diastolic value is "+diastolicNumPicker.value)
+
                 builder.dismiss()
                 Toast.makeText(requireContext(), "Successfully Added!", Toast.LENGTH_LONG).show()
 
@@ -268,11 +230,15 @@ class BPMainFragment : Fragment() {
             }
         }
 
+        btnCancel.setOnClickListener {
+            builder.dismiss()
+        }
+
     }
 
 
     private fun registerFilterChanged(chips_group: ChipGroup) {
-        val ids = chips_group.getCheckedChipIds()
+        val ids = chips_group.checkedChipIds
 
         val titles = mutableListOf<CharSequence>()
 
@@ -286,17 +252,9 @@ class BPMainFragment : Fragment() {
             ""
         }
 
-        //Toast.makeText(requireContext(), label, Toast.LENGTH_SHORT).show()
     }
 
-    private fun getTime(hr: Int, min: Int): String? {
-        val cal = Calendar.getInstance()
-        cal[Calendar.HOUR_OF_DAY] = hr
-        cal[Calendar.MINUTE] = min
-        val formatter: Format
-        formatter = SimpleDateFormat("h:mm a")
-        return formatter.format(cal.time)
-    }
+
 
 
 
