@@ -1,4 +1,4 @@
-package com.vboard.bp_recorder_app.ui.blood_pressure.show_bp_record
+package com.vboard.bp_recorder_app.ui.show_history_record
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.TimePicker
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.forEach
@@ -26,18 +25,18 @@ import com.vboard.bp_recorder_app.data.database.DatabaseClass
 import com.vboard.bp_recorder_app.data.database.db_tables.BloodPressureTable
 import com.vboard.bp_recorder_app.databinding.FragmentShowBPRecordBinding
 import com.vboard.bp_recorder_app.ui.blood_pressure.BPRecordViewModel
-import com.vboard.bp_recorder_app.ui.blood_pressure.show_bp_record.adapter.ShowBloodPressureAdapter
+import com.vboard.bp_recorder_app.ui.show_history_record.adapter.HistoryAdapter
 import com.vboard.bp_recorder_app.utils.interfaces.ShowBPAdapterCallbacks
 import java.text.Format
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ShowBPRecordFragment : Fragment(), ShowBPAdapterCallbacks {
+class ShowHistoryFragment : Fragment(), ShowBPAdapterCallbacks {
 
     private lateinit var binding: FragmentShowBPRecordBinding
     private lateinit var showBPRecordViewModel: BPRecordViewModel
-    private lateinit var adapter: ShowBloodPressureAdapter
+    private lateinit var adapter: HistoryAdapter
 
 
     val myCalendar: Calendar = Calendar.getInstance()
@@ -65,7 +64,7 @@ class ShowBPRecordFragment : Fragment(), ShowBPAdapterCallbacks {
     private fun init() {
         showBPRecordViewModel = ViewModelProvider(this)[BPRecordViewModel::class.java]
 
-        adapter = ShowBloodPressureAdapter(this)
+        adapter = HistoryAdapter(this)
         showBPRecordViewModel.ShowBPRecordFromDB().observe(requireActivity()) {
             adapter.bloodPressureRecordList = ArrayList(it)
         }

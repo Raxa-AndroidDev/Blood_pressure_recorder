@@ -1,6 +1,5 @@
-package com.vboard.bp_recorder_app.ui.blood_pressure.show_bp_record.adapter
+package com.vboard.bp_recorder_app.ui.show_history_record.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,8 +7,8 @@ import com.vboard.bp_recorder_app.data.database.db_tables.BloodPressureTable
 import com.vboard.bp_recorder_app.databinding.ItemShowRecordsLayoutBinding
 import com.vboard.bp_recorder_app.utils.interfaces.ShowBPAdapterCallbacks
 
-class ShowBloodPressureAdapter(var callBacks: ShowBPAdapterCallbacks) :
-    RecyclerView.Adapter<ShowBloodPressureAdapter.MyViewHolder>() {
+class HistoryAdapter(var callBacks: ShowBPAdapterCallbacks) :
+    RecyclerView.Adapter<HistoryAdapter.MyViewHolder>() {
 
     var SECOND_MILLIS = 1000
     var MINUTE_MILLIS = 60 * SECOND_MILLIS

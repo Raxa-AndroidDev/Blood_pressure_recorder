@@ -51,7 +51,7 @@
         tools:layout="@layout/fragment_add_b_p_record" />
     <fragment
         android:id="@+id/showBPRecordFragment"
-        android:name="com.vboard.bp_recorder_app.ui.blood_pressure.show_bp_record.ShowBPRecordFragment"
+        android:name="com.vboard.bp_recorder_app.ui.show_history_record.ShowHistoryFragment"
         android:label="ShowBPRecordFragment" />
     <fragment
         android:id="@+id/heartRateFragment"

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.PowerManager;
@@ -16,6 +17,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
@@ -32,7 +34,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class HeartRateMonitor extends AppCompatActivity {
 
     static int progress = 0;
- static ProgressBar heart_progressbar;
+    static CountDownTimer timer = null;
+    static ProgressBar heart_progressbar;
 
     private static final String TAG = "HeartRateMonitor";
     private static final AtomicBoolean processing = new AtomicBoolean(false);
@@ -51,7 +54,9 @@ public class HeartRateMonitor extends AppCompatActivity {
 
     public static enum TYPE {
         GREEN, RED
-    };
+    }
+
+    ;
 
     private static TYPE currentType = TYPE.GREEN;
 
@@ -68,7 +73,6 @@ public class HeartRateMonitor extends AppCompatActivity {
 
     public static String heartRate;
     private static boolean calculatingTHR = false;
-
 
 
     @Override
@@ -90,11 +94,24 @@ public class HeartRateMonitor extends AppCompatActivity {
 
 
 
+         timer = new CountDownTimer(20000, 20000) {
+            @Override
+            public void onTick(long l) {
+
+                progress = progress+1;
+                heart_progressbar.setProgress(progress);
+                Log.e("TAG", "onTick: progress is"+progress);
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        };
+
+
     }
-
-
-
-
 
 
     @Override
@@ -140,16 +157,30 @@ public class HeartRateMonitor extends AppCompatActivity {
             int height = size.height;
 
             int imgAvg = ImageProcessing.decodeYUV420SPtoRedAvg(data.clone(), height, width);
-            // Log.i(TAG, "imgAvg="+imgAvg);
-            Log.e(TAG, "onPreviewFrame: avg is" + imgAvg);
+
+
+
+
+
+
+
+
             if (imgAvg == 0 || imgAvg < 200) {
+                progress =0;
+                timer.cancel();
                 processing.set(false);
                 return;
             }
 
+            timer.start();
+
+
+
+
             int averageArrayAvg = 0;
             int averageArrayCnt = 0;
             for (int i = 0; i < averageArray.length; i++) {
+                Log.e(TAG, "onPreviewFrame: avg array count" + i);
                 if (averageArray[i] > 0) {
                     averageArrayAvg += averageArray[i];
                     averageArrayCnt++;
@@ -162,11 +193,10 @@ public class HeartRateMonitor extends AppCompatActivity {
                 newType = TYPE.RED;
                 if (newType != currentType) {
                     beats++;
-                    Log.e("TAG", "onPreviewFrame: beats"+beats);
-                    Log.e("TAG", "onPreviewFrame: beatsarray length"+beatsArray.length);
+                    Log.e(TAG, "onPreviewFrame: beats" + beats);
+                    Log.e(TAG, "onPreviewFrame: beatsarray length" + beatsArray.length);
 
 
-                    // Log.d(TAG, "BEAT!! beats="+beats);
                 }
             } else if (imgAvg > rollingAverage) {
                 newType = TYPE.GREEN;
@@ -178,23 +208,13 @@ public class HeartRateMonitor extends AppCompatActivity {
 
             // Transitioned from one state to another to the same
             if (newType != currentType) {
+                Log.e(TAG, "onPreviewFrame: currenttype is " + currentType);
                 currentType = newType;
                 image.postInvalidate();
             }
 
             long endTime = System.currentTimeMillis();
             double totalTimeInSecs = (endTime - startTime) / 1000d;
-
-           new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    progress =progress+10;
-
-                    heart_progressbar.setProgress(progress);
-                }
-            },10000);
-
-            Log.e("time", "onPreviewFrame: time in seconds"+totalTimeInSecs );
 
             if (totalTimeInSecs >= 10) {
 
@@ -209,13 +229,10 @@ public class HeartRateMonitor extends AppCompatActivity {
                     return;
                 }
 
-                // Log.d(TAG,
-                // "totalTimeInSecs="+totalTimeInSecs+" beats="+beats);
-
                 if (beatsIndex == beatsArraySize) beatsIndex = 0;
                 beatsArray[beatsIndex] = dpm;
                 beatsIndex++;
-                Log.e("TAG", "onPreviewFrame: beatsIndex"+beatsIndex);
+                Log.e(TAG, "onPreviewFrame: beatsIndex" + beatsIndex);
 
 
                 int beatsArrayAvg = 0;
@@ -224,10 +241,7 @@ public class HeartRateMonitor extends AppCompatActivity {
                     if (beatsArray[i] > 0) {
                         beatsArrayAvg += beatsArray[i];
                         beatsArrayCnt++;
-                        Log.e("TAG", "onPreviewFrame: beatsarraycount"+beatsArrayCnt);
-
-
-
+                        Log.e(TAG, "onPreviewFrame: beatsarraycount" + beatsArrayCnt);
 
 
                     }
@@ -240,6 +254,8 @@ public class HeartRateMonitor extends AppCompatActivity {
                 stopCam();
             }
             processing.set(false);
+
+
         }
     };
 

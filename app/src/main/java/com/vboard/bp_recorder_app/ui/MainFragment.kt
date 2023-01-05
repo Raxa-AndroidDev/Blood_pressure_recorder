@@ -34,11 +34,11 @@ class MainFragment : Fragment() {
     }
 
     private fun initListeners() {
-        binding.constBloodpressureRed.setOnClickListener {
+        binding.bpLayout.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_BPMainFragment)
         }
 
-        binding.constHeartrateblue.setOnClickListener {
+        binding.heartrateLayout.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_heartRateFragment)
         }
 

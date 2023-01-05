@@ -44,6 +44,8 @@ public class HeartbeatView extends View {
     }
 
 
+
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -57,7 +59,7 @@ public class HeartbeatView extends View {
     protected void onDraw(Canvas canvas) {
         if (canvas == null) throw new NullPointerException();
 
-        Bitmap bitmap = null;
+        Bitmap bitmap;
         if (getCurrent() == HeartRateMonitor.TYPE.GREEN) bitmap = greenBitmap;
         else bitmap = redBitmap;
 
