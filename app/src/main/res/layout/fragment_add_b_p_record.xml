@@ -4,170 +4,261 @@
 
     <data>
 
+        <variable
+            name="viewmodel"
+            type="com.vboard.bp_recorder_app.data.viewModels.BPRecordViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
 
-        <com.google.android.material.card.MaterialCardView
+        <RelativeLayout
+            android:id="@+id/top_appbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="@dimen/_5sdp"
-            app:cardCornerRadius="@dimen/_10sdp"
-            app:cardUseCompatPadding="true">
+            android:layout_height="?actionBarSize"
+            android:theme="@style/TopBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_17sdp"
+                android:src="@drawable/icon_cross" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_17sdp"
+                android:text="New Record"
+                android:textSize="@dimen/_18ssp"
+                android:theme="@style/TopBarTitleTheme" />
+
+
+        </RelativeLayout>
+
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scrollbars="none"
+            android:layout_marginBottom="@dimen/_10sdp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_ok"
+            app:layout_constraintTop_toBottomOf="@+id/top_appbar">
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_margin="@dimen/_10sdp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/white">
 
-
-                <!--date and time picker layout-->
-                <LinearLayout
-                    android:id="@+id/ln_main"
-                    android:layout_width="match_parent"
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/left_guide"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:weightSum="3"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="@dimen/_17sdp" />
 
-                    <TextView
-                        android:id="@+id/tv_Operation_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Add"
-                        android:drawableTint="@color/black"
-                        android:drawableLeft="@drawable/ic_add"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_14ssp"
-                        android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/btn_datePick"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawablePadding="@dimen/_3sdp"
-                        android:gravity="center_vertical"
-                        android:text="2022-07-06"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_12ssp"
-                        app:drawableStartCompat="@drawable/ic_baseline_calendar_month_24" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/right_guide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="@dimen/_17sdp" />
 
-                    <TextView
-                        android:id="@+id/btn_timePicker"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawablePadding="@dimen/_3sdp"
-                        android:gravity="center_vertical"
-                        android:text="9:56"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_12ssp"
-                        app:drawableStartCompat="@drawable/ic_baseline_access_time_24" />
-                </LinearLayout>
 
-                <!--number pickers layout-->
-                <LinearLayout
-                    android:id="@+id/ln_picker"
-                    android:layout_width="match_parent"
+                <!--systolic number pickers layout-->
+                <TextView
+                    android:id="@+id/tv_systolic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/systolic"
+                    android:textSize="@dimen/_17ssp"
+                    android:theme="@style/Generic.NumberPickerTextTheme"
+                    app:layout_constraintStart_toStartOf="@id/left_guide"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_systolic_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="@string/mmhg"
+                    android:textColor="#85000000"
+                    android:textSize="@dimen/_10ssp"
+                    app:layout_constraintEnd_toEndOf="@id/tv_systolic"
+                    app:layout_constraintStart_toStartOf="@+id/tv_systolic"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_systolic" />
+
+                <com.shawnlin.numberpicker.NumberPicker
+                    android:id="@+id/systolic_numberpicker"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:orientation="horizontal"
-                    android:weightSum="3"
-                    app:layout_constraintTop_toBottomOf="@+id/ln_main">
+                    android:descendantFocusability="blocksDescendants"
+                    app:layout_constraintStart_toStartOf="@+id/tv_systolic"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_systolic_unit"
+                    app:np_dividerThickness="@dimen/_1sdp"
+                    app:np_order="ascending"
+                    app:np_selectedTextColor="@color/tab_selected_color"
+                    app:np_selectedTextSize="@dimen/_28ssp"
+                    app:np_wrapSelectorWheel="false" />
 
-                    <LinearLayout
+
+                <!--Diastolic number pickers layout-->
+                <TextView
+                    android:id="@+id/tv_diastolic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/diastolic"
+                    android:textSize="@dimen/_17ssp"
+                    android:theme="@style/Generic.NumberPickerTextTheme"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/tv_diastolic_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="@string/mmhg"
+                    android:textColor="#85000000"
+                    android:textSize="@dimen/_10ssp"
+                    app:layout_constraintEnd_toEndOf="@id/tv_diastolic"
+                    app:layout_constraintStart_toStartOf="@+id/tv_diastolic"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_diastolic" />
+                <com.shawnlin.numberpicker.NumberPicker
+                    android:id="@+id/diastolic_numberpicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:descendantFocusability="blocksDescendants"
+                    app:layout_constraintStart_toStartOf="@+id/tv_diastolic"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_systolic_unit"
+                    app:np_dividerThickness="@dimen/_1sdp"
+                    app:np_order="ascending"
+                    app:np_selectedTextColor="@color/tab_selected_color"
+                    app:np_selectedTextSize="@dimen/_28ssp"
+                    app:np_wrapSelectorWheel="false" />
+
+
+                <!--pulse number pickers layout-->
+                <TextView
+                    android:id="@+id/tv_pulse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pulse"
+                    android:textSize="@dimen/_17ssp"
+                    android:theme="@style/Generic.NumberPickerTextTheme"
+                    app:layout_constraintEnd_toStartOf="@+id/right_guide"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/tv_pulse_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="@string/bpm"
+                    android:textColor="#85000000"
+                    android:textSize="@dimen/_10ssp"
+                    app:layout_constraintEnd_toEndOf="@id/tv_pulse"
+                    app:layout_constraintStart_toStartOf="@+id/tv_pulse"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_systolic" />
+                <com.shawnlin.numberpicker.NumberPicker
+                    android:id="@+id/pulse_numberpicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:descendantFocusability="blocksDescendants"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_pulse"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_systolic_unit"
+                    app:np_dividerThickness="@dimen/_1sdp"
+                    app:np_order="ascending"
+                    app:np_selectedTextColor="@color/tab_selected_color"
+                    app:np_selectedTextSize="@dimen/_28ssp"
+                    app:np_wrapSelectorWheel="false" />
+
+
+
+                <!--textview for bp condition-->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/bp_condition_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/_5sdp"
+
+                    android:paddingBottom="@dimen/_5sdp"
+                    app:layout_constraintEnd_toEndOf="@id/right_guide"
+                    app:layout_constraintStart_toStartOf="@+id/left_guide"
+                    app:layout_constraintTop_toBottomOf="@+id/pulse_numberpicker">
+
+
+                    <ImageView
+                        android:id="@+id/img_heart_icon"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content"
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:text="Systolic"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_12ssp" />
+                        android:src="@drawable/bp_type_heart_icon"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_bp_condition"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tv_bp_condition" />
 
-                        <com.shawnlin.numberpicker.NumberPicker
-                            android:id="@+id/systolic_numberpicker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            app:np_order="ascending"
 
-                            app:np_selectedTextColor="@color/red"
-                            app:np_wrapSelectorWheel="false"
-                            android:descendantFocusability="blocksDescendants" />
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_bp_condition"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_toEndOf="@+id/img_heart_icon"
+                        android:fontFamily="@font/productsans_bold"
+                        android:text="@string/normal"
+                        android:textSize="@dimen/_16ssp"
+                        app:layout_constraintStart_toEndOf="@+id/img_heart_icon"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:text="Diastolic"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <com.shawnlin.numberpicker.NumberPicker
-                            android:id="@+id/diastolic_numberpicker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            app:np_order="ascending"
-                            app:np_selectedTextColor="@color/red"
-                            app:np_wrapSelectorWheel="false"
-                            android:descendantFocusability="blocksDescendants" />
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_bp_range_description"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_11ssp"
+                        app:layout_constraintStart_toStartOf="@+id/img_heart_icon"
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:text="Pulse"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_12ssp" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_bp_condition" />
 
-                        <com.shawnlin.numberpicker.NumberPicker
-                            android:id="@+id/pulse_numberpicker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            app:np_order="ascending"
-                            app:np_selectedTextColor="@color/red"
-                            app:np_wrapSelectorWheel="false"
-                            android:descendantFocusability="blocksDescendants" />
-                    </LinearLayout>
-                </LinearLayout>
 
+                    <ImageView
+                        android:id="@+id/info_about_bp_types"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_question_mark"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_bp_condition"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tv_bp_condition" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/bp_type_colors_rcv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bp_condition_layout" />
 
                 <!--textview for bp type-->
                 <TextView
@@ -175,156 +266,93 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:background="@drawable/round_dialogue"
                     android:maxHeight="@dimen/_50sdp"
                     android:padding="@dimen/_5sdp"
-                    android:text=""
+                    android:text="Rest assured"
                     android:textColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ln_picker" />
+                    app:layout_constraintEnd_toEndOf="@id/right_guide"
+                    app:layout_constraintStart_toStartOf="@id/left_guide"
+                    app:layout_constraintTop_toBottomOf="@+id/bp_type_colors_rcv" />
 
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:id="@+id/bp_type_colors_rcv"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_instructions"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
-
-
-
-
+                <!--Date and Time title-->
                 <TextView
-                    android:id="@+id/tv_addlabel"
+                    android:id="@+id/tv_datetime_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:paddingStart="@dimen/_5sdp"
-                    android:text="Tags"
-                    android:textSize="@dimen/_15ssp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/bp_type_colors_rcv"
+                    android:text="@string/date_time"
+                    android:textSize="@dimen/_19ssp"
+                    android:theme="@style/AddRecordTextviewTheme"
+                    app:layout_constraintStart_toStartOf="@id/left_guide"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_instructions" />
 
-                    />
-
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/chip_group"
-                    android:layout_width="match_parent"
+                <!--Tags Title-->
+                <TextView
+                    android:id="@+id/tv_add_note_title"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:padding="@dimen/_5sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_addlabel"
-                    app:singleSelection="true">
-
-                    <com.google.android.material.chip.Chip
-                        style="@style/custom_chip_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Right" />
-
-                    <com.google.android.material.chip.Chip
-                        style="@style/custom_chip_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Left" />
-
-                    <com.google.android.material.chip.Chip
-                        style="@style/custom_chip_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Period" />
-
-                    <com.google.android.material.chip.Chip
-                        style="@style/custom_chip_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Seated" />
-
-                    <com.google.android.material.chip.Chip
-                        style="@style/custom_chip_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="lying down" />
-
-                    <com.google.android.material.chip.Chip
-                        style="@style/custom_chip_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Before eating" />
-
-                    <com.google.android.material.chip.Chip
-
-                        style="@style/custom_chip_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="After eating" />
-
-                    <com.google.android.material.chip.Chip
-
-                        style="@style/custom_chip_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="After walking" />
-
-                    <com.google.android.material.chip.Chip
-                        style="@style/custom_chip_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="After medication" />
-
-                </com.google.android.material.chip.ChipGroup>
 
 
-                <LinearLayout
-                    android:id="@+id/controlls"
-                    android:layout_width="match_parent"
+                    android:fontFamily="@font/productsans_regular"
+                    android:text="@string/note"
+                    android:textSize="@dimen/_16ssp"
+                    android:theme="@style/AddRecordTextviewTheme"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_datetime_title"
+                    app:layout_constraintEnd_toEndOf="@id/right_guide"
+                    app:layout_constraintTop_toTopOf="@+id/tv_datetime_title" />
+
+
+                <!--Date and time picker-->
+                <com.github.florent37.singledateandtimepicker.SingleDateAndTimePicker
+                    android:id="@+id/single_day_picker"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:weightSum="2"
-                    app:layout_constraintTop_toBottomOf="@id/chip_group">
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginStart="-25dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/left_guide"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_datetime_title"
+                    app:picker_curved="true"
+                    app:picker_curvedMaxAngle="45"
+                    app:picker_cyclic="false"
+                    app:picker_dayCount="31"
+                    app:picker_displayDays="false"
+                    app:picker_displayDaysOfMonth="true"
+                    app:picker_displayMonth="true"
+                    app:picker_displayMonthNumbers="true"
+                    app:picker_displayYears="true"
+                    app:picker_itemSpacing="24dp"
+                    app:picker_mustBeOnFuture="false"
+                    app:picker_selectorColor="@android:color/transparent"
+                    app:picker_stepSizeHours="1"
+                    app:picker_stepSizeMinutes="1"
+                    app:picker_visibleItemCount="2" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_cancel"
-                        android:layout_width="@dimen/_150sdp"
-                        android:layout_height="@dimen/_40sdp"
-                        android:layout_margin="@dimen/_10sdp"
-                        android:layout_weight="1"
-                        android:backgroundTint="@color/red"
-                        app:cornerRadius="@dimen/_6sdp"
-                        android:gravity="center"
-                        android:text="Cancel"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_15ssp" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_ok"
-                        android:layout_width="@dimen/_150sdp"
-                        android:layout_height="@dimen/_40sdp"
-                        android:layout_margin="@dimen/_10sdp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-
-                        android:textAllCaps="false"
-                        app:cornerRadius="@dimen/_6sdp"
-                        android:text="Add"
-                        android:backgroundTint="@color/black"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_15ssp" />
-                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        </com.google.android.material.card.MaterialCardView>
+        </ScrollView>
 
-</ScrollView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_18sdp"
+            android:layout_marginEnd="@dimen/_18sdp"
+            android:layout_marginBottom="@dimen/_18sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:text="@string/save"
+            android:theme="@style/Generic.RoundButton"
+            app:cornerRadius="@dimen/_20sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

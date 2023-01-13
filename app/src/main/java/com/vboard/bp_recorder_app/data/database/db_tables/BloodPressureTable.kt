@@ -1,10 +1,13 @@
 package com.vboard.bp_recorder_app.data.database.db_tables
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
 @Entity
-data class BloodPressureTable(
+@Parcelize
+ data class BloodPressureTable(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val date: String,
@@ -14,4 +17,4 @@ data class BloodPressureTable(
     val diaSystolic: Int,
     val pulse: Int,
     val label: String
-)
+):Parcelable

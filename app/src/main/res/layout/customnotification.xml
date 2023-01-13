@@ -20,10 +20,9 @@
             android:layout_height="wrap_content"
           android:gravity="start"
 
-
+            style="@style/TextAppearance.Compat.Notification.Title"
 
             android:text="Track Your Health"
-            android:textColor="@color/black"
             android:textSize="@dimen/_14ssp"/>
 
 

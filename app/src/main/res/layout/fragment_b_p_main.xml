@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -15,94 +15,78 @@
         <RelativeLayout
             android:id="@+id/top_appbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:background="@color/splash_bg"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
             <ImageView
                 android:id="@+id/back_arrow"
-                android:paddingStart="@dimen/_18sdp"
-                android:paddingEnd="@dimen/_10sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_arrow_back"/>
+                android:paddingStart="@dimen/_18sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:src="@drawable/icon_back" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Blood Pressure"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="@dimen/_15ssp"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/back_arrow"/>
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_toEndOf="@+id/back_arrow"
+                android:text="@string/tracker"
+                android:textSize="@dimen/_18ssp"
+                android:theme="@style/TopBarTitleTheme" />
+
+
+            <TextView
+                android:id="@+id/tv_export"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:text="@string/export"
+                android:textSize="@dimen/_16ssp"
+                android:theme="@style/TopBarSubTitleTheme" />
         </RelativeLayout>
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toBottomOf="@+id/top_appbar"
+            app:tabIndicatorColor="@color/tab_selected_color"
+            app:tabSelectedTextColor="@color/tab_selected_color" />
+
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/button_add_bp"
+            app:layout_constraintTop_toBottomOf="@+id/tab_layout" />
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_add_bp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_15sdp"
-            android:text="ANALYZE"
-            app:cornerRadius="@dimen/_7sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:text="@string/add_data"
+            android:theme="@style/Generic.RoundButton"
+            app:cornerRadius="@dimen/_20sdp"
             app:icon="@drawable/ic_add"
-            app:layout_constraintBottom_toTopOf="@+id/button_view_bp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_view_bp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cornerRadius="@dimen/_10sdp"
-            android:text="History"
-            app:icon="@drawable/ic_add"
-            app:layout_constraintTop_toTopOf="parent"
+            app:iconGravity="textStart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_view_bp_trends"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cornerRadius="@dimen/_10sdp"
-            android:text="Trends"
-            android:layout_marginTop="@dimen/_15sdp"
-            app:icon="@drawable/ic_add"
-           app:layout_constraintTop_toBottomOf="@+id/button_view_bp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_export_bp_record"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cornerRadius="@dimen/_10sdp"
-            android:text="Export Data"
-            android:layout_marginTop="@dimen/_15sdp"
-            app:icon="@drawable/ic_add"
-            app:layout_constraintTop_toBottomOf="@+id/button_view_bp_trends"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_set_alarm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cornerRadius="@dimen/_10sdp"
-            android:text="Set Alarm"
-            android:layout_marginTop="@dimen/_15sdp"
-            app:icon="@drawable/ic_add"
-            app:layout_constraintTop_toBottomOf="@+id/button_export_bp_record"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

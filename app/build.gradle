@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -45,12 +46,25 @@ dependencies {
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation files('libs/opencsv-5.7.1.jar')
+    implementation project(':nativetemplates')
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
     // for nav graph
     def nav_version = "2.5.3"
+
+    // for logs
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    // for admob ads
+        implementation 'com.google.android.gms:play-services-ads:21.4.0'
+
+
+    // for datepicker
+
+    implementation 'com.github.Raxa-AndroidDev:SingleDateAndTimePicker:4ba89acf07'
+
 
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
@@ -67,7 +81,9 @@ dependencies {
     // number picker
     implementation 'io.github.ShawnLin013:number-picker:2.4.13'
 
-
+    // lottie animation
+    def lottieVersion = "3.4.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 
     implementation 'androidx.work:work-runtime:2.7.1'
     // graphs

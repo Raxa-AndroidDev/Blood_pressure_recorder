@@ -13,4 +13,27 @@
     <color name="mediumgray">#DEDEDE</color>
     <color name="darkgray">#858585</color>
 
+
+
+    <color name="hypotension_bp_color">#5591ff</color>
+    <color name="normal_bp_color">#16a1a6</color>
+    <color name="elevated_bp_color">#ffe200</color>
+    <color name="hyper_stage1_color">#ffb200</color>
+    <color name="hyper_stage2_color">#ff824c</color>
+    <color name="hyper_crisis_color">#f04040</color>
+
+
+
+
+
+
+    <color name="mainbar_selected_color">#179296</color>
+    <color name="mainbar_unselected_color">#949394</color>
+
+
+    <color name="tab_selected_color">#16a1a6</color>
+    <color name="tab_unselected_color">#060605</color>
+
+    <color name="picker_default_divider_color">@android:color/black</color>
+
 </resources>

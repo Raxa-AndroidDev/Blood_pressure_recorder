@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.vboard.bp_recorder_app.data.Alarm;
-import com.vboard.bp_recorder_app.ui.blood_pressure.BPRecordViewModel;
+import com.vboard.bp_recorder_app.data.viewModels.BPRecordViewModel;
 
 import java.util.List;
 

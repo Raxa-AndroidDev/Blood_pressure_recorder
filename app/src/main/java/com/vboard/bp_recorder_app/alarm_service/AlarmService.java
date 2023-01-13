@@ -1,7 +1,6 @@
 package com.vboard.bp_recorder_app.alarm_service;
 
 
-import static android.media.MediaPlayer.*;
 import static com.vboard.bp_recorder_app.App.CHANNEL_ID;
 
 import android.app.NotificationChannel;
@@ -23,14 +22,9 @@ import android.widget.RemoteViews;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
-
 import com.vboard.bp_recorder_app.R;
-import com.vboard.bp_recorder_app.RingActivity;
 import com.vboard.bp_recorder_app.data.Alarm;
-import com.vboard.bp_recorder_app.ui.Alarm.AlarmViewHolder;
 import com.vboard.bp_recorder_app.ui.MainActivity;
-
-import java.io.IOException;
 
 public class AlarmService extends Service {
     private MediaPlayer mediaPlayer;
@@ -70,8 +64,20 @@ public class AlarmService extends Service {
         notificationIntent.putExtra(getString(R.string.bundle_alarm_obj), bundle);
 
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        Log.e("alarmm", "onStartCommand: "+alarm.getAlarmId() );
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, alarm.getAlarmId(), notificationIntent, 0);
+        Log.e("alarmm", "onStartCommand: " + alarm.getAlarmId());
+
+
+        PendingIntent pendingIntent;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            pendingIntent = PendingIntent.getActivity(this, alarm.getAlarmId(), notificationIntent, PendingIntent.FLAG_MUTABLE);
+
+
+        } else {
+            pendingIntent = PendingIntent.getActivity(this, alarm.getAlarmId(), notificationIntent, 0);
+
+
+        }
         String alarmTitle = getString(R.string.alarm_title);
 
 
@@ -96,25 +102,23 @@ public class AlarmService extends Service {
         }*/
 
         RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.customnotification);
-         remoteViews.setTextViewText(R.id.tv_alarm_notify_title, "Track your Health");
-         remoteViews.setTextViewText(R.id.tv_subtitle, "Its time to record your blood pressure");
+        remoteViews.setTextViewText(R.id.tv_alarm_notify_title, "Track your Health");
+        remoteViews.setTextViewText(R.id.tv_subtitle, "Its time to record your blood pressure");
 
 
         NotificationCompat.Builder notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
                 .setSmallIcon(R.drawable.ic_alarm_white)
                 .setTicker("Alarm")
-               .setContent(remoteViews)
+                .setCustomContentView(remoteViews)
                 .setAutoCancel(true)
                 //.setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
-               // .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                // .setCategory(NotificationCompat.CATEGORY_REMINDER)
                 //.setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 //.setFullScreenIntent(pendingIntent, true);
                 .setContentIntent(pendingIntent);
-
-
-
 
 
         //mediaPlayer.setOnPreparedListener(mediaPlayer -> mediaPlayer.start());

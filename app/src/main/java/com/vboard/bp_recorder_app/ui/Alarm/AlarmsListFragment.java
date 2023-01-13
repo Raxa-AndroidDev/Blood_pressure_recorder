@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.vboard.bp_recorder_app.R;
 import com.vboard.bp_recorder_app.data.Alarm;
 import com.vboard.bp_recorder_app.databinding.FragmentAlarmsListBinding;
-import com.vboard.bp_recorder_app.ui.blood_pressure.BPRecordViewModel;
+import com.vboard.bp_recorder_app.data.viewModels.BPRecordViewModel;
 import com.vboard.bp_recorder_app.utils.interfaces.OnToggleAlarmListener;
 
 import java.util.List;

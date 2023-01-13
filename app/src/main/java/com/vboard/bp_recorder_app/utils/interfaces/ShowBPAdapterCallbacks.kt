@@ -4,7 +4,7 @@ import com.vboard.bp_recorder_app.data.database.db_tables.BloodPressureTable
 
 interface ShowBPAdapterCallbacks {
 
-    fun OnDeleteIconClick(position:Int)
+    fun OnEditIconClick(bloodPressureTable: BloodPressureTable)
 
     fun OnItemClick(bloodPressureTable: BloodPressureTable)
 }

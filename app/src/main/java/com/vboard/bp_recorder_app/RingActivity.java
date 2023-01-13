@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.vboard.bp_recorder_app.alarm_service.AlarmService;
 import com.vboard.bp_recorder_app.data.Alarm;
 import com.vboard.bp_recorder_app.databinding.ActivityRingBinding;
-import com.vboard.bp_recorder_app.ui.blood_pressure.BPRecordViewModel;
+import com.vboard.bp_recorder_app.data.viewModels.BPRecordViewModel;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

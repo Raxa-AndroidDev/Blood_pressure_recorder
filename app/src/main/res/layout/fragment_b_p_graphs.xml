@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.blood_pressure.BPGraphsFragment">
+        tools:context=".ui.blood_pressure.graphs.BPGraphsFragment">
 
 
         <RelativeLayout
@@ -28,7 +28,7 @@
                 android:paddingEnd="@dimen/_10sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_arrow_back" />
+                android:src="@drawable/icon_back" />
 
             <TextView
                 android:layout_width="wrap_content"

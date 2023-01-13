@@ -5,11 +5,39 @@
     <string name="sub_title">TRACKER</string>
 
 
-
     <string name="arg_alarm_obj" translatable="false">AlarmObject</string>
     <string name="bundle_alarm_obj" translatable="false">BundleAlarmObject</string>
     <string name="alarm_title" translatable="false">My Alarm</string>
     <string name="dayNightTheme" translatable="false">DayNightTheme</string>
     <string name="alarmwithvibration" translatable="false">Reminder with Vibration</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tracker">Tracker</string>
+    <string name="export">Export</string>
+    <string name="systolic">Systolic</string>
+    <string name="diastolic">Diastolic</string>
+    <string name="pulse">Pulse</string>
+    <string name="add_data">Add Data</string>
+    <string name="date_time"><![CDATA[Date & time]]></string>
+    <string name="save">Save</string>
+    <string name="normal">Normal</string>
+    <string name="mmhg">mmHg</string>
+    <string name="bpm">BPM</string>
+    <string name="hypo_bp_range"><![CDATA[SYS <90 or DIA <60]]></string>
+    <string name="normal_bp_range">SYS 90-119 and DIA 60-79</string>
+    <string name="elevated_bp_range">SYS 120-129 and DIA 60-79</string>
+    <string name="stage1_bp_range">SYS 130-139 or DIA 80-89</string>
+    <string name="stage2_bp_range">SYS 140-180 or DIA 90-120</string>
+    <string name="critical_bp_range">SYS >180 or DIA >120</string>
+    <string name="type">Type</string>
+    <string name="got_it">Got It</string>
+    <string name="note">Note +</string>
+    <string name="weight_and_bmi_title">Weight and BMI</string>
+    <string name="select_height">Select Height</string>
+    <string name="select_weight">Select Weight</string>
+    <string name="kg">Kg</string>
+    <string name="weight">Weight</string>
+    <string name="height">Height</string>
+    <string name="cm">cm</string>
 
 </resources>

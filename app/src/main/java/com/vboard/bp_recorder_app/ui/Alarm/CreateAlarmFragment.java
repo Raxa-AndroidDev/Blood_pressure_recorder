@@ -18,12 +18,11 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.vboard.bp_recorder_app.R;
 import com.vboard.bp_recorder_app.data.Alarm;
+import com.vboard.bp_recorder_app.data.viewModels.BPRecordViewModel;
 import com.vboard.bp_recorder_app.databinding.FragmentCreateAlarmBinding;
-import com.vboard.bp_recorder_app.ui.blood_pressure.BPRecordViewModel;
 import com.vboard.bp_recorder_app.utils.DayUtil;
 import com.vboard.bp_recorder_app.utils.TimePickerUtil;
 
-import java.util.Calendar;
 import java.util.Random;
 
 public class CreateAlarmFragment extends Fragment {

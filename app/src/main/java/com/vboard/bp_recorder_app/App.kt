@@ -4,9 +4,14 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.SharedPreferences
+import android.nfc.Tag
 import android.os.Build
+import android.os.Message
 import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatDelegate
+import timber.log.Timber
+import timber.log.Timber.DebugTree
+
 
 class App : Application() {
 
@@ -19,6 +24,16 @@ class App : Application() {
     lateinit var sharedPreferences: SharedPreferences
     override fun onCreate() {
         super.onCreate()
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(object :DebugTree(){
+                override fun log(priority: Int,tag: String?,message: String, t: Throwable?) {
+                    super.log(priority,"applicationtag $tag",message, t)
+                }
+            })
+        }
+
+
         createNotificationChannnel()
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val dn = sharedPreferences.getBoolean(getString(R.string.dayNightTheme), true)

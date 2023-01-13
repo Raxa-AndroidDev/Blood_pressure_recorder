@@ -9,6 +9,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
+
+
+fun DateLongtoString(longDate:Long):String{
+
+    val date = Date(longDate)
+
+    val dateFormat = SimpleDateFormat("dd/MMM/yy", Locale.getDefault())
+     return dateFormat.format(date)
+}
 fun Date.toString(): String {
     val formatter = SimpleDateFormat(Constansts.dateFormate, Locale.getDefault())
     return formatter.format(this)
@@ -19,9 +28,27 @@ fun getCurrentDateTime(): Date {
 }
 
 
+fun DateToCalendar(date: Date?): Calendar? {
+    val cal = Calendar.getInstance()
+    cal.time = date
+    return cal
+}
+fun getNextDayDate(calendar: Calendar):String{
+    calendar.add(Calendar.DAY_OF_MONTH,1)
+
+    return CurrentDate(calendar)
+}
+
+fun getPreviousDayDate(calendar: Calendar):String{
+    calendar.add( Calendar.DAY_OF_MONTH,-1)
+
+    return CurrentDate(calendar)
+}
+
+
 fun CurrentDate(calendar: Calendar): String {
 
-    val dateFormat = SimpleDateFormat("dd/MM/yy", Locale.getDefault())
+    val dateFormat = SimpleDateFormat("dd/MMM/yy", Locale.getDefault())
     return dateFormat.format(calendar.time)
 }
 

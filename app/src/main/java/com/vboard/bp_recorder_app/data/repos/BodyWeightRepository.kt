@@ -7,11 +7,19 @@ import com.vboard.bp_recorder_app.data.database.db_tables.BodyWeightTable
 class BodyWeightRepository(private val bodyWeightDao: BodyWeightDao) {
 
     // function to store Body Weight data in DB
-    fun storeBPRecordDB(bodyWeightTable: BodyWeightTable) {
+    fun storeWeightRecordDB(bodyWeightTable: BodyWeightTable) {
         bodyWeightDao.storeBodyWeightRecord(bodyWeightTable)
     }
 
-    fun fetchBPRecordFromBP(): LiveData<List<BodyWeightTable>> {
+    fun updateWeightRecord(bodyWeightTable: BodyWeightTable){
+        bodyWeightDao.UpdateSingleWeightRecord(bodyWeightTable)
+    }
+
+    fun fetchWeightRecordFromDB(): LiveData<List<BodyWeightTable>> {
         return bodyWeightDao.fetchAllBodyWeightRecords()
+    }
+
+    fun deleteSpecificWeightRecord(position:Int){
+            bodyWeightDao.deleteSingleBodyWeightRecord(position)
     }
 }

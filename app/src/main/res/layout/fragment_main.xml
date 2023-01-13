@@ -6,36 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainFragment">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/main_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"/>
+
     <RelativeLayout
         android:id="@+id/top_appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?actionBarSize"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/main_title"
+            style="@style/TopBarTitleTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:fontFamily="@font/productsans_bold"
             android:paddingStart="@dimen/_15sdp"
-
-            android:text="@string/main_title"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_18ssp" />
-
-        <TextView
-            android:id="@+id/sub_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/main_title"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:fontFamily="@font/productsans_regular"
-            android:paddingStart="@dimen/_15sdp"
-            android:text="@string/sub_title"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14ssp" />
+            android:textSize="@dimen/_18ssp"
+            android:text="@string/main_title" />
 
 
         <ImageView
@@ -45,7 +38,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/_15sdp"
-            android:src="@drawable/icon_settings" />
+            android:src="@drawable/settings_icon" />
 
     </RelativeLayout>
 
@@ -62,95 +55,121 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top_appbar">
 
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/heartrate_card_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
         <ImageView
             android:id="@+id/img_heartwave_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_70sdp"
             android:src="@drawable/heartwave_main"
             app:layout_constraintTop_toTopOf="parent" />
 
-
-        <TextView
-            android:id="@+id/heartrate_title_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/productsans_bold"
-            android:gravity="center_vertical"
-            android:text="Heart Rate"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_18sdp"
-            app:layout_constraintEnd_toEndOf="parent"
+        <ImageView
+            android:id="@+id/heart_animation"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:src="@drawable/heart_finger_anim"
+            app:layout_constraintEnd_toStartOf="@+id/heartrate_title_main"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_heartwave_main" />
 
         <TextView
-            android:id="@+id/tv_heartrate_count"
+            android:id="@+id/heartrate_title_main"
+            style="@style/Main.CardHeadingsTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/productsans_bold"
-            android:gravity="center_vertical"
-            android:text="No Record"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_10ssp"
-            app:layout_constraintStart_toStartOf="@+id/heartrate_title_main"
-            app:layout_constraintTop_toBottomOf="@+id/heartrate_title_main" />
+            android:text="Heart Rate"
+            android:textSize="@dimen/_21ssp"
+            app:layout_constraintStart_toEndOf="@+id/heartrate_card_guide"
+            app:layout_constraintTop_toBottomOf="@+id/img_heartwave_main" />
 
-        <View
-            android:id="@+id/view1"
-            android:layout_width="@dimen/_2sdp"
-            android:layout_height="@dimen/_13sdp"
-            android:layout_marginStart="@dimen/_4sdp"
-            android:background="@color/white"
-            app:layout_constraintBottom_toTopOf="@+id/btn_measure_heartrate"
-            app:layout_constraintStart_toEndOf="@+id/tv_heartrate_count"
-            app:layout_constraintTop_toBottomOf="@+id/heartrate_title_main" />
 
-        <TextView
-            android:id="@+id/tv_latest_heartrate_reading"
+        <LinearLayout
+            android:id="@+id/heartrate_count_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:fontFamily="@font/productsans_bold"
-            android:gravity="center_vertical"
-            android:text="Latest"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_10ssp"
-            app:layout_constraintStart_toEndOf="@+id/view1"
-            app:layout_constraintTop_toBottomOf="@+id/heartrate_title_main" />
+            android:layout_marginBottom="@dimen/_7sdp"
+
+            android:orientation="horizontal"
+            app:layout_constraintStart_toEndOf="@+id/heartrate_card_guide"
+            app:layout_constraintTop_toBottomOf="@+id/heartrate_title_main">
+
+
+            <TextView
+                android:id="@+id/tv_heartrate_count"
+                style="@style/Main.SubTextsTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/_5sdp"
+                android:text="0 Records"
+                android:textSize="@dimen/_11ssp"
+                app:drawableLeftCompat="@drawable/main_tick_icon" />
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="2dp"
+                android:layout_height="@dimen/_9sdp"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_latest_heartrate_reading"
+
+
+                style="@style/Main.SubTextsTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Latest: 0"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11ssp" />
+
+        </LinearLayout>
 
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_measure_heartrate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_25sdp"
             android:backgroundTint="@color/white"
             android:fontFamily="@font/productsans_bold"
             android:text="Measure and Tracker"
             android:textColor="#2b628e"
             android:textSize="@dimen/_10ssp"
             app:cornerRadius="@dimen/_10sdp"
-            app:layout_constraintStart_toStartOf="@+id/heartrate_title_main"
-            app:layout_constraintTop_toBottomOf="@+id/tv_heartrate_count" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/heartrate_card_guide"
+            app:layout_constraintTop_toBottomOf="@+id/heartrate_count_layout" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/weight_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/main_card_bg"
         android:elevation="@dimen/_5sdp"
-        android:padding="@dimen/_25sdp"
-        android:layout_margin="@dimen/_15sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bp_layout"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        app:layout_constraintEnd_toEndOf="@+id/heartrate_layout"
+        app:layout_constraintStart_toStartOf="@+id/main_guideline"
         app:layout_constraintTop_toBottomOf="@+id/heartrate_layout">
 
 
         <ImageView
             android:id="@+id/img_weight_main"
-            android:layout_width="@dimen/_90sdp"
+            android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_80sdp"
             android:src="@drawable/weight_main"
             app:layout_constraintEnd_toEndOf="parent"
@@ -161,27 +180,29 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:text="Weight, BMI"
             android:textColor="@color/white"
-            android:textSize="@dimen/_15ssp"
+            android:textSize="@dimen/_14ssp"
+            android:theme="@style/Main.SubTextsTheme"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_weight_main" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bp_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/main_card_bg"
         android:elevation="@dimen/_5sdp"
-        android:padding="@dimen/_25sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:layout_marginStart="@dimen/_15sdp"
-        app:layout_constraintEnd_toStartOf="@+id/weight_layout"
-        app:layout_constraintStart_toStartOf="parent"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        app:layout_constraintEnd_toStartOf="@+id/main_guideline"
+        app:layout_constraintStart_toStartOf="@+id/heartrate_layout"
         app:layout_constraintTop_toBottomOf="@+id/heartrate_layout">
 
 
@@ -198,15 +219,35 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:text="Blood Pressure"
             android:textColor="@color/white"
-            android:textSize="@dimen/_15ssp"
+            android:textSize="@dimen/_14ssp"
+            android:theme="@style/Main.SubTextsTheme"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_bp_main" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav_view"
+        app:layout_constraintTop_toBottomOf="@+id/bp_layout">
+
+        <com.google.android.ads.nativetemplates.TemplateView
+            android:id="@+id/native_ad_template"
+            app:gnt_template_type="@layout/gnt_medium_template_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+
+
+    </ScrollView>
+
+
+
 
 
 
@@ -216,8 +257,10 @@
         android:id="@+id/bottom_nav_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
-        android:background="@drawable/bottom_nav_bg"
-        app:itemTextColor="@color/white"
+        android:backgroundTint="@color/white"
+        app:itemIconTint="@color/botombar_color_selector"
+        app:itemTextColor="@color/botombar_color_selector"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

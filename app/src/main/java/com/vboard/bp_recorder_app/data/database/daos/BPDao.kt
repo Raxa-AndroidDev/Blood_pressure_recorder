@@ -13,13 +13,17 @@ interface BPDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun storeBPRecord(bpTable: BloodPressureTable)
 
+    // to update a specific BP record
+    @Update
+    fun UpdateSingleBPRecord(bloodPressureTable: BloodPressureTable)
+
     // to fetch BP data from DB and display to user
     @Query("SELECT * FROM BloodPressureTable")
     fun fetchAllBPRecords(): LiveData<List<BloodPressureTable>>
 
     // to search BP data by using date filter
     @Query("SELECT * FROM BloodPressureTable WHERE date BETWEEN :startDate AND :endDate")
-    open fun searchBPRecordByDate(startDate: Long?, endDate: Long?): LiveData<List<BloodPressureTable>>
+     fun searchBPRecordByDate(startDate: String?, endDate: String?): LiveData<List<BloodPressureTable>>
 
 
 
@@ -34,9 +38,7 @@ interface BPDao {
     @Query("SELECT * FROM alarm_table ORDER BY alarmId DESC")
     fun getAlarms(): LiveData<List<Alarm>>
 
-    // to update a specific BP record
-   @Update
-    fun UpdateSingleBPRecord(bloodPressureTable: BloodPressureTable)
+
 
 
     // to delete a single BP record

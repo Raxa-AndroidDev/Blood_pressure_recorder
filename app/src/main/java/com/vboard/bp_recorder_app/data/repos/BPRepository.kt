@@ -20,6 +20,13 @@ class BPRepository(private val bpDao: BPDao) {
     }
 
 
+
+    fun searchBPRecordByDate(startDate:String, endDate:String):LiveData<List<BloodPressureTable>>{
+
+        return bpDao.searchBPRecordByDate(startDate,endDate)
+    }
+
+
     fun deleteSpecificBPRecord(position:Int){
 
         bpDao.deleteSingleBPRecord(position)

@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +12,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.forEach
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.tabs.TabLayoutMediator
 import com.vboard.bp_recorder_app.R
+import com.vboard.bp_recorder_app.ui.blood_pressure.add_bp_record.adapters.ViewPagerAdapter
 import com.vboard.bp_recorder_app.data.database.db_tables.BloodPressureTable
+import com.vboard.bp_recorder_app.data.viewModels.BPRecordViewModel
 import com.vboard.bp_recorder_app.databinding.FragmentBPMainBinding
 import com.vboard.bp_recorder_app.utils.CurrentDate
 import com.vboard.bp_recorder_app.utils.dateAndTime
@@ -28,6 +31,8 @@ class BPMainFragment : Fragment() {
 
     lateinit var binding: FragmentBPMainBinding
     lateinit var viewModel: BPRecordViewModel
+
+    val tabList = arrayOf("History", "Analysis")
     val myCalendar: Calendar = Calendar.getInstance()
     var choosenDate: String? = null
     var choosenTime: String? = null
@@ -46,7 +51,19 @@ class BPMainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        tabInitialization()
         initListeners()
+
+    }
+
+    private fun tabInitialization() {
+        val viewPagerAdapter = ViewPagerAdapter(childFragmentManager,lifecycle)
+        binding.viewPager.adapter = viewPagerAdapter
+
+        TabLayoutMediator(binding.tabLayout,binding.viewPager){
+            tab,position ->
+            tab.text = tabList[position]
+        }.attach()
     }
 
     private fun initListeners() {
@@ -54,20 +71,17 @@ class BPMainFragment : Fragment() {
 
         binding.buttonAddBp.setOnClickListener {
 
-            insertBPDialogue()
+
+            val bundle = Bundle()
+
+            bundle.putParcelable("bloodpressuretable", null)
+            findNavController().navigate(R.id.action_BPMainFragment_to_addBPRecordFragment, bundle)
+
+
+            //insertBPDialogue()
         }
 
-        binding.buttonViewBpTrends.setOnClickListener {
-            findNavController().navigate(R.id.action_BPMainFragment_to_BPGraphsFragment)
-        }
 
-        binding.buttonViewBp.setOnClickListener {
-            findNavController().navigate(R.id.action_BPMainFragment_to_showBPRecordFragment)
-        }
-
-        binding.buttonSetAlarm.setOnClickListener {
-            findNavController().navigate(R.id.action_BPMainFragment_to_createAlarmFragment)
-        }
     }
 
 

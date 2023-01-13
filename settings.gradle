@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "BP_Recorder_App"
 include ':app'
+include ':nativetemplates'
