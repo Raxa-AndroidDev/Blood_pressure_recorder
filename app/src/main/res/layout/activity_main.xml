@@ -19,11 +19,50 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/main_nav"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_layout"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:navGraph="@navigation/main_nav" />
 
 
+        <LinearLayout
+            android:id="@+id/bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/mainbar_unselected_color" />
+
+            <me.ibrahimsn.lib.SmoothBottomBar
+                android:id="@+id/bottom_nav_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                app:activeItem="0"
+                app:backgroundColor="@color/white"
+                app:cornerRadius="@dimen/_16sdp"
+                app:corners="top_left|bottom_right"
+                app:iconTint="@color/mainbar_unselected_color"
+                app:iconTintActive="@color/tab_selected_color"
+                app:indicatorColor="@color/badge_color"
+                app:indicatorRadius="@dimen/_16sdp"
+                app:itemFontFamily="@font/poppins_regular"
+                app:menu="@menu/bottom_nav_menu"
+                app:textColor="@color/mainbar_unselected_color"
+                app:textColorActive="@color/tab_selected_color"
+                app:textSize="@dimen/_10ssp" />
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/mainbar_unselected_color" />
+
+
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

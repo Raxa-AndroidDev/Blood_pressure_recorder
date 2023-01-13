@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Message
 import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatDelegate
+import com.google.android.gms.ads.MobileAds
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
@@ -24,6 +25,9 @@ class App : Application() {
     lateinit var sharedPreferences: SharedPreferences
     override fun onCreate() {
         super.onCreate()
+
+        MobileAds.initialize(this)
+
 
         if (BuildConfig.DEBUG) {
             Timber.plant(object :DebugTree(){

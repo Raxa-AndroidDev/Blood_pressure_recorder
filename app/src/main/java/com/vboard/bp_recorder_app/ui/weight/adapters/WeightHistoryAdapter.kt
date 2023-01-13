@@ -1,6 +1,7 @@
 package com.vboard.bp_recorder_app.ui.weight.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.vboard.bp_recorder_app.data.database.db_tables.BloodPressureTable
@@ -40,7 +41,9 @@ class WeightHistoryAdapter(var callBacks: WeightAdapterCallbacks) :
 
         holder.binding.apply {
             tvSystolicBp.text = currentItem.weight.toString()
-            tvDiastolicBp.text = currentItem.height.toString()
+            tvDiastolicBp.visibility = View.INVISIBLE
+            view1.visibility = View.INVISIBLE
+
 
             tvDatetime.text = currentItem.DateAndTime
 

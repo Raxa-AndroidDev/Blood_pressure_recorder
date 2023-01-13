@@ -62,8 +62,11 @@ dependencies {
 
 
     // for datepicker
-
     implementation 'com.github.Raxa-AndroidDev:SingleDateAndTimePicker:4ba89acf07'
+
+
+    // for bottombar
+    implementation 'com.github.UmerSarfrazHazel:SmoothBottomBar:2b0898e8e0'
 
 
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"

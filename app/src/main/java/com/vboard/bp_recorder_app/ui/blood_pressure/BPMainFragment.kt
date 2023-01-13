@@ -19,10 +19,12 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.tabs.TabLayoutMediator
 import com.vboard.bp_recorder_app.R
+import com.vboard.bp_recorder_app.data.database.DatabaseClass
 import com.vboard.bp_recorder_app.ui.blood_pressure.add_bp_record.adapters.ViewPagerAdapter
 import com.vboard.bp_recorder_app.data.database.db_tables.BloodPressureTable
 import com.vboard.bp_recorder_app.data.viewModels.BPRecordViewModel
 import com.vboard.bp_recorder_app.databinding.FragmentBPMainBinding
+import com.vboard.bp_recorder_app.ui.MainActivity
 import com.vboard.bp_recorder_app.utils.CurrentDate
 import com.vboard.bp_recorder_app.utils.dateAndTime
 import java.util.*
@@ -51,9 +53,15 @@ class BPMainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initValues()
         tabInitialization()
         initListeners()
 
+    }
+
+    private fun initValues() {
+
+        (activity as MainActivity).binding.bottomNavView.setSelectedItem(2)
     }
 
     private fun tabInitialization() {
@@ -64,10 +72,23 @@ class BPMainFragment : Fragment() {
             tab,position ->
             tab.text = tabList[position]
         }.attach()
+
+
+
+
+
     }
 
     private fun initListeners() {
         viewModel = ViewModelProvider(this)[BPRecordViewModel::class.java]
+
+        DatabaseClass.getDBInstance(requireContext()).bpDao().fetchAllBPRecords().observe(viewLifecycleOwner){
+
+            if(it.isEmpty()){
+
+            }
+
+        }
 
         binding.buttonAddBp.setOnClickListener {
 

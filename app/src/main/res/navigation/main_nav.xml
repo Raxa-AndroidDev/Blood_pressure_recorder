@@ -20,12 +20,20 @@
             android:id="@+id/action_mainFragment_to_weightMainFragment"
             app:destination="@id/weightMainFragment" />
 
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="yourapp://BloodPressure/app/main/frag" />
+
     </fragment>
     <fragment
         android:id="@+id/infoFragment"
         android:name="com.vboard.bp_recorder_app.ui.info_module.InfoFragment"
         android:label="fragment_info"
-        tools:layout="@layout/fragment_info" />
+        tools:layout="@layout/fragment_info" >
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="BloodPressure_app_info_frag" />
+    </fragment>
     <fragment
         android:id="@+id/BPMainFragment"
         android:name="com.vboard.bp_recorder_app.ui.blood_pressure.BPMainFragment"
@@ -42,6 +50,9 @@
         <action
             android:id="@+id/action_BPMainFragment_to_createAlarmFragment"
             app:destination="@id/createAlarmFragment" />
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="yourapp://BloodPressure/app/bp/frag" />
     </fragment>
     <fragment
         android:id="@+id/addBPRecordFragment"
@@ -73,18 +84,18 @@
         android:id="@+id/createAlarmFragment"
         android:name="com.vboard.bp_recorder_app.ui.Alarm.CreateAlarmFragment"
         android:label="CreateAlarmFragment" />
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.vboard.bp_recorder_app.ui.SettingsFragment"
-        android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
-    <fragment
-        android:id="@+id/weightFragment"
-        android:name="com.vboard.bp_recorder_app.ui.weight.AddWeightRecordFragment"
-        android:label="WeightFragment" />
+
     <fragment
         android:id="@+id/weightMainFragment"
         android:name="com.vboard.bp_recorder_app.ui.weight.WeightMainFragment"
-        android:label="WeightMainFragment" />
+        android:label="WeightMainFragment" >
+        <action
+            android:id="@+id/action_weightMainFragment_to_addWeightRecordFragment"
+            app:destination="@id/addWeightRecordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addWeightRecordFragment"
+        android:name="com.vboard.bp_recorder_app.ui.weight.AddWeightRecordFragment"
+        android:label="AddWeightRecordFragment" />
 
 </navigation>

@@ -1,20 +1,21 @@
 package com.vboard.bp_recorder_app.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation
 import com.vboard.bp_recorder_app.R
 import com.vboard.bp_recorder_app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    lateinit var  binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val navController = Navigation.findNavController(this, R.id.main_nav_graph)
+        binding.bottomNavView.setupWithNavController(navController)
 
 
     }
