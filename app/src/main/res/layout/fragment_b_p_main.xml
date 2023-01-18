@@ -7,16 +7,21 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
+        android:id="@+id/bp_main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.blood_pressure.BPMainFragment">
+
+
+
 
         <RelativeLayout
             android:id="@+id/top_appbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:background="@color/white"
+            android:layout_alignParentTop="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -57,7 +62,7 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+android:layout_below="@+id/top_appbar"
             app:layout_constraintTop_toBottomOf="@+id/top_appbar"
             app:tabIndicatorColor="@color/tab_selected_color"
             app:tabSelectedTextColor="@color/tab_selected_color" />
@@ -66,28 +71,20 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tab_layout"
+            android:layout_above="@+id/button_add_bp"
             app:layout_constraintBottom_toTopOf="@+id/button_add_bp"
             app:layout_constraintTop_toBottomOf="@+id/tab_layout" />
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_add_bp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_10sdp"
-            android:text="@string/add_data"
-            android:theme="@style/Generic.RoundButton"
-            app:cornerRadius="@dimen/_20sdp"
-            app:icon="@drawable/ic_add"
-            app:iconGravity="textStart"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+    </RelativeLayout>
 </layout>

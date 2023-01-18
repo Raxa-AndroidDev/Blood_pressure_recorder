@@ -1,9 +1,10 @@
-package com.vboard.bp_recorder_app.ui.blood_pressure.add_bp_record
+package com.vboard.bp_recorder_app.ui.blood_pressure.add_record
 
 import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -12,6 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
@@ -19,35 +23,35 @@ import com.google.android.material.chip.ChipGroup
 import com.vboard.bp_recorder_app.BPValuesModelClass
 import com.vboard.bp_recorder_app.R
 import com.vboard.bp_recorder_app.data.database.db_tables.BloodPressureTable
-import com.vboard.bp_recorder_app.databinding.FragmentAddBPRecordBinding
 import com.vboard.bp_recorder_app.data.viewModels.BPRecordViewModel
-import com.vboard.bp_recorder_app.ui.blood_pressure.BPTypesModelClass
-import com.vboard.bp_recorder_app.ui.blood_pressure.add_bp_record.adapters.BPTypeColorsAdapter
-import com.vboard.bp_recorder_app.ui.blood_pressure.add_bp_record.adapters.BPTypesAdapter
-import com.vboard.bp_recorder_app.utils.Constansts
-import com.vboard.bp_recorder_app.utils.CurrentDate
+import com.vboard.bp_recorder_app.databinding.FragmentAddBPRecordBinding
+import com.vboard.bp_recorder_app.ui.MainActivity
+import com.vboard.bp_recorder_app.ui.blood_pressure.add_record.adapters.BPTypeColorsAdapter
+import com.vboard.bp_recorder_app.ui.blood_pressure.add_record.adapters.BPTypesAdapter
+import com.vboard.bp_recorder_app.ui.blood_pressure.add_record.adapters.ChipAdapter
+import com.vboard.bp_recorder_app.ui.blood_pressure.model_classes.BPTypesModelClass
+import com.vboard.bp_recorder_app.utils.*
 import timber.log.Timber
-import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
-class AddBPRecordFragment : Fragment() {
+class AddBPRecordFragment : Fragment(),ChipListCallBacks {
+
     private lateinit var binding: FragmentAddBPRecordBinding
 
     lateinit var viewModel: BPRecordViewModel
     private lateinit var adapter: BPTypeColorsAdapter
+    var bptypesList: ArrayList<BPTypesModelClass> = arrayListOf()
+    var selectedChipsList:ArrayList<String>  = arrayListOf()
+
+    var bloodPressureTable: BloodPressureTable? = null
+
     private var label: String? = null
     private var bpType: String = Constansts.bp_Normal
     var selectedDate: String? = null
     var selectedTime: String? = null
-    var pasTime:String? = null
+    var completeDate: String? = null
     var width: Int = 0
-
-     var table_id:Int =0
-
-    val bptypesList: ArrayList<BPTypesModelClass> = arrayListOf()
-    var bloodPressureTable:BloodPressureTable? = null
 
 
     override fun onCreateView(
@@ -64,10 +68,8 @@ class AddBPRecordFragment : Fragment() {
 
         val wm: WindowManager =
             requireActivity().getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val display: Display = wm.getDefaultDisplay()
+        val display: Display = wm.defaultDisplay
         width = display.width
-
-
 
         initViews()
 
@@ -75,88 +77,57 @@ class AddBPRecordFragment : Fragment() {
     }
 
     private fun initViews() {
+        handleBottombar()
+
         viewModel = ViewModelProvider(this)[BPRecordViewModel::class.java]
 
+        bloodPressureTable = requireArguments().getParcelable("bloodpressuretable")
+        bptypesList = getBPRangeTypesList(requireContext())
 
-
-         bloodPressureTable = requireArguments().getParcelable<BloodPressureTable>("bloodpressuretable")
-
+        initRecyclerview()
         populateValues()
-
-        bptypesList.add(
-            BPTypesModelClass(
-                R.color.hypotension_bp_color,
-                Constansts.bp_hypotension,
-                getString(R.string.hypo_bp_range),
-                false
-            )
-        )
-        bptypesList.add(
-            BPTypesModelClass(
-                R.color.normal_bp_color,
-                Constansts.bp_Normal,
-                getString(R.string.normal_bp_range), false
-            )
-        )
-        bptypesList.add(
-            BPTypesModelClass(
-                R.color.elevated_bp_color,
-                Constansts.bp_Elevated,
-                getString(R.string.elevated_bp_range), false
-            )
-        )
-        bptypesList.add(
-            BPTypesModelClass(
-                R.color.hyper_stage1_color,
-                Constansts.bp_Hypertension1,
-                getString(R.string.stage1_bp_range), false
-            )
-        )
-        bptypesList.add(
-            BPTypesModelClass(
-                R.color.hyper_stage2_color,
-                Constansts.bp_Hypertension2,
-                getString(R.string.stage2_bp_range), false
-            )
-        )
-        bptypesList.add(
-            BPTypesModelClass(
-                R.color.hyper_crisis_color,
-                Constansts.bp_Crisis,
-                getString(R.string.critical_bp_range), false
-            )
-        )
-
-
-
-
-
-
-        adapter = BPTypeColorsAdapter(requireContext(), width, bptypesList)
-        binding.bpTypeColorsRcv.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.bpTypeColorsRcv.adapter = adapter
-
-
         setNumberPickerValues()
 
-        binding.singleDayPicker.setTimeZone(TimeZone.getDefault())
 
+        clickListeners()
+
+
+    }
+
+    private fun clickListeners() {
         binding.apply {
-
-
-
 
             singleDayPicker.addOnDateChangedListener { displayed, date ->
 
+                val calendar: Calendar = Calendar.getInstance()
+                calendar.time = date
+                selectedTime = getTime(calendar)
 
-                selectedDate =
-                    SimpleDateFormat(Constansts.dateFormate, Locale.getDefault()).format(date)
+                selectedDate = date.toString()
+                completeDate = selectedDate
 
-                selectedTime = SimpleDateFormat("h:mm a", Locale.getDefault()).format(date)
+                Timber.e("displayed time is ${selectedTime} , displayed date is ${date} ")
 
-                Timber.e("displayed date is ${selectedTime} ")
+            }
 
+            binding.btnOk.setOnClickListener {
+
+                if (selectedDate != null && selectedTime != null) {
+                    if (bloodPressureTable != null) {
+                        updateBPRecord()
+                    } else {
+                        storeBPRecord()
+                    }
+
+                    findNavController().popBackStack()
+                }
+                else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Please Fill out All fields.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
 
             }
 
@@ -167,6 +138,11 @@ class AddBPRecordFragment : Fragment() {
             infoAboutBpTypes.setOnClickListener {
                 showBottomSheet()
             }
+
+            tvAddNoteTitle.setOnClickListener {
+                showTagsBottomSheet()
+            }
+
 
             //region chip group code
 
@@ -180,117 +156,151 @@ class AddBPRecordFragment : Fragment() {
 
 
         }
+    }
 
+    private fun showTagsBottomSheet() {
+        val bottomSheet = BottomSheetDialog(requireContext())
+        bottomSheet.setContentView(R.layout.bp_types_bottomsheet)
+
+        val chipsList:ArrayList<String> = getChipsList()
+
+        val flexboxLayoutManager = FlexboxLayoutManager(requireContext())
+        flexboxLayoutManager.flexDirection = FlexDirection.ROW
+        flexboxLayoutManager.justifyContent = JustifyContent.CENTER
+
+        bottomSheet.findViewById<TextView>(R.id.tv_bp_types_bs_title)!!.text = getString(R.string.notes)
+        bottomSheet.findViewById<MaterialButton>(R.id.button_got_it)!!.apply {
+            this.text = getString(R.string.save)
+            this.setTextColor(ContextCompat.getColor(requireContext(),R.color.tab_selected_color))
+            this.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.white)
+
+            this.setOnClickListener {
+                bottomSheet.dismiss()
+            }
+        }
+        bottomSheet.findViewById<ImageView>(R.id.img_cross)!!.setOnClickListener {
+            bottomSheet.dismiss()
+        }
+
+        bottomSheet.findViewById<RecyclerView>(R.id.bp_types_listview)!!.apply {
+
+
+            //this.layoutManager = StaggeredGridLayoutManager(3,LinearLayoutManager.VERTICAL)
+            this.layoutManager = flexboxLayoutManager
+
+            this.adapter = ChipAdapter(requireContext(),chipsList,this@AddBPRecordFragment)
+
+        }
+
+
+
+        bottomSheet.show()
 
     }
 
+    private fun updateBPRecord() {
+
+        label = if (selectedChipsList!=null){
+            java.lang.String.join("# ", selectedChipsList)
+        }else {
+            "#default"
+        }
+        viewModel.UpdateBPRecord(
+            BloodPressureTable(
+                bloodPressureTable!!.id,
+                selectedDate!!.toLong(),
+                selectedTime!!,
+                completeDate!!,
+                binding.systolicNumberpicker.value,
+                binding.diastolicNumberpicker.value,
+                binding.pulseNumberpicker.value,
+                label!!
+            )
+        )
+
+
+        Toast.makeText(requireContext(), "Successfully Updated!", Toast.LENGTH_LONG).show()
+
+    }
+
+    private fun storeBPRecord() {
+        label = if (selectedChipsList!=null){
+            java.lang.String.join("# ", selectedChipsList)
+        }else {
+            "#default"
+        }
+
+
+        viewModel.StoreBPRecordInDB(
+            BloodPressureTable(
+                0,
+                selectedDate!!.toLong(),
+                selectedTime!!,
+                completeDate!!,
+                binding.systolicNumberpicker.value,
+                binding.diastolicNumberpicker.value,
+                binding.pulseNumberpicker.value,
+                label!!
+            )
+        )
+
+        Toast.makeText(requireContext(), "Successfully Added!", Toast.LENGTH_LONG).show()
+
+    }
+
+    private fun initRecyclerview() {
+        adapter = BPTypeColorsAdapter(requireContext(), width, bptypesList)
+        binding.bpTypeColorsRcv.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.bpTypeColorsRcv.adapter = adapter
+    }
+
+
+    private fun handleBottombar() {
+        (activity as MainActivity).binding.bottomNavView.visibility = View.GONE
+    }
+
     private fun populateValues() {
-        if (bloodPressureTable!=null){
+        if (bloodPressureTable != null) {
             // coming from history for editing
+
             binding.systolicNumberpicker.value = bloodPressureTable!!.systolic
             binding.diastolicNumberpicker.value = bloodPressureTable!!.diaSystolic
             binding.pulseNumberpicker.value = bloodPressureTable!!.pulse
+            label = "default"
 
-            selectedDate = bloodPressureTable!!.date
-            selectedTime = bloodPressureTable!!.time
-            pasTime = bloodPressureTable!!.DateAndTime
+            val myCalendar: Calendar = Calendar.getInstance()
+            myCalendar.time = bloodPressureTable!!.fulldate.toDate()
 
+            binding.singleDayPicker.setDefaultDate(bloodPressureTable!!.fulldate.toDate())
+            binding.singleDayPicker.setTimeZone(TimeZone.getDefault())
 
+            completeDate = bloodPressureTable!!.fulldate
+            selectedDate = completeDate
+            selectedTime = getTime(myCalendar)
 
+            Timber.e("current time  is ${selectedTime} ")
+            binding.btnOk.text = getString(R.string.update)
 
-            binding.btnOk.setOnClickListener {
-
-                label = "default"
-
-                if (selectedDate != null && selectedTime != null) {
-
-                    Timber.e("stored time is ${selectedTime} ")
-                    Timber.e("stored date is ${selectedDate} ")
-
-                    viewModel.UpdateBPRecord(
-                        BloodPressureTable(
-                            bloodPressureTable!!.id,
-                            selectedDate!!,
-                            selectedTime!!,
-                            pasTime!!,
-                            binding.systolicNumberpicker.value,
-                            binding.diastolicNumberpicker.value,
-                            binding.pulseNumberpicker.value,
-                            label!!
-                        )
-                    )
-
-                    Toast.makeText(requireContext(), "Successfully Updated!", Toast.LENGTH_LONG)
-                        .show()
-
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "Please Fill out All fields.",
-                        Toast.LENGTH_LONG
-                    )
-                        .show()
-                }
-            }
-
-        }
-        else{
+        } else {
             // coming from main
             binding.systolicNumberpicker.value = 90
             binding.diastolicNumberpicker.value = 65
             binding.pulseNumberpicker.value = 75
+            label = "default"
 
             val myCalendar: Calendar = Calendar.getInstance()
-
             val datecurrent = Date()
-            val dateFormatcurrent = SimpleDateFormat("dd-MM-yyyy hh:mm:ss")
-            pasTime = dateFormatcurrent.format(datecurrent)
 
-            val currentDateTime = System.currentTimeMillis()
-            val simpleDateFormat = SimpleDateFormat("h:mm a", Locale.getDefault())
-            val currentTime = simpleDateFormat.format(currentDateTime)
+            binding.singleDayPicker.setDefaultDate(datecurrent)
+            binding.singleDayPicker.setTimeZone(TimeZone.getDefault())
 
-            selectedDate = CurrentDate(myCalendar)
-            selectedTime = currentTime
+            completeDate = datecurrent.toString()
+            selectedDate = completeDate
+            selectedTime = getTime(myCalendar)
 
-
-
-            binding.btnOk.setOnClickListener {
-
-
-                label = "default"
-
-
-                if (selectedDate != null && selectedTime != null) {
-
-                    Timber.e("stored time is ${selectedTime} ")
-                    Timber.e("stored date is ${selectedDate} ")
-
-                    viewModel.StoreBPRecordInDB(
-                        BloodPressureTable(
-                            0,
-                            selectedDate!!,
-                            selectedTime!!,
-                            pasTime!!,
-                            binding.systolicNumberpicker.value,
-                            binding.diastolicNumberpicker.value,
-                            binding.pulseNumberpicker.value,
-                            label!!
-                        )
-                    )
-
-                    Toast.makeText(requireContext(), "Successfully Added!", Toast.LENGTH_LONG)
-                        .show()
-
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "Please Fill out All fields.",
-                        Toast.LENGTH_LONG
-                    )
-                        .show()
-                }
-            }
+            Timber.e("current time  is ${selectedTime} ")
+            binding.btnOk.text = getString(R.string.save)
 
         }
     }
@@ -388,7 +398,7 @@ class AddBPRecordFragment : Fragment() {
             Timber.e("bptype systolic ${this.systolic}, diastolic ${this.diastolic} , bp type is $bpType")
 
             if (this.systolic < 90 || this.diastolic < 60) {
-                bpType = Constansts.bp_hypotension
+
 
                 isNumberPickersSelected(true)
                 setNumberPickerColor(R.color.hypotension_bp_color)
@@ -420,7 +430,7 @@ class AddBPRecordFragment : Fragment() {
 
 
             } else if (this.systolic in 120..129 && this.diastolic in 60..79) {
-                bpType = Constansts.bp_Elevated
+
 
                 isNumberPickersSelected(true)
                 setNumberPickerColor(R.color.elevated_bp_color)
@@ -435,7 +445,7 @@ class AddBPRecordFragment : Fragment() {
 
 
             } else if (this.systolic in 130..139 || this.diastolic in 80..89) {
-                bpType = Constansts.bp_Hypertension1
+
                 isNumberPickersSelected(true)
                 setNumberPickerColor(R.color.hyper_stage1_color)
                 binding.tvBpRangeDescription.text = getString(R.string.stage1_bp_range)
@@ -448,7 +458,7 @@ class AddBPRecordFragment : Fragment() {
 
 
             } else if (this.systolic in 140..180 || this.diastolic in 90..120) {
-                bpType = Constansts.bp_Hypertension2
+
 
                 isNumberPickersSelected(true)
                 setNumberPickerColor(R.color.hyper_stage2_color)
@@ -463,7 +473,7 @@ class AddBPRecordFragment : Fragment() {
 
 
             } else if (this.systolic > 180 || this.diastolic > 120) {
-                bpType = Constansts.bp_Crisis
+
 
                 isNumberPickersSelected(true)
                 setNumberPickerColor(R.color.hyper_crisis_color)
@@ -474,7 +484,7 @@ class AddBPRecordFragment : Fragment() {
                 }
             }
 
-            binding.tvBpCondition.text = bpType
+            binding.tvBpCondition.text = getBPType(this.systolic, this.diastolic)
 
             adapter.notifyDataSetChanged()
 
@@ -525,6 +535,12 @@ class AddBPRecordFragment : Fragment() {
         } else {
             ""
         }
+
+    }
+
+    override fun onChipSelected(tag: String) {
+
+        selectedChipsList.add(tag)
 
     }
 

@@ -4,6 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
+import com.example.step.database.DateConverter
 import com.vboard.bp_recorder_app.data.Alarm
 import com.vboard.bp_recorder_app.data.database.daos.BPDao
 import com.vboard.bp_recorder_app.data.database.daos.BodyWeightDao
@@ -13,6 +16,7 @@ import com.vboard.bp_recorder_app.data.database.db_tables.BodyWeightTable
 import com.vboard.bp_recorder_app.data.database.db_tables.HeartRateTable
 
 @Database( entities = [BloodPressureTable::class ,HeartRateTable::class,BodyWeightTable::class,Alarm::class], version = 1)
+@TypeConverters(DateConverter::class)
 abstract class DatabaseClass :RoomDatabase() {
 
     abstract fun bpDao() : BPDao

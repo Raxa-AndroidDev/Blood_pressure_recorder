@@ -10,11 +10,11 @@ import kotlinx.parcelize.Parcelize
  data class BloodPressureTable(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val date: String,
+    val date: Long,
     val time: String,
-    val DateAndTime: String,
+    val fulldate: String,
     val systolic: Int,
     val diaSystolic: Int,
     val pulse: Int,
-    val label: String
+    val tag: String
 ):Parcelable

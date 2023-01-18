@@ -3,7 +3,11 @@ package com.vboard.bp_recorder_app.utils
 class Constansts {
 
     companion object{
-        val dateFormate:String = "yy/MMM/dd"
+        val dateFormate:String = "MMM/dd/yy"
+        val timeFormate:String = "hh:mm a"
+        val historyDateFormat = "MMM dd,hh:mm a"
+
+        val completeDateFormat:String = "EEE MMM dd hh:mm:ss 'GMT'Z yyyy"
 
         val bp_hypotension:String = "Hypotension"
         val bp_Normal:String = "Normal"

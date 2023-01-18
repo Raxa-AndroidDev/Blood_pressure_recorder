@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.vboard.bp_recorder_app.data.Alarm
 import com.vboard.bp_recorder_app.data.database.db_tables.BloodPressureTable
+import java.util.*
 
 
 @Dao
@@ -12,6 +13,10 @@ interface BPDao {
     // to store BP data in DB
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun storeBPRecord(bpTable: BloodPressureTable)
+
+
+
+
 
     // to update a specific BP record
     @Update
@@ -23,7 +28,7 @@ interface BPDao {
 
     // to search BP data by using date filter
     @Query("SELECT * FROM BloodPressureTable WHERE date BETWEEN :startDate AND :endDate")
-     fun searchBPRecordByDate(startDate: String?, endDate: String?): LiveData<List<BloodPressureTable>>
+     fun searchBPRecordByDate(startDate: Date, endDate: Date): LiveData<List<BloodPressureTable>>
 
 
 
@@ -32,7 +37,7 @@ interface BPDao {
 
 
     // to search BP data by using tag filter
-    @Query("Select * From BloodPressureTable Where label =:label")
+    @Query("Select * From BloodPressureTable Where tag =:label")
     fun searchBPRecordByTag(label: String): LiveData<List<BloodPressureTable>>
 
     @Query("SELECT * FROM alarm_table ORDER BY alarmId DESC")

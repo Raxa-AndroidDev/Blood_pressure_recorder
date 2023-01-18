@@ -7,4 +7,5 @@ interface ShowBPAdapterCallbacks {
     fun OnEditIconClick(bloodPressureTable: BloodPressureTable)
 
     fun OnItemClick(bloodPressureTable: BloodPressureTable)
+
 }

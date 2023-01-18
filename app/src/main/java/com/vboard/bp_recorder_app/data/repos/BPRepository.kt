@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.vboard.bp_recorder_app.data.Alarm
 import com.vboard.bp_recorder_app.data.database.daos.BPDao
 import com.vboard.bp_recorder_app.data.database.db_tables.BloodPressureTable
+import java.util.Date
 
 class BPRepository(private val bpDao: BPDao) {
 
@@ -21,7 +22,7 @@ class BPRepository(private val bpDao: BPDao) {
 
 
 
-    fun searchBPRecordByDate(startDate:String, endDate:String):LiveData<List<BloodPressureTable>>{
+    fun searchBPRecordByDate(startDate:Date, endDate:Date):LiveData<List<BloodPressureTable>>{
 
         return bpDao.searchBPRecordByDate(startDate,endDate)
     }

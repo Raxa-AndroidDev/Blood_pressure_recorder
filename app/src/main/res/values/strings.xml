@@ -20,6 +20,7 @@
     <string name="add_data">Add Data</string>
     <string name="date_time"><![CDATA[Date & time]]></string>
     <string name="save">Save</string>
+    <string name="update">Update</string>
     <string name="normal">Normal</string>
     <string name="mmhg">mmHg</string>
     <string name="bpm">BPM</string>
@@ -39,5 +40,7 @@
     <string name="weight">Weight</string>
     <string name="height">Height</string>
     <string name="cm">cm</string>
+    <string name="no_records_yet_add_your_first_blood_pressure_record">No Records yet. Add your\n first blood pressure record</string>
+    <string name="notes">Notes</string>
 
 </resources>

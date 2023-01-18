@@ -16,6 +16,7 @@ import com.vboard.bp_recorder_app.utils.TimePickerDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Calendar
+import java.util.Date
 
 class BPRecordViewModel(application: Application):AndroidViewModel(application) {
 
@@ -97,6 +98,10 @@ class BPRecordViewModel(application: Application):AndroidViewModel(application) 
     fun ShowBPRecordFromDB():LiveData<List<BloodPressureTable>>{
 
        return repository.fetchBPRecordFromBP()
+    }
+
+    fun showDateWiseRecord(startDate:Date,endDate:Date):LiveData<List<BloodPressureTable>>{
+        return repository.searchBPRecordByDate(startDate,endDate)
     }
 
     fun DeleteSpecificBPRecord(position:Int){

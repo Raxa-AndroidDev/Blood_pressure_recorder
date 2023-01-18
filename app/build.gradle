@@ -64,6 +64,9 @@ dependencies {
     // for datepicker
     implementation 'com.github.Raxa-AndroidDev:SingleDateAndTimePicker:4ba89acf07'
 
+    // for chips views
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
+
 
     // for bottombar
     implementation 'com.github.UmerSarfrazHazel:SmoothBottomBar:2b0898e8e0'
@@ -75,6 +78,8 @@ dependencies {
     // room databse
     implementation "androidx.room:room-runtime:2.4.2"
     kapt("androidx.room:room-compiler:2.4.2")
+    //for type converters
+    implementation 'com.google.code.gson:gson:2.8.8'
 
     // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"

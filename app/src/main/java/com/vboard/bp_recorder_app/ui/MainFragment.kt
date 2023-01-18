@@ -44,12 +44,7 @@ class MainFragment : Fragment() {
                permissions.entries.forEach {
                   val isGranted = it.value
                    if (isGranted){
-
-
-
                        initListeners()
-
-
                    }
                    else {
                       Toast.makeText(requireContext(),"Storage Permission Required",Toast.LENGTH_LONG).show()
@@ -71,6 +66,7 @@ class MainFragment : Fragment() {
     private fun initListeners() {
         binding.bpLayout.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_BPMainFragment)
+            (activity as MainActivity).binding.bottomNavView.setSelectedItem(2)
         }
 
         binding.heartrateLayout.setOnClickListener {
@@ -85,21 +81,29 @@ class MainFragment : Fragment() {
         }
 
 
-        // will be dealt on monday
-       /* (activity as MainActivity).binding.bottomNavView.setOnItemSelectedListener {
-            Timber.e("ids are ${it}")
-            when(it){
-               0 ->{
-                   findNavController().navigate(Uri.parse("yourapp://BloodPressure/app/main/frag"  ))
+        (activity as MainActivity).binding.bottomNavView.apply {
+
+
+            this.setOnItemSelectedListener {
+                when (it){
+                    0 ->{
+
+                    }
+                    1 ->{
+                        findNavController().navigate(R.id.action_mainFragment_to_infoFragment)
+                    }
+                    2 ->{
+                        findNavController().navigate(R.id.action_mainFragment_to_BPMainFragment)
+
+
+                    }
                 }
-               1->{
-                   findNavController().navigate(Uri.parse(  "BloodPressure_app_info_frag"  ))
-                }
-                2 ->{
-                    findNavController().navigate(Uri.parse(  "yourapp://BloodPressure/app/bp/frag"))
-                }
+
             }
-        }*/
+        }
+
+
+
 
 
     }

@@ -1,4 +1,4 @@
-package com.vboard.bp_recorder_app.ui.blood_pressure.add_bp_record.adapters
+package com.vboard.bp_recorder_app.ui.blood_pressure.add_record.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vboard.bp_recorder_app.R
 import com.vboard.bp_recorder_app.databinding.ItemBptypeColorsLayoutBinding
-import com.vboard.bp_recorder_app.ui.blood_pressure.BPTypesModelClass
+import com.vboard.bp_recorder_app.ui.blood_pressure.model_classes.BPTypesModelClass
 
 
 class BPTypeColorsAdapter(
@@ -17,6 +17,9 @@ class BPTypeColorsAdapter(
     var list: ArrayList<BPTypesModelClass>
 ) :
     RecyclerView.Adapter<BPTypeColorsAdapter.BPColorTypeViewHolder>() {
+
+
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BPColorTypeViewHolder {

@@ -54,7 +54,7 @@ class SettingsFragment : Fragment() {
 
 
             bpList.forEach {
-                val arrStr = arrayOf("${it.id}","${it.label}","${it.systolic}")
+                val arrStr = arrayOf("${it.id}","${it.tag}","${it.systolic}")
                 csvWrite.writeNext(arrStr)
             }
 

@@ -23,6 +23,9 @@
         <deepLink
             android:id="@+id/deepLink"
             app:uri="yourapp://BloodPressure/app/main/frag" />
+        <action
+            android:id="@+id/action_mainFragment_to_infoFragment"
+            app:destination="@id/infoFragment" />
 
     </fragment>
     <fragment
@@ -33,14 +36,18 @@
         <deepLink
             android:id="@+id/deepLink"
             app:uri="BloodPressure_app_info_frag" />
+        <action
+            android:id="@+id/action_infoFragment_to_BPMainFragment"
+            app:destination="@id/BPMainFragment" />
+        <action
+            android:id="@+id/action_infoFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/BPMainFragment"
         android:name="com.vboard.bp_recorder_app.ui.blood_pressure.BPMainFragment"
         android:label="BPMainFragment" >
-        <action
-            android:id="@+id/action_BPMainFragment_to_addBPRecordFragment"
-            app:destination="@id/addBPRecordFragment" />
+
         <action
             android:id="@+id/action_BPMainFragment_to_showBPRecordFragment"
             app:destination="@id/showBPRecordFragment" />
@@ -53,16 +60,29 @@
         <deepLink
             android:id="@+id/deepLink"
             app:uri="yourapp://BloodPressure/app/bp/frag" />
+        <action
+            android:id="@+id/action_BPMainFragment_to_infoFragment"
+            app:destination="@id/infoFragment" />
+        <action
+            android:id="@+id/action_BPMainFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_BPMainFragment_to_addBPRecordFragment"
+            app:destination="@id/addBPRecordFragment" />
     </fragment>
     <fragment
         android:id="@+id/addBPRecordFragment"
-        android:name="com.vboard.bp_recorder_app.ui.blood_pressure.add_bp_record.AddBPRecordFragment"
+        android:name="com.vboard.bp_recorder_app.ui.blood_pressure.add_record.AddBPRecordFragment"
         android:label="fragment_add_b_p_record"
         tools:layout="@layout/fragment_add_b_p_record" />
     <fragment
         android:id="@+id/showBPRecordFragment"
-        android:name="com.vboard.bp_recorder_app.ui.show_history_record.BPHistoryFragment"
-        android:label="ShowBPRecordFragment" />
+        android:name="com.vboard.bp_recorder_app.ui.blood_pressure.history.BPHistoryFragment"
+        android:label="ShowBPRecordFragment" >
+        <action
+            android:id="@+id/action_showBPRecordFragment_to_addBPRecordFragment"
+            app:destination="@id/addBPRecordFragment" />
+    </fragment>
     <fragment
         android:id="@+id/heartRateFragment"
         android:name="com.vboard.bp_recorder_app.ui.heart_rate.HeartRateMainFragment"

@@ -50,8 +50,8 @@
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:scrollbars="none"
             android:layout_marginBottom="@dimen/_10sdp"
+            android:scrollbars="none"
             app:layout_constraintBottom_toTopOf="@+id/btn_ok"
             app:layout_constraintTop_toBottomOf="@+id/top_appbar">
 
@@ -127,6 +127,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
                     android:id="@+id/tv_diastolic_unit"
                     android:layout_width="wrap_content"
@@ -138,6 +139,7 @@
                     app:layout_constraintEnd_toEndOf="@id/tv_diastolic"
                     app:layout_constraintStart_toStartOf="@+id/tv_diastolic"
                     app:layout_constraintTop_toBottomOf="@+id/tv_diastolic" />
+
                 <com.shawnlin.numberpicker.NumberPicker
                     android:id="@+id/diastolic_numberpicker"
                     android:layout_width="wrap_content"
@@ -163,6 +165,7 @@
                     android:theme="@style/Generic.NumberPickerTextTheme"
                     app:layout_constraintEnd_toStartOf="@+id/right_guide"
                     app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
                     android:id="@+id/tv_pulse_unit"
                     android:layout_width="wrap_content"
@@ -174,6 +177,7 @@
                     app:layout_constraintEnd_toEndOf="@id/tv_pulse"
                     app:layout_constraintStart_toStartOf="@+id/tv_pulse"
                     app:layout_constraintTop_toBottomOf="@+id/tv_systolic" />
+
                 <com.shawnlin.numberpicker.NumberPicker
                     android:id="@+id/pulse_numberpicker"
                     android:layout_width="wrap_content"
@@ -187,7 +191,6 @@
                     app:np_selectedTextColor="@color/tab_selected_color"
                     app:np_selectedTextSize="@dimen/_28ssp"
                     app:np_wrapSelectorWheel="false" />
-
 
 
                 <!--textview for bp condition-->
@@ -293,8 +296,8 @@
                     android:id="@+id/tv_add_note_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-
+                    android:clickable="true"
+                    android:focusable="true"
                     android:fontFamily="@font/productsans_regular"
                     android:text="@string/note"
                     android:textSize="@dimen/_16ssp"
@@ -309,8 +312,8 @@
                     android:id="@+id/single_day_picker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginStart="-25dp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@id/left_guide"
                     app:layout_constraintTop_toBottomOf="@+id/tv_datetime_title"

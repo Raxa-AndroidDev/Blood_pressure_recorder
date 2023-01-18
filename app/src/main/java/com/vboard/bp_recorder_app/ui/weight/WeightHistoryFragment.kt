@@ -71,8 +71,8 @@ class WeightHistoryFragment : Fragment(), WeightAdapterCallbacks {
         }
 
 
-        mindate = CurrentDate(calendarInstance)
-        maxdate = CurrentDate(calendarInstance)
+        mindate = getCurrentDate(calendarInstance)
+        maxdate = getCurrentDate(calendarInstance)
 
 
 
@@ -168,7 +168,7 @@ maxdate = CurrentDate(maxCalendarInstance)
         val bundle = Bundle()
         bundle.putParcelable("weighttable", weightTable)
 
-        findNavController().navigate(R.id.action_BPMainFragment_to_addBPRecordFragment,bundle)
+        findNavController().navigate(R.id.action_showBPRecordFragment_to_addBPRecordFragment,bundle)
        // updateBPDialogue(bloodPressureTable)
         //showBPRecordViewModel.DeleteSpecificBPRecord((position + 1))
     }

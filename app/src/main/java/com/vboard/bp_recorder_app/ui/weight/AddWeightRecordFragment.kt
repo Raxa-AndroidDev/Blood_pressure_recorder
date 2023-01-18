@@ -21,11 +21,12 @@ import com.vboard.bp_recorder_app.R
 import com.vboard.bp_recorder_app.data.viewModels.WeightViewModel
 import com.vboard.bp_recorder_app.data.database.db_tables.BodyWeightTable
 import com.vboard.bp_recorder_app.databinding.FragmentAddWeightRecordBinding
-import com.vboard.bp_recorder_app.ui.blood_pressure.BPTypesModelClass
-import com.vboard.bp_recorder_app.ui.blood_pressure.add_bp_record.adapters.BPTypeColorsAdapter
-import com.vboard.bp_recorder_app.ui.blood_pressure.add_bp_record.adapters.BPTypesAdapter
+import com.vboard.bp_recorder_app.ui.blood_pressure.model_classes.BPTypesModelClass
+import com.vboard.bp_recorder_app.ui.blood_pressure.add_record.adapters.BPTypeColorsAdapter
+import com.vboard.bp_recorder_app.ui.blood_pressure.add_record.adapters.BPTypesAdapter
 import com.vboard.bp_recorder_app.utils.Constansts
-import com.vboard.bp_recorder_app.utils.CurrentDate
+import com.vboard.bp_recorder_app.utils.getCurrentDate
+import com.vboard.bp_recorder_app.utils.getBPRangeTypesList
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
@@ -45,7 +46,7 @@ class AddWeightRecordFragment : Fragment() {
 
     var table_id: Int = 0
 
-    val bptypesList: ArrayList<BPTypesModelClass> = arrayListOf()
+    var bptypesList: ArrayList<BPTypesModelClass> = arrayListOf()
     var weightTable: BodyWeightTable? = null
 
     override fun onCreateView(
@@ -79,59 +80,15 @@ class AddWeightRecordFragment : Fragment() {
 
         weightTable =
             requireArguments().getParcelable<BodyWeightTable>("weighttable")
-
+bptypesList = getBPRangeTypesList(requireContext())
         populateValues()
 
-        bptypesList.add(
-            BPTypesModelClass(
-                R.color.hypotension_bp_color,
-                Constansts.bp_hypotension,
-                getString(R.string.hypo_bp_range),
-                false
-            )
-        )
-        bptypesList.add(
-            BPTypesModelClass(
-                R.color.normal_bp_color,
-                Constansts.bp_Normal,
-                getString(R.string.normal_bp_range), false
-            )
-        )
-        bptypesList.add(
-            BPTypesModelClass(
-                R.color.elevated_bp_color,
-                Constansts.bp_Elevated,
-                getString(R.string.elevated_bp_range), false
-            )
-        )
-        bptypesList.add(
-            BPTypesModelClass(
-                R.color.hyper_stage1_color,
-                Constansts.bp_Hypertension1,
-                getString(R.string.stage1_bp_range), false
-            )
-        )
-        bptypesList.add(
-            BPTypesModelClass(
-                R.color.hyper_stage2_color,
-                Constansts.bp_Hypertension2,
-                getString(R.string.stage2_bp_range), false
-            )
-        )
-        bptypesList.add(
-            BPTypesModelClass(
-                R.color.hyper_crisis_color,
-                Constansts.bp_Crisis,
-                getString(R.string.critical_bp_range), false
-            )
-        )
 
 
 
 
 
-
-        adapter = BPTypeColorsAdapter(requireContext(), width, bptypesList)
+        adapter = BPTypeColorsAdapter(requireContext(), width,bptypesList)
         binding.bpTypeColorsRcv.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.bpTypeColorsRcv.adapter = adapter
@@ -246,7 +203,7 @@ class AddWeightRecordFragment : Fragment() {
             val simpleDateFormat = SimpleDateFormat("h:mm a", Locale.getDefault())
             val currentTime = simpleDateFormat.format(currentDateTime)
 
-            selectedDate = CurrentDate(myCalendar)
+            selectedDate = getCurrentDate(myCalendar)
             selectedTime = currentTime
 
 

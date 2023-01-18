@@ -1,17 +1,9 @@
 package com.vboard.bp_recorder_app.ui.weight
 
-import android.app.AlertDialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.widget.AppCompatButton
-import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -19,15 +11,10 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.tabs.TabLayoutMediator
 import com.vboard.bp_recorder_app.R
-import com.vboard.bp_recorder_app.ui.blood_pressure.add_bp_record.adapters.ViewPagerAdapter
-import com.vboard.bp_recorder_app.data.database.db_tables.BloodPressureTable
-import com.vboard.bp_recorder_app.data.viewModels.BPRecordViewModel
 import com.vboard.bp_recorder_app.data.viewModels.WeightViewModel
-import com.vboard.bp_recorder_app.databinding.FragmentBPMainBinding
 import com.vboard.bp_recorder_app.databinding.FragmentWeightMainBinding
 import com.vboard.bp_recorder_app.ui.weight.adapters.WeightViewPagerAdapter
-import com.vboard.bp_recorder_app.utils.CurrentDate
-import com.vboard.bp_recorder_app.utils.dateAndTime
+
 import java.util.*
 
 class WeightMainFragment : Fragment() {
