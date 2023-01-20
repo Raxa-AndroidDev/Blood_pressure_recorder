@@ -23,6 +23,16 @@
     <color name="hyper_crisis_color">#f04040</color>
 
 
+    <color name="very_severly_uw">#B07EFF</color>
+    <color name="severly_uw">#4B00C4</color>
+    <color name="underweight">#5591ff</color>
+    <color name="normalweight">#16a1a6</color>
+    <color name="overweight">#ffe200</color>
+    <color name="obesestage1">#ffb200</color>
+    <color name="obesestage2">#ff824c</color>
+    <color name="obesestage3">#f04040</color>
+
+
 
 
 

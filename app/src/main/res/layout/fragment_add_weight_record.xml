@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="viewmodel"
-            type="com.vboard.bp_recorder_app.data.viewModels.BPRecordViewModel" />
+            type="com.vboard.bp_recorder_app.data.viewModels.WeightViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        tools:context=".ui.weight.AddWeightRecordFragment">
+        android:background="@color/white">
 
 
         <RelativeLayout
@@ -52,8 +50,8 @@
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:scrollbars="none"
             android:layout_marginBottom="@dimen/_10sdp"
+            android:scrollbars="none"
             app:layout_constraintBottom_toTopOf="@+id/btn_ok"
             app:layout_constraintTop_toBottomOf="@+id/top_appbar">
 
@@ -82,27 +80,27 @@
 
                 <!--systolic number pickers layout-->
                 <TextView
-                    android:id="@+id/tv_weight"
+                    android:id="@+id/tv_weight_np"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/weight"
+                    android:text="Weight"
                     android:textSize="@dimen/_17ssp"
                     android:theme="@style/Generic.NumberPickerTextTheme"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_height"
                     app:layout_constraintStart_toStartOf="@id/left_guide"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_height_np"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_weight_unit"
+                    android:id="@+id/tv_systolic_unit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="@string/kg"
+                    android:text="Kg"
                     android:textColor="#85000000"
                     android:textSize="@dimen/_10ssp"
-                    app:layout_constraintEnd_toEndOf="@id/tv_weight"
-                    app:layout_constraintStart_toStartOf="@+id/tv_weight"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_weight" />
+                    app:layout_constraintEnd_toEndOf="@id/tv_weight_np"
+                    app:layout_constraintStart_toStartOf="@+id/tv_weight_np"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_weight_np" />
 
                 <com.shawnlin.numberpicker.NumberPicker
                     android:id="@+id/weight_numberpicker"
@@ -110,8 +108,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:descendantFocusability="blocksDescendants"
-                    app:layout_constraintStart_toStartOf="@+id/tv_weight"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_weight_unit"
+                    app:layout_constraintStart_toStartOf="@+id/tv_weight_np"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_systolic_unit"
                     app:np_dividerThickness="@dimen/_1sdp"
                     app:np_order="ascending"
                     app:np_selectedTextColor="@color/tab_selected_color"
@@ -119,31 +117,30 @@
                     app:np_wrapSelectorWheel="false" />
 
 
-
-
-
-                <!--pulse number pickers layout-->
+                <!--Diastolic number pickers layout-->
                 <TextView
-                    android:id="@+id/tv_height"
+                    android:id="@+id/tv_height_np"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/height"
                     android:textSize="@dimen/_17ssp"
                     android:theme="@style/Generic.NumberPickerTextTheme"
-                    app:layout_constraintStart_toEndOf="@+id/tv_weight"
-                    app:layout_constraintEnd_toStartOf="@+id/right_guide"
+                    app:layout_constraintEnd_toEndOf="@id/right_guide"
+                    app:layout_constraintStart_toEndOf="@+id/tv_weight_np"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
                     android:id="@+id/tv_height_unit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="@string/cm"
+                    android:text="m"
                     android:textColor="#85000000"
                     android:textSize="@dimen/_10ssp"
-                    app:layout_constraintEnd_toEndOf="@id/tv_height"
-                    app:layout_constraintStart_toStartOf="@+id/tv_height"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_weight" />
+                    app:layout_constraintEnd_toEndOf="@id/tv_height_np"
+                    app:layout_constraintStart_toStartOf="@+id/tv_height_np"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_height_np" />
 
                 <com.shawnlin.numberpicker.NumberPicker
                     android:id="@+id/height_numberpicker"
@@ -151,7 +148,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:descendantFocusability="blocksDescendants"
-                    app:layout_constraintEnd_toEndOf="@+id/tv_height"
+                    app:layout_constraintStart_toStartOf="@+id/tv_height_np"
                     app:layout_constraintTop_toBottomOf="@+id/tv_height_unit"
                     app:np_dividerThickness="@dimen/_1sdp"
                     app:np_order="ascending"
@@ -161,9 +158,11 @@
 
 
 
+
+
                 <!--textview for bp condition-->
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/bp_condition_layout"
+                    android:id="@+id/weight_condition_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/_5sdp"
@@ -180,13 +179,13 @@
                         android:layout_height="wrap_content"
 
                         android:src="@drawable/bp_type_heart_icon"
-                        app:layout_constraintBottom_toBottomOf="@+id/tv_bp_condition"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_weight_condition"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tv_bp_condition" />
+                        app:layout_constraintTop_toTopOf="@+id/tv_weight_condition" />
 
 
                     <TextView
-                        android:id="@+id/tv_bp_condition"
+                        android:id="@+id/tv_weight_condition"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -199,7 +198,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/tv_bp_range_description"
+                        android:id="@+id/tv_weight_range_description"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
@@ -207,29 +206,29 @@
                         android:textSize="@dimen/_11ssp"
                         app:layout_constraintStart_toStartOf="@+id/img_heart_icon"
 
-                        app:layout_constraintTop_toBottomOf="@+id/tv_bp_condition" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_weight_condition" />
 
 
                     <ImageView
-                        android:id="@+id/info_about_bp_types"
+                        android:id="@+id/info_about_weight_types"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/icon_question_mark"
-                        app:layout_constraintBottom_toBottomOf="@+id/tv_bp_condition"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_weight_condition"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tv_bp_condition" />
+                        app:layout_constraintTop_toTopOf="@+id/tv_weight_condition" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/bp_type_colors_rcv"
+                    android:id="@+id/weight_type_colors_rcv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/bp_condition_layout" />
+                    app:layout_constraintTop_toBottomOf="@+id/weight_condition_layout" />
 
                 <!--textview for bp type-->
                 <TextView
@@ -243,7 +242,7 @@
                     android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="@id/right_guide"
                     app:layout_constraintStart_toStartOf="@id/left_guide"
-                    app:layout_constraintTop_toBottomOf="@+id/bp_type_colors_rcv" />
+                    app:layout_constraintTop_toBottomOf="@+id/weight_type_colors_rcv" />
 
 
                 <!--Date and Time title-->
@@ -264,8 +263,8 @@
                     android:id="@+id/tv_add_note_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-
+                    android:clickable="true"
+                    android:focusable="true"
                     android:fontFamily="@font/productsans_regular"
                     android:text="@string/note"
                     android:textSize="@dimen/_16ssp"
@@ -280,8 +279,8 @@
                     android:id="@+id/single_day_picker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginStart="-25dp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@id/left_guide"
                     app:layout_constraintTop_toBottomOf="@+id/tv_datetime_title"

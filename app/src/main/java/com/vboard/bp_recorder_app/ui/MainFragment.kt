@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -34,6 +35,20 @@ class MainFragment : Fragment() {
 
         askPermission()
 
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Timber.e("main frag  resumed ")
+        (activity as MainActivity).binding.bottomNavView.apply {
+            Timber.e("bar visibility on resume is ${this.visibility}")
+            if ((this.visibility == View.GONE)) {
+
+                this.visibility = View.VISIBLE
+
+            }
+        }
 
     }
 
@@ -80,9 +95,11 @@ class MainFragment : Fragment() {
             findNavController().navigate(R.id.action_mainFragment_to_weightMainFragment)
         }
 
-
         (activity as MainActivity).binding.bottomNavView.apply {
-
+            Timber.e("bar visibility is ${this.visibility}")
+            if ((this.visibility == View.GONE)) {
+                this.visibility = View.VISIBLE
+            }
 
             this.setOnItemSelectedListener {
                 when (it){

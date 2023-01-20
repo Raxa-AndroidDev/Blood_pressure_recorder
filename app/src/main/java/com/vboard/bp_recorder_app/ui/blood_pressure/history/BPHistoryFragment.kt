@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -41,21 +40,11 @@ class BPHistoryFragment : Fragment(), ShowBPAdapterCallbacks {
     private lateinit var showBPRecordViewModel: BPRecordViewModel
     private lateinit var adapter: BPHistoryAdapter
 
-
     private var minCalendarInstance = Calendar.getInstance()
     private var maxCalendarInstance = Calendar.getInstance()
 
-    lateinit var mindate: String
-    lateinit var maxdate: String
-
-
-    val myCalendar: Calendar = Calendar.getInstance()
-    var sDate: String? = null
-    var sTime: String? = null
-    var sSYS: Int = 0
-    var sDIA: Int = 0
-    var sPUL: Int = 0
     var label: String = "testable"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -69,27 +58,29 @@ class BPHistoryFragment : Fragment(), ShowBPAdapterCallbacks {
 
 
 
-
-
         init()
 
 
 
         binding.imgPreviousDate.setOnClickListener {
 
+            binding.tvStartDate.text = getPreviousDayDate(minCalendarInstance)
 
-
-            binding.tvStartDate.text =  getPreviousDayDate(minCalendarInstance)
-
-            dateWiseSearchView((getCurrentDate(minCalendarInstance)),(getCurrentDate(maxCalendarInstance)))
+            dateWiseSearchView(
+                (getDateToStore(minCalendarInstance)),
+                (getDateToStore(maxCalendarInstance))
+            )
 
         }
 
         binding.imgNextDate.setOnClickListener {
 
-            binding.tvEndDate.text =  getNextDayDate(maxCalendarInstance)
+            binding.tvEndDate.text = getNextDayDate(maxCalendarInstance)
 
-            dateWiseSearchView((getCurrentDate(minCalendarInstance)),(getCurrentDate(maxCalendarInstance)))
+            dateWiseSearchView(
+                (getDateToStore(minCalendarInstance)),
+                (getDateToStore(maxCalendarInstance))
+            )
 
         }
 
@@ -106,7 +97,7 @@ class BPHistoryFragment : Fragment(), ShowBPAdapterCallbacks {
         binding.tvViewall.setOnClickListener {
 
             adapter.type = "detail"
-           adapter.notifyDataSetChanged()
+            adapter.notifyDataSetChanged()
             binding.buttonAddBp.visibility = View.GONE
             binding.chartLayout.visibility = View.GONE
             binding.dateWiseSearchLayout.visibility = View.GONE
@@ -119,14 +110,12 @@ class BPHistoryFragment : Fragment(), ShowBPAdapterCallbacks {
             constraintSet.connect(
                 binding.rcvBloodPressure.id,
                 ConstraintSet.TOP,
-               binding.parentLayout.id,
+                binding.parentLayout.id,
                 ConstraintSet.TOP,
                 0
             )
             constraintSet.applyTo(binding.parentLayout)
         }
-
-
 
 
     }
@@ -144,103 +133,78 @@ class BPHistoryFragment : Fragment(), ShowBPAdapterCallbacks {
         showBPRecordViewModel = ViewModelProvider(this)[BPRecordViewModel::class.java]
 
         initRecyclerview()
-        binding.tvEndDate.text = getWeekEndDateForTextview(Calendar.getInstance())
-        binding.tvStartDate.text = getWeekStartDateForTextview(Calendar.getInstance())
+        binding.tvEndDate.text = getWeekEndDate(Calendar.getInstance())
+        binding.tvStartDate.text = getWeekStartDate(Calendar.getInstance())
 
         minCalendarInstance.time = (getWeekStartDate(Calendar.getInstance())).toDate()
         maxCalendarInstance.time = (getWeekEndDate(Calendar.getInstance())).toDate()
 
 
 
-        val startDate = getWeekStartDate(Calendar.getInstance())
-        val endDate = getWeekEndDate(Calendar.getInstance())
-        dateWiseSearchView(startDate,endDate)
+        dateWiseSearchView(getDateToStore(minCalendarInstance), getDateToStore(maxCalendarInstance))
 
 
 
-
-
-//        mindate = getCurrentDate(calendarInstance)
-//        maxdate = getCurrentDate(calendarInstance)
-
-
-        /* binding.imgNextDate.setOnClickListener {
- mindate = CurrentDate(minCalendarInstance)
-             binding.tvDateSearch.text =
-                 "${mindate} - ${getNextDayDate(maxCalendarInstance)}"
-         }
-         binding.imgPreviousDate.setOnClickListener {
- maxdate = CurrentDate(maxCalendarInstance)
-
-             binding.tvDateSearch.text =
-                 "${getPreviousDayDate(minCalendarInstance)} - ${maxdate}"
-
-
-         }
-
-
-         binding.btnSearch.setOnClickListener {
-
-             Log.e("testing", "init: min date ${mindate}", )
-             Log.e("testing", "init: max date ${maxdate}", )
-
-             DatabaseClass.getDBInstance(requireContext()).bpDao()
-                 .searchBPRecordByDate(mindate, maxdate).observe(viewLifecycleOwner){
-
-                     if (it.isNotEmpty()){
-
-                         it.forEach {
-                             Log.e("testing", "init:  ${it.date}", )
-                         }
-
-                         Log.e("testing", "init:  ${it.size}", )
-
-                     }else{
-                         Log.e("testing", "init:  empty list", )
-                     }
-
-
-
-
-                 }
-         }
-
-
-
-         binding.searchView.setOnClickListener {
-
-
-             val builder = MaterialDatePicker.Builder.dateRangePicker()
-             builder.setTheme(R.style.CustomThemeOverlay_MaterialCalendar_Fullscreen)
-
-
-             builder.setSelection(
-                 androidx.core.util.Pair(
-                     calendarInstance.timeInMillis,
-                     calendarInstance.timeInMillis
-                 )
-             )
-
-             val picker = builder.build()
-             picker.show(activity?.supportFragmentManager!!, picker.toString())
-
-             picker.addOnNegativeButtonClickListener { picker.dismiss() }
-             picker.addOnPositiveButtonClickListener {
-                 val minimumdate = Date(it.first)
-                 val maximumdate = Date(it.second)
-                 minCalendarInstance = DateToCalendar(minimumdate)!!
-                 maxCalendarInstance = DateToCalendar(maximumdate)!!
-                 mindate = CurrentDate(minCalendarInstance)
-                 maxdate = CurrentDate(maxCalendarInstance)
-
-
-                 Log.e("TAG", "init: first is ${it.first},second is ${it.second}")
-                 binding.tvDateSearch.text =
-                     "${DateLongtoString(it.first)} - ${DateLongtoString(it.second)}"
-
-
-             }
-         }*/
+//        binding.btnSearch.setOnClickListener {
+//
+//            Log.e("testing", "init: min date ${mindate}")
+//            Log.e("testing", "init: max date ${maxdate}")
+//
+//            DatabaseClass.getDBInstance(requireContext()).bpDao()
+//                .searchBPRecordByDate(mindate, maxdate).observe(viewLifecycleOwner) {
+//
+//                    if (it.isNotEmpty()) {
+//
+//                        it.forEach {
+//                            Log.e("testing", "init:  ${it.date}")
+//                        }
+//
+//                        Log.e("testing", "init:  ${it.size}")
+//
+//                    } else {
+//                        Log.e("testing", "init:  empty list")
+//                    }
+//
+//
+//                }
+//        }
+//
+//
+//
+//        binding.searchView.setOnClickListener {
+//
+//
+//            val builder = MaterialDatePicker.Builder.dateRangePicker()
+//            builder.setTheme(R.style.CustomThemeOverlay_MaterialCalendar_Fullscreen)
+//
+//
+//            builder.setSelection(
+//                androidx.core.util.Pair(
+//                    calendarInstance.timeInMillis,
+//                    calendarInstance.timeInMillis
+//                )
+//            )
+//
+//            val picker = builder.build()
+//            picker.show(activity?.supportFragmentManager!!, picker.toString())
+//
+//            picker.addOnNegativeButtonClickListener { picker.dismiss() }
+//            picker.addOnPositiveButtonClickListener {
+//                val minimumdate = Date(it.first)
+//                val maximumdate = Date(it.second)
+//                minCalendarInstance = DateToCalendar(minimumdate)!!
+//                maxCalendarInstance = DateToCalendar(maximumdate)!!
+//                mindate = CurrentDate(minCalendarInstance)
+//                maxdate = CurrentDate(maxCalendarInstance)
+//
+//
+//                Log.e("TAG", "init: first is ${it.first},second is ${it.second}")
+//                binding.tvDateSearch.text =
+//                    "${DateLongtoString(it.first)} - ${DateLongtoString(it.second)}"
+//
+//
+//            }
+//        }
 
     }
 
@@ -279,7 +243,10 @@ class BPHistoryFragment : Fragment(), ShowBPAdapterCallbacks {
             }
     }
 
-    private fun dateWiseSearchView(startDate:String,endDate:String) {
+    private fun dateWiseSearchView(startDate: String, endDate: String) {
+
+
+
 
         showBPRecordViewModel.showDateWiseRecord(
             startDate.toDate(),
@@ -291,9 +258,6 @@ class BPHistoryFragment : Fragment(), ShowBPAdapterCallbacks {
         }
 
 
-
-
-
     }
 
 
@@ -302,11 +266,6 @@ class BPHistoryFragment : Fragment(), ShowBPAdapterCallbacks {
         binding.rcvBloodPressure.layoutManager = LinearLayoutManager(requireContext())
         binding.rcvBloodPressure.adapter = adapter
 
-        /* showBPRecordViewModel.ShowBPRecordFromDB().observe(requireActivity()) {
-             adapter.bloodPressureRecordList = ArrayList(it)
-
-
-         }*/
 
         drawGraph()
     }
@@ -408,247 +367,247 @@ class BPHistoryFragment : Fragment(), ShowBPAdapterCallbacks {
     }
 
 
-    /* private fun updateBPDialogue(data: BloodPressureTable) {
-         val view = LayoutInflater.from(requireContext())
-             .inflate(R.layout.fragment_add_b_p_record, null)
-         val builder = AlertDialog.Builder(requireContext())
-             .setView(view)
-             .show()
-         builder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    /*private fun updateBPDialogue(data: BloodPressureTable) {
+        val view = LayoutInflater.from(requireContext())
+            .inflate(R.layout.fragment_add_b_p_record, null)
+        val builder = AlertDialog.Builder(requireContext())
+            .setView(view)
+            .show()
+        builder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
 
-         val tv_operation: TextView = view.findViewById(R.id.tv_Operation_name)
-         val btnDate: TextView = view.findViewById(R.id.btn_datePick)
-         val btnTime: TextView = view.findViewById(R.id.btn_timePicker)
-         val tv_instructions: TextView = view.findViewById(R.id.tv_instructions)
+        val tv_operation: TextView = view.findViewById(R.id.tv_Operation_name)
+        val btnDate: TextView = view.findViewById(R.id.btn_datePick)
+        val btnTime: TextView = view.findViewById(R.id.btn_timePicker)
+        val tv_instructions: TextView = view.findViewById(R.id.tv_instructions)
 
-         val sysNumberPicker: com.shawnlin.numberpicker.NumberPicker =
-             view.findViewById(R.id.systolic_numberpicker)
-         val diaNumberPicker: com.shawnlin.numberpicker.NumberPicker =
-             view.findViewById(R.id.diastolic_numberpicker)
-         val pulNumberPicker: com.shawnlin.numberpicker.NumberPicker =
-             view.findViewById(R.id.pulse_numberpicker)
+        val sysNumberPicker: com.shawnlin.numberpicker.NumberPicker =
+            view.findViewById(R.id.systolic_numberpicker)
+        val diaNumberPicker: com.shawnlin.numberpicker.NumberPicker =
+            view.findViewById(R.id.diastolic_numberpicker)
+        val pulNumberPicker: com.shawnlin.numberpicker.NumberPicker =
+            view.findViewById(R.id.pulse_numberpicker)
 
-         val btnCancel: AppCompatButton = view.findViewById(R.id.btn_cancel)
-         val btnYes: AppCompatButton = view.findViewById(R.id.btn_ok)
+        val btnCancel: AppCompatButton = view.findViewById(R.id.btn_cancel)
+        val btnYes: AppCompatButton = view.findViewById(R.id.btn_ok)
 
-         val chipGroup: ChipGroup = view.findViewById(R.id.chip_group)
-
-
-         val strs = data.label.split(",").toTypedArray()
-
-         for (i in strs.indices) {
-
-         }
+        val chipGroup: ChipGroup = view.findViewById(R.id.chip_group)
 
 
-         for (a in strs.indices) {
-             var chip: Chip
-             var text = strs[a].toLowerCase()
+        val strs = data.label.split(",").toTypedArray()
 
-             for (i in 0 until chipGroup.childCount) {
+        for (i in strs.indices) {
 
-                 chip = chipGroup.getChildAt(i) as Chip
-                 val chiptext = chip.text.toString().toLowerCase()
-                 if (chiptext == text) {
-
-                     chip.isChecked = true
-                 }
-             }
-
-         }
+        }
 
 
+        for (a in strs.indices) {
+            var chip: Chip
+            var text = strs[a].toLowerCase()
 
-         tv_operation.text = "Modify"
-         btnYes.text = "Update"
+            for (i in 0 until chipGroup.childCount) {
 
+                chip = chipGroup.getChildAt(i) as Chip
+                val chiptext = chip.text.toString().toLowerCase()
+                if (chiptext == text) {
 
-         btnDate.text = data.date
-         btnTime.text = data.time
+                    chip.isChecked = true
+                }
+            }
+
+        }
 
 
 
-
-         sysNumberPicker.maxValue = 250
-         sysNumberPicker.minValue = 1
-
-         if (data.systolic.toInt() in 0..89) {
-             tv_instructions.text =
-                 "Your blood pressure seems a little low.If the situation continues, do not hesitate to consult your doctor."
-         }
-         if (data.systolic.toInt() in 90..119) {
-             tv_instructions.text =
-                 "Your blood pressure is in good condition. Try to keep it the same way!"
-         }
-         if (data.systolic.toInt() in 120..129) {
-             tv_instructions.text =
-                 "Your blood pressure is a little above normal.We recommend that you adopt a healthier lifestyle and measure your blood pressure more frequently."
-         }
-         if (data.systolic.toInt() in 130..139) {
-             tv_instructions.text =
-                 "If you have 3 or more measurements in this area, it is time to consult your doctor to improve your lifestyle."
-         }
-         if (data.systolic.toInt() in 140..179) {
-             tv_instructions.text =
-                 "If you have 3 or more measurements in this area, you should take care of yourself with medical treatment and lifestyle changes."
-         }
-         if (data.systolic.toInt() in 180..250) {
-             tv_instructions.text =
-                 "We're worried about you.Call an emergency medical service immediately!"
-
-         }
+        tv_operation.text = "Modify"
+        btnYes.text = "Update"
 
 
-
-         diaNumberPicker.maxValue = 250
-         diaNumberPicker.minValue = 1
-         pulNumberPicker.maxValue = 200
-         pulNumberPicker.minValue = 1
-
-         sysNumberPicker.value = data.systolic.toInt()
-         diaNumberPicker.value = data.diaSystolic.toInt()
-         pulNumberPicker.value = data.pulse.toInt()
+        btnDate.text = data.date
+        btnTime.text = data.time
 
 
 
 
-         btnCancel.setOnClickListener {
-             builder.dismiss()
-         }
+        sysNumberPicker.maxValue = 250
+        sysNumberPicker.minValue = 1
+
+        if (data.systolic.toInt() in 0..89) {
+            tv_instructions.text =
+                "Your blood pressure seems a little low.If the situation continues, do not hesitate to consult your doctor."
+        }
+        if (data.systolic.toInt() in 90..119) {
+            tv_instructions.text =
+                "Your blood pressure is in good condition. Try to keep it the same way!"
+        }
+        if (data.systolic.toInt() in 120..129) {
+            tv_instructions.text =
+                "Your blood pressure is a little above normal.We recommend that you adopt a healthier lifestyle and measure your blood pressure more frequently."
+        }
+        if (data.systolic.toInt() in 130..139) {
+            tv_instructions.text =
+                "If you have 3 or more measurements in this area, it is time to consult your doctor to improve your lifestyle."
+        }
+        if (data.systolic.toInt() in 140..179) {
+            tv_instructions.text =
+                "If you have 3 or more measurements in this area, you should take care of yourself with medical treatment and lifestyle changes."
+        }
+        if (data.systolic.toInt() in 180..250) {
+            tv_instructions.text =
+                "We're worried about you.Call an emergency medical service immediately!"
+
+        }
 
 
-         val date = DatePickerDialog.OnDateSetListener { view, year, month, day ->
-             myCalendar[Calendar.YEAR] = year
-             myCalendar[Calendar.MONTH] = month
-             myCalendar[Calendar.DAY_OF_MONTH] = day
-             val myFormat = "MM/dd/yy"
-             val dateFormat = SimpleDateFormat(myFormat, Locale.US)
-             btnDate.text = dateFormat.format(myCalendar.time)
-             sDate = dateFormat.format(myCalendar.time)
-         }
 
-         btnDate.setOnClickListener {
-             DatePickerDialog(
-                 requireContext(),
-                 date,
-                 myCalendar[Calendar.YEAR],
-                 myCalendar[Calendar.MONTH],
-                 myCalendar[Calendar.DAY_OF_MONTH]
-             ).show()
-         }
+        diaNumberPicker.maxValue = 250
+        diaNumberPicker.minValue = 1
+        pulNumberPicker.maxValue = 200
+        pulNumberPicker.minValue = 1
+
+        sysNumberPicker.value = data.systolic.toInt()
+        diaNumberPicker.value = data.diaSystolic.toInt()
+        pulNumberPicker.value = data.pulse.toInt()
 
 
 
-         btnTime.setOnClickListener {
-             val mTimePicker: TimePickerDialog
-             val mcurrentTime = Calendar.getInstance()
-             val hour = mcurrentTime.get(Calendar.HOUR_OF_DAY)
-             val minute = mcurrentTime.get(Calendar.MINUTE)
 
-             mTimePicker =
-                 TimePickerDialog(
-                     requireContext(),
-                     { view, hourOfDay, minute ->
-                         btnTime.setText(String.format("%d : %d", hourOfDay, minute))
-                         sTime = getTime(hourOfDay, minute)
-                         btnTime.text = getTime(hourOfDay, minute);
-                     }, hour, minute, false
-                 )
-             mTimePicker.show()
-         }
+        btnCancel.setOnClickListener {
+            builder.dismiss()
+        }
 
 
-         sysNumberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
-             sSYS = newVal
-             if (newVal in 0..89) {
-                 tv_instructions.text =
-                     "Your blood pressure seems a little low.If the situation continues, do not hesitate to consult your doctor."
-             }
-             if (newVal in 90..119) {
-                 tv_instructions.text =
-                     "Your blood pressure is in good condition. Try to keep it the same way!"
-             }
-             if (newVal in 120..129) {
-                 tv_instructions.text =
-                     "Your blood pressure is a little above normal.We recommend that you adopt a healthier lifestyle and measure your blood pressure more frequently."
-             }
-             if (newVal in 130..139) {
-                 tv_instructions.text =
-                     "If you have 3 or more measurements in this area, it is time to consult your doctor to improve your lifestyle."
-             }
-             if (newVal in 140..179) {
-                 tv_instructions.text =
-                     "If you have 3 or more measurements in this area, you should take care of yourself with medical treatment and lifestyle changes."
-             }
-             if (newVal in 180..250) {
-                 tv_instructions.text =
-                     "We're worried about you.Call an emergency medical service immediately!"
+        val date = DatePickerDialog.OnDateSetListener { view, year, month, day ->
+            myCalendar[Calendar.YEAR] = year
+            myCalendar[Calendar.MONTH] = month
+            myCalendar[Calendar.DAY_OF_MONTH] = day
+            val myFormat = "MM/dd/yy"
+            val dateFormat = SimpleDateFormat(myFormat, Locale.US)
+            btnDate.text = dateFormat.format(myCalendar.time)
+            sDate = dateFormat.format(myCalendar.time)
+        }
 
-             }
-         }
-
-         diaNumberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
-             sDIA = newVal
-             if (newVal in 0..59) {
-                 tv_instructions.text =
-                     "Your blood pressure seems a little low.If the situation continues, do not hesitate to consult your doctor."
-             }
-             if (newVal in 60..79) {
-                 tv_instructions.text =
-                     "Your blood pressure is in good condition. Try to keep it the same way!"
-             }
-             if (newVal in 80..89) {
-                 tv_instructions.text =
-                     "If you have 3 or more measurements in this area, it is time to consult your doctor to improve your lifestyle."
-             }
-             if (newVal in 90..120) {
-                 tv_instructions.text =
-                     "If you have 3 or more measurements in this area, you should take care of yourself with medical treatment and lifestyle changes."
-             }
-             if (newVal in 121..250) {
-                 tv_instructions.text =
-                     "We're worried about you.Call an emergency medical service immediately!"
-
-             }
-         }
-         pulNumberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
-             sPUL = newVal
-         }
+        btnDate.setOnClickListener {
+            DatePickerDialog(
+                requireContext(),
+                date,
+                myCalendar[Calendar.YEAR],
+                myCalendar[Calendar.MONTH],
+                myCalendar[Calendar.DAY_OF_MONTH]
+            ).show()
+        }
 
 
-         chipGroup.forEach { child ->
-             (child as? Chip)?.setOnCheckedChangeListener { _, _ ->
-                 registerFilterChanged(chipGroup)
-             }
-         }
-         val datecurrent = Date()
-         val dateFormatcurrent = SimpleDateFormat("dd-MM-yyyy hh:mm:ss")
-         val pasTime = dateFormatcurrent.format(datecurrent)
 
-         btnYes.setOnClickListener {
-             if (sDate != null && sTime != null && sSYS != null && sDIA != null && sPUL != null && label != null) {
-                 showBPRecordViewModel.UpdateBPRecord(
-                     BloodPressureTable(
-                         data.id,
-                         sDate!!,
-                         sTime!!,
-                         pasTime,
-                         sSYS!!,
-                         sDIA!!,
-                         sPUL!!,
-                         label!!
-                     )
-                 )
-                 builder.dismiss()
-                 Toast.makeText(requireContext(), "Successfully Updated!", Toast.LENGTH_LONG).show()
-             } else {
-                 Toast.makeText(requireContext(), "Please Fill out All fields.", Toast.LENGTH_LONG)
-                     .show()
-             }
-         }
+        btnTime.setOnClickListener {
+            val mTimePicker: TimePickerDialog
+            val mcurrentTime = Calendar.getInstance()
+            val hour = mcurrentTime.get(Calendar.HOUR_OF_DAY)
+            val minute = mcurrentTime.get(Calendar.MINUTE)
 
-     }*/
+            mTimePicker =
+                TimePickerDialog(
+                    requireContext(),
+                    { view, hourOfDay, minute ->
+                        btnTime.setText(String.format("%d : %d", hourOfDay, minute))
+                        sTime = getTime(hourOfDay, minute)
+                        btnTime.text = getTime(hourOfDay, minute);
+                    }, hour, minute, false
+                )
+            mTimePicker.show()
+        }
+
+
+        sysNumberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
+            sSYS = newVal
+            if (newVal in 0..89) {
+                tv_instructions.text =
+                    "Your blood pressure seems a little low.If the situation continues, do not hesitate to consult your doctor."
+            }
+            if (newVal in 90..119) {
+                tv_instructions.text =
+                    "Your blood pressure is in good condition. Try to keep it the same way!"
+            }
+            if (newVal in 120..129) {
+                tv_instructions.text =
+                    "Your blood pressure is a little above normal.We recommend that you adopt a healthier lifestyle and measure your blood pressure more frequently."
+            }
+            if (newVal in 130..139) {
+                tv_instructions.text =
+                    "If you have 3 or more measurements in this area, it is time to consult your doctor to improve your lifestyle."
+            }
+            if (newVal in 140..179) {
+                tv_instructions.text =
+                    "If you have 3 or more measurements in this area, you should take care of yourself with medical treatment and lifestyle changes."
+            }
+            if (newVal in 180..250) {
+                tv_instructions.text =
+                    "We're worried about you.Call an emergency medical service immediately!"
+
+            }
+        }
+
+        diaNumberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
+            sDIA = newVal
+            if (newVal in 0..59) {
+                tv_instructions.text =
+                    "Your blood pressure seems a little low.If the situation continues, do not hesitate to consult your doctor."
+            }
+            if (newVal in 60..79) {
+                tv_instructions.text =
+                    "Your blood pressure is in good condition. Try to keep it the same way!"
+            }
+            if (newVal in 80..89) {
+                tv_instructions.text =
+                    "If you have 3 or more measurements in this area, it is time to consult your doctor to improve your lifestyle."
+            }
+            if (newVal in 90..120) {
+                tv_instructions.text =
+                    "If you have 3 or more measurements in this area, you should take care of yourself with medical treatment and lifestyle changes."
+            }
+            if (newVal in 121..250) {
+                tv_instructions.text =
+                    "We're worried about you.Call an emergency medical service immediately!"
+
+            }
+        }
+        pulNumberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
+            sPUL = newVal
+        }
+
+
+        chipGroup.forEach { child ->
+            (child as? Chip)?.setOnCheckedChangeListener { _, _ ->
+                registerFilterChanged(chipGroup)
+            }
+        }
+        val datecurrent = Date()
+        val dateFormatcurrent = SimpleDateFormat("dd-MM-yyyy hh:mm:ss")
+        val pasTime = dateFormatcurrent.format(datecurrent)
+
+        btnYes.setOnClickListener {
+            if (sDate != null && sTime != null && sSYS != null && sDIA != null && sPUL != null && label != null) {
+                showBPRecordViewModel.UpdateBPRecord(
+                    BloodPressureTable(
+                        data.id,
+                        sDate!!,
+                        sTime!!,
+                        pasTime,
+                        sSYS!!,
+                        sDIA!!,
+                        sPUL!!,
+                        label!!
+                    )
+                )
+                builder.dismiss()
+                Toast.makeText(requireContext(), "Successfully Updated!", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(requireContext(), "Please Fill out All fields.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }*/
 
 
     private fun registerFilterChanged(chips_group: ChipGroup) {

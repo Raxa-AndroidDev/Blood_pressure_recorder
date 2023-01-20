@@ -10,9 +10,9 @@ import com.vboard.bp_recorder_app.data.database.db_tables.BloodPressureTable
 import com.vboard.bp_recorder_app.databinding.ItemShowRecordsLayoutBinding
 import com.vboard.bp_recorder_app.utils.Constansts
 import com.vboard.bp_recorder_app.utils.getBPType
-import com.vboard.bp_recorder_app.utils.getHistoryFormatDate
 import com.vboard.bp_recorder_app.utils.interfaces.ShowBPAdapterCallbacks
 import com.vboard.bp_recorder_app.utils.toDate
+import com.vboard.bp_recorder_app.utils.tostring
 
 class BPHistoryAdapter(var context: Context ,var callBacks: ShowBPAdapterCallbacks) :
     RecyclerView.Adapter<BPHistoryAdapter.MyViewHolder>() {
@@ -50,7 +50,7 @@ class BPHistoryAdapter(var context: Context ,var callBacks: ShowBPAdapterCallbac
             tvSystolicBp.text = currentItem.systolic.toString()
             tvDiastolicBp.text = currentItem.diaSystolic.toString()
 
-            tvDatetime.text = "${getHistoryFormatDate(currentItem.fulldate.toDate()) }, ${currentItem.pulse} BPM"
+            tvDatetime.text = "${currentItem.date.tostring()} ${currentItem.time}, ${currentItem.pulse} BPM"
 
            bptype =  getBPType(currentItem.systolic,currentItem.diaSystolic)
                 tvStatus.text =bptype

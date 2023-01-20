@@ -11,10 +11,12 @@ import kotlinx.parcelize.Parcelize
 data class BodyWeightTable(
     @PrimaryKey(autoGenerate = true)
     val id: Int=0,
-    val date: String,
+    val date: Long,
     val time: String,
-    val DateAndTime: String,
+    val fulldate: String,
     val weight: Int,
     val height: Int,
-    val label: String
+    val bmi:String,
+    val weightType:String,
+    val tag: String
 ):Parcelable

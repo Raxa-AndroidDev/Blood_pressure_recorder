@@ -1,13 +1,12 @@
-package com.vboard.bp_recorder_app.ui.blood_pressure.add_record.adapters
+package com.vboard.bp_recorder_app
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.vboard.bp_recorder_app.R
 import com.vboard.bp_recorder_app.databinding.CustomChipBinding
-import com.vboard.bp_recorder_app.ui.blood_pressure.add_record.ChipListCallBacks
+import com.vboard.bp_recorder_app.utils.interfaces.ChipListCallBacks
 
 class ChipAdapter(
     var context: Context,

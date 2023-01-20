@@ -1,4 +1,4 @@
-package com.example.step.database
+package com.vboard.bp_recorder_app.data.database
 
 import androidx.room.TypeConverter
 import java.util.*

@@ -1,57 +1,87 @@
 package com.vboard.bp_recorder_app.utils
 
-import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.vboard.bp_recorder_app.R
 import com.vboard.bp_recorder_app.ui.blood_pressure.model_classes.BPTypesModelClass
+import com.vboard.bp_recorder_app.ui.weight.WeightTypesModelClass
 import java.text.Format
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
-fun getBPType(systolic:Int, diastolic:Int):String{
+fun getBPType(systolic: Int, diastolic: Int): String {
 
     if (systolic < 90 || diastolic < 60) {
-         return Constansts.bp_hypotension
+        return Constansts.bp_hypotension
 
 
-    }
-    else if (systolic in 90..119 && diastolic in 60..79) {
-          Constansts.bp_Normal
+    } else if (systolic in 90..119 && diastolic in 60..79) {
+        Constansts.bp_Normal
 
-    }
-    else if (systolic in 120..129 && diastolic in 60..79) {
+    } else if (systolic in 120..129 && diastolic in 60..79) {
         return Constansts.bp_Elevated
 
 
-
-
-    }
-    else if (systolic in 130..139 || diastolic in 80..89) {
+    } else if (systolic in 130..139 || diastolic in 80..89) {
         return Constansts.bp_Hypertension1
 
 
-
-    }
-    else if (systolic in 140..180 || diastolic in 90..120) {
+    } else if (systolic in 140..180 || diastolic in 90..120) {
         return Constansts.bp_Hypertension2
 
 
+    } else if (systolic > 180 || diastolic > 120) {
+        return Constansts.bp_Crisis
 
     }
-    else if (systolic > 180 || diastolic > 120) {
-        return  Constansts.bp_Crisis
-
-    }
-    return  Constansts.bp_Normal
+    return Constansts.bp_Normal
 }
 
+ fun getWeightType(bmi:Double):String{
+    var weightType:String? = null
 
-fun getChipsList():ArrayList<String>{
-    val chipsList:ArrayList<String> = arrayListOf()
+    if (bmi<16.0){
+        weightType = Constansts.verySeverlyUnderWeight
+    }
+    else if (bmi in 16.0..16.9){
+        weightType = Constansts.severlyUnderWeight
+    }
+
+    else if (bmi in 17.0..18.4){
+        weightType = Constansts.underWeight
+    }
+    else if (bmi in 18.5..24.9){
+        weightType = Constansts.normalWeight
+    }
+    else if (bmi in 25.0..29.9){
+        weightType = Constansts.overWeight
+    }
+
+    else if (bmi in 30.0..34.9){
+        weightType = Constansts.obeseClass1
+    }
+
+    else if (bmi in 35.0..39.9){
+        weightType = Constansts.obeseClass2
+    }
+
+    else if (bmi >=40.0){
+        weightType = Constansts.obeseClass3
+    }
+
+    return weightType!!
+
+}
+
+ fun calculateBMI(weight:Int,height:Int):Double{
+    return (weight/(height*height)).toDouble()
+
+}
+
+fun getChipsList(): ArrayList<String> {
+    val chipsList: ArrayList<String> = arrayListOf()
 
     chipsList.add("after running")
     chipsList.add("before running")
@@ -70,6 +100,69 @@ fun getChipsList():ArrayList<String>{
 }
 
 
+fun getTime(calendar: Calendar): String {
+
+    val timeFormat = SimpleDateFormat(Constansts.timeFormate, Locale.getDefault())
+    return timeFormat.format(calendar.time)
+}
+
+
+   /// function to store date in db
+fun getDateToStore(calendar: Calendar): String {
+
+    val sdf = SimpleDateFormat(Constansts.dateFormat, Locale.getDefault())
+   return sdf.format(calendar.time)
+
+
+}
+
+
+fun getNextDayDate(calendar: Calendar): String {
+    calendar.add(Calendar.DAY_OF_MONTH, 1)
+    val dateFormat = SimpleDateFormat(Constansts.dateFormat, Locale.getDefault())
+    return dateFormat.format(calendar.time)
+
+
+}
+
+fun getPreviousDayDate(calendar: Calendar): String {
+    calendar.add(Calendar.DAY_OF_YEAR, -1)
+    val dateFormat = SimpleDateFormat(Constansts.dateFormat, Locale.getDefault())
+    return dateFormat.format(calendar.time)
+
+
+}
+
+
+fun getWeekStartDate(calendar: Calendar): String {
+    calendar.add(Calendar.DAY_OF_YEAR, -7)
+    val dateFormat = SimpleDateFormat(Constansts.dateFormat, Locale.getDefault())
+    return dateFormat.format(calendar.time)
+
+
+}
+
+fun getWeekEndDate(calendar: Calendar): String {
+    val dateFormat = SimpleDateFormat(Constansts.dateFormat, Locale.getDefault())
+    return dateFormat.format(calendar.time)
+
+}
+
+
+fun Long.tostring(): String {
+    val dateobj = Date(this)
+
+    val dateFormat = SimpleDateFormat(Constansts.dateFormat, Locale.getDefault())
+    return dateFormat.format(dateobj)
+
+
+
+}
+
+fun Long.toDate(): Date {
+    return Date(this)
+}
+
 fun String.toLong(): Long {
     val dateobj = this.toDate()
 
@@ -77,30 +170,25 @@ fun String.toLong(): Long {
 
 }
 
-fun Long.toString():String{
-    val dateobj = Date(this)
-
-    return dateobj.toString()
+fun String.toDate(): Date {
+    val completeDateFormat = SimpleDateFormat(Constansts.dateFormat, Locale.getDefault())
+    return completeDateFormat.parse(this) as Date
 }
 
 
-
-
-fun String.toDate():Date{
-    val completeDateFormat = SimpleDateFormat(Constansts.completeDateFormat, Locale.getDefault())
-    return completeDateFormat.parse(this)
-}
-
+/*
 fun Date.toString():String{
-    val completeDateFormat = SimpleDateFormat(Constansts.completeDateFormat, Locale.getDefault())
+    val completeDateFormat = SimpleDateFormat(Constansts.SearchdateFormate, Locale.getDefault())
     return  completeDateFormat.format(this)
 }
 
-fun getTime(calendar:Calendar):String{
 
-    val timeFormat =SimpleDateFormat(Constansts.timeFormate, Locale.getDefault())
-    return timeFormat.format(calendar.time)
+fun getOnlyDate(calendar: Calendar):String{
+    val simpleSDF = SimpleDateFormat(Constansts.SearchdateFormate,Locale.getDefault())
+    return simpleSDF.format(calendar)
 }
+
+
 
 fun getHistoryFormatDate(date:Date):String{
     val historyDateFormat = SimpleDateFormat(Constansts.historyDateFormat, Locale.getDefault())
@@ -109,7 +197,7 @@ fun getHistoryFormatDate(date:Date):String{
 }
 
 fun getCurrentDate(calendar: Calendar): String {
-    val dateFormat = SimpleDateFormat(Constansts.completeDateFormat, Locale.getDefault())
+    val dateFormat = SimpleDateFormat(Constansts.SearchdateFormate, Locale.getDefault())
     return dateFormat.format(calendar.time)
 
 }
@@ -125,30 +213,25 @@ fun getWeekStartDateForTextview(calendar: Calendar):String{
 fun getWeekEndDateForTextview(calendar: Calendar):String{
     val dateFormat = SimpleDateFormat("dd MMM", Locale.getDefault())
     return dateFormat.format(calendar.time)
-}
+}*/
 
 
-
-
-
-
-
-
-
+/*
 
 
 fun getWeekStartDate(calendar: Calendar):String{
     calendar.add(Calendar.DAY_OF_YEAR, -7)
-    val dateFormat = SimpleDateFormat(Constansts.completeDateFormat, Locale.getDefault())
+    val dateFormat = SimpleDateFormat(Constansts.SearchdateFormate, Locale.getDefault())
     return dateFormat.format(calendar.time)
 }
 
 
 fun getWeekEndDate(calendar: Calendar):String{
-    val dateFormat = SimpleDateFormat(Constansts.completeDateFormat, Locale.getDefault())
+
+    val dateFormat = SimpleDateFormat(Constansts.SearchdateFormate, Locale.getDefault())
 
     return dateFormat.format(calendar.time)
-}
+}*/
 
 
 
@@ -162,27 +245,7 @@ fun getCurrentDateTime(): Date {
 }
 
 
-
-fun getNextDayDate(calendar: Calendar):String{
-    calendar.add(Calendar.DAY_OF_MONTH,1)
-    val dateFormat = SimpleDateFormat("dd MMM", Locale.getDefault())
-    return dateFormat.format(calendar.time)
-}
-
-fun getPreviousDayDate(calendar: Calendar):String{
-    calendar.add( Calendar.DAY_OF_YEAR,-1)
-    val dateFormat = SimpleDateFormat("dd MMM", Locale.getDefault())
-    return dateFormat.format(calendar.time)
-
-}
-
-
-
-
-
-
-
-fun DatePickerDialog(context: Context, calendar: Calendar): MutableLiveData<String> {
+/*fun DatePickerDialog(context: Context, calendar: Calendar): MutableLiveData<String> {
 
     var choosenDate = MutableLiveData<String>()
 
@@ -207,9 +270,9 @@ fun DatePickerDialog(context: Context, calendar: Calendar): MutableLiveData<Stri
     datePickerDialog.show()
 
     return choosenDate
-}
+}*/
 
-fun TimePickerDialog(context: Context):MutableLiveData<String>{
+fun TimePickerDialog(context: Context): MutableLiveData<String> {
 
     var choosenTime = MutableLiveData<String>()
 
@@ -220,9 +283,9 @@ fun TimePickerDialog(context: Context):MutableLiveData<String>{
 
     TimePickerDialog(context, { timePicker, hour, minute ->
 
-        choosenTime.postValue( GetTime(hour, minute))
+        choosenTime.postValue(GetTime(hour, minute))
 
-    },hour,minute,false).show()
+    }, hour, minute, false).show()
 
     return choosenTime
 }
@@ -238,45 +301,45 @@ fun GetTime(hr: Int, min: Int): String {
 }
 
 
- fun getBPRangeTypesList( context: Context):ArrayList<BPTypesModelClass> {
-     val bptypesList = arrayListOf<BPTypesModelClass>()
-    bptypesList.add(
+fun getBPRangeTypesList(context: Context): ArrayList<BPTypesModelClass> {
+    val bpTypesList = arrayListOf<BPTypesModelClass>()
+    bpTypesList.add(
         BPTypesModelClass(
             R.color.hypotension_bp_color,
             Constansts.bp_hypotension,
-           context.getString(R.string.hypo_bp_range),
+            context.getString(R.string.hypo_bp_range),
             false
         )
     )
-    bptypesList.add(
+    bpTypesList.add(
         BPTypesModelClass(
             R.color.normal_bp_color,
             Constansts.bp_Normal,
             context.getString(R.string.normal_bp_range), false
         )
     )
-    bptypesList.add(
+    bpTypesList.add(
         BPTypesModelClass(
             R.color.elevated_bp_color,
             Constansts.bp_Elevated,
             context.getString(R.string.elevated_bp_range), false
         )
     )
-    bptypesList.add(
+    bpTypesList.add(
         BPTypesModelClass(
             R.color.hyper_stage1_color,
             Constansts.bp_Hypertension1,
             context.getString(R.string.stage1_bp_range), false
         )
     )
-    bptypesList.add(
+    bpTypesList.add(
         BPTypesModelClass(
             R.color.hyper_stage2_color,
             Constansts.bp_Hypertension2,
             context.getString(R.string.stage2_bp_range), false
         )
     )
-    bptypesList.add(
+    bpTypesList.add(
         BPTypesModelClass(
             R.color.hyper_crisis_color,
             Constansts.bp_Crisis,
@@ -285,7 +348,58 @@ fun GetTime(hr: Int, min: Int): String {
     )
 
 
-     return bptypesList
+    return bpTypesList
 }
+
+fun getWeightRangeTypesList(context: Context): ArrayList<WeightTypesModelClass> {
+    val weightTypesList = arrayListOf<WeightTypesModelClass>()
+    weightTypesList.add(
+        WeightTypesModelClass(
+            R.color.hypotension_bp_color,
+            Constansts.bp_hypotension,
+            context.getString(R.string.hypo_bp_range),
+            false
+        )
+    )
+    weightTypesList.add(
+        WeightTypesModelClass(
+            R.color.normal_bp_color,
+            Constansts.bp_Normal,
+            context.getString(R.string.normal_bp_range), false
+        )
+    )
+    weightTypesList.add(
+        WeightTypesModelClass(
+            R.color.elevated_bp_color,
+            Constansts.bp_Elevated,
+            context.getString(R.string.elevated_bp_range), false
+        )
+    )
+    weightTypesList.add(
+        WeightTypesModelClass(
+            R.color.hyper_stage1_color,
+            Constansts.bp_Hypertension1,
+            context.getString(R.string.stage1_bp_range), false
+        )
+    )
+    weightTypesList.add(
+        WeightTypesModelClass(
+            R.color.hyper_stage2_color,
+            Constansts.bp_Hypertension2,
+            context.getString(R.string.stage2_bp_range), false
+        )
+    )
+    weightTypesList.add(
+        WeightTypesModelClass(
+            R.color.hyper_crisis_color,
+            Constansts.bp_Crisis,
+            context.getString(R.string.critical_bp_range), false
+        )
+    )
+
+
+    return weightTypesList
+}
+
 
 

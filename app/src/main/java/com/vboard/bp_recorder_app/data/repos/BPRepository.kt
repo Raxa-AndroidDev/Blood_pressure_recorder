@@ -16,22 +16,29 @@ class BPRepository(private val bpDao: BPDao) {
         bpDao.storeBPRecord(bpTable)
     }
 
-     fun fetchBPRecordFromBP(): LiveData<List<BloodPressureTable>>{
+    // function to fetch BP data from DB at background thread
+    fun fetchBPRecordFromBP(): LiveData<List<BloodPressureTable>>{
         return bpDao.fetchAllBPRecords()
     }
 
+    // function to update BP data in DB at background thread
+    fun updateBPRecord(bloodPressureTable: BloodPressureTable){
+        bpDao.UpdateSingleBPRecord(bloodPressureTable)
+    }
 
-
+    // function to fetch BP data from  DB (date wise)
     fun searchBPRecordByDate(startDate:Date, endDate:Date):LiveData<List<BloodPressureTable>>{
 
         return bpDao.searchBPRecordByDate(startDate,endDate)
     }
 
-
+    // function to delete BP data from DB at background thread
     fun deleteSpecificBPRecord(position:Int){
 
         bpDao.deleteSingleBPRecord(position)
     }
+
+
 
 
 
@@ -52,7 +59,5 @@ class BPRepository(private val bpDao: BPDao) {
     }
 
 
-    fun updateBPRecord(bloodPressureTable: BloodPressureTable){
-        bpDao.UpdateSingleBPRecord(bloodPressureTable)
-    }
+
 }

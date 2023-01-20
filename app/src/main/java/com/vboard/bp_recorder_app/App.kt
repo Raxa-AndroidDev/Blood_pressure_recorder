@@ -4,12 +4,12 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.SharedPreferences
-import android.nfc.Tag
 import android.os.Build
-import android.os.Message
 import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.databinding.library.BuildConfig
 import com.google.android.gms.ads.MobileAds
+
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 

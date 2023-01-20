@@ -21,6 +21,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.vboard.bp_recorder_app.BPValuesModelClass
+import com.vboard.bp_recorder_app.ChipAdapter
 import com.vboard.bp_recorder_app.R
 import com.vboard.bp_recorder_app.data.database.db_tables.BloodPressureTable
 import com.vboard.bp_recorder_app.data.viewModels.BPRecordViewModel
@@ -28,10 +29,11 @@ import com.vboard.bp_recorder_app.databinding.FragmentAddBPRecordBinding
 import com.vboard.bp_recorder_app.ui.MainActivity
 import com.vboard.bp_recorder_app.ui.blood_pressure.add_record.adapters.BPTypeColorsAdapter
 import com.vboard.bp_recorder_app.ui.blood_pressure.add_record.adapters.BPTypesAdapter
-import com.vboard.bp_recorder_app.ui.blood_pressure.add_record.adapters.ChipAdapter
 import com.vboard.bp_recorder_app.ui.blood_pressure.model_classes.BPTypesModelClass
 import com.vboard.bp_recorder_app.utils.*
+import com.vboard.bp_recorder_app.utils.interfaces.ChipListCallBacks
 import timber.log.Timber
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -94,6 +96,61 @@ class AddBPRecordFragment : Fragment(),ChipListCallBacks {
 
     }
 
+    private fun populateValues() {
+        if (bloodPressureTable != null) {
+            // coming from history for editing
+
+            binding.systolicNumberpicker.value = bloodPressureTable!!.systolic
+            binding.diastolicNumberpicker.value = bloodPressureTable!!.diaSystolic
+            binding.pulseNumberpicker.value = bloodPressureTable!!.pulse
+            label = "default"
+
+            val myCalendar: Calendar = Calendar.getInstance()
+            myCalendar.time = bloodPressureTable!!.date.toDate()
+
+            val completeDateFormat = SimpleDateFormat(Constansts.completeDateFormat, Locale.getDefault())
+            var  datetoset =  completeDateFormat.parse(bloodPressureTable!!.fulldate) as Date
+
+            binding.singleDayPicker.setDefaultDate(datetoset)
+
+
+            binding.singleDayPicker.setTimeZone(TimeZone.getDefault())
+
+            completeDate = bloodPressureTable!!.fulldate
+            selectedDate =  getDateToStore(myCalendar)
+            selectedTime = getTime(myCalendar)
+
+            Timber.e("current time  is ${selectedTime} ")
+            binding.btnOk.text = getString(R.string.update)
+
+        } else {
+            // coming from main
+            binding.systolicNumberpicker.value = 90
+            binding.diastolicNumberpicker.value = 65
+            binding.pulseNumberpicker.value = 75
+            label = "default"
+
+            val myCalendar: Calendar = Calendar.getInstance()
+            val datecurrent = Date()
+
+            binding.singleDayPicker.setDefaultDate(datecurrent)
+            binding.singleDayPicker.setTimeZone(TimeZone.getDefault())
+
+
+
+            selectedDate =  getDateToStore(myCalendar)
+
+
+            completeDate = datecurrent.toString()
+
+            selectedTime = getTime(myCalendar)
+
+            Timber.e("current time  is ${selectedTime} ")
+            binding.btnOk.text = getString(R.string.save)
+
+        }
+    }
+
     private fun clickListeners() {
         binding.apply {
 
@@ -103,8 +160,12 @@ class AddBPRecordFragment : Fragment(),ChipListCallBacks {
                 calendar.time = date
                 selectedTime = getTime(calendar)
 
-                selectedDate = date.toString()
-                completeDate = selectedDate
+
+
+                selectedDate = getDateToStore(calendar)
+
+
+                completeDate = date.toString()
 
                 Timber.e("displayed time is ${selectedTime} , displayed date is ${date} ")
 
@@ -246,6 +307,9 @@ class AddBPRecordFragment : Fragment(),ChipListCallBacks {
 
         Toast.makeText(requireContext(), "Successfully Added!", Toast.LENGTH_LONG).show()
 
+
+        Timber.e("stored date is ${selectedDate!!.toLong()}")
+
     }
 
     private fun initRecyclerview() {
@@ -260,50 +324,7 @@ class AddBPRecordFragment : Fragment(),ChipListCallBacks {
         (activity as MainActivity).binding.bottomNavView.visibility = View.GONE
     }
 
-    private fun populateValues() {
-        if (bloodPressureTable != null) {
-            // coming from history for editing
 
-            binding.systolicNumberpicker.value = bloodPressureTable!!.systolic
-            binding.diastolicNumberpicker.value = bloodPressureTable!!.diaSystolic
-            binding.pulseNumberpicker.value = bloodPressureTable!!.pulse
-            label = "default"
-
-            val myCalendar: Calendar = Calendar.getInstance()
-            myCalendar.time = bloodPressureTable!!.fulldate.toDate()
-
-            binding.singleDayPicker.setDefaultDate(bloodPressureTable!!.fulldate.toDate())
-            binding.singleDayPicker.setTimeZone(TimeZone.getDefault())
-
-            completeDate = bloodPressureTable!!.fulldate
-            selectedDate = completeDate
-            selectedTime = getTime(myCalendar)
-
-            Timber.e("current time  is ${selectedTime} ")
-            binding.btnOk.text = getString(R.string.update)
-
-        } else {
-            // coming from main
-            binding.systolicNumberpicker.value = 90
-            binding.diastolicNumberpicker.value = 65
-            binding.pulseNumberpicker.value = 75
-            label = "default"
-
-            val myCalendar: Calendar = Calendar.getInstance()
-            val datecurrent = Date()
-
-            binding.singleDayPicker.setDefaultDate(datecurrent)
-            binding.singleDayPicker.setTimeZone(TimeZone.getDefault())
-
-            completeDate = datecurrent.toString()
-            selectedDate = completeDate
-            selectedTime = getTime(myCalendar)
-
-            Timber.e("current time  is ${selectedTime} ")
-            binding.btnOk.text = getString(R.string.save)
-
-        }
-    }
 
     private fun showBottomSheet() {
         val bottomsheet = BottomSheetDialog(requireContext())
