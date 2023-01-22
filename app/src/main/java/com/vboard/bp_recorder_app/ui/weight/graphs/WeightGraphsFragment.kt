@@ -9,9 +9,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.data.CandleEntry
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.utils.ColorTemplate
 import com.opencsv.CSVWriter
 import com.vboard.bp_recorder_app.data.database.DatabaseClass
-import com.vboard.bp_recorder_app.data.viewModels.BPRecordViewModel
+import com.vboard.bp_recorder_app.data.database.db_tables.BodyWeightTable
+import com.vboard.bp_recorder_app.data.viewModels.WeightViewModel
 import com.vboard.bp_recorder_app.databinding.FragmentWeightGraphsBinding
 import java.io.File
 import java.io.FileWriter
@@ -20,7 +25,7 @@ import java.io.FileWriter
 class WeightGraphsFragment : Fragment() {
 
     private lateinit var binding: FragmentWeightGraphsBinding
-    private lateinit var viewModel: BPRecordViewModel
+    private lateinit var viewModel: WeightViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,18 +46,42 @@ class WeightGraphsFragment : Fragment() {
     }
 
     private fun initViews() {
-        viewModel = ViewModelProvider(this)[BPRecordViewModel::class.java]
+        viewModel = ViewModelProvider(this)[WeightViewModel::class.java]
+
 
         drawGraph()
     }
 
+
+
     private fun drawGraph() {
-        val chartPointsList = ArrayList<CandleEntry>()
+        val chartPointsList = ArrayList<PieEntry>()
 
 
-        viewModel.ShowBPRecordFromDB().observe(viewLifecycleOwner) { bplist ->
-            if (bplist.isNotEmpty()) {
-                for (i in bplist.indices) {
+
+        chartPointsList.add(PieEntry(200F,"normal"))
+        chartPointsList.add(PieEntry(300F,"obese"))
+        chartPointsList.add(PieEntry(400F,"obese"))
+        chartPointsList.add(PieEntry(150f,"underweight"))
+        chartPointsList.add(PieEntry(190f,"normal"))
+        chartPointsList.add(PieEntry(200F,"normal"))
+
+
+val pieDataset = PieDataSet(chartPointsList,"weight Pie Chart")
+      //  pieDataset.setColors(ColorTemplate.COLORFUL_COLORS,requireContext())
+
+        val pieData = PieData(pieDataset)
+        binding.weightPieChart.data = pieData
+
+
+
+        viewModel.showWeightRecordFromDB().observe(viewLifecycleOwner) { weightRecordList ->
+            if (weightRecordList.isNotEmpty()) {
+
+                calculateMinMaxAvg(weightRecordList)
+
+
+                for (i in weightRecordList.indices) {
 
 
                 }
@@ -62,6 +91,30 @@ class WeightGraphsFragment : Fragment() {
 
 
         }
+
+    }
+
+    private fun calculateMinMaxAvg(weightRecordList: List<BodyWeightTable>) {
+        var  sumOfWeights = 0
+        var max = 0
+        var min = 0
+            for ( i in weightRecordList.indices){
+                sumOfWeights += weightRecordList[i].weight
+                if (weightRecordList[i].weight>max){
+                    max = weightRecordList[i].weight
+                }
+
+                if (weightRecordList[i].weight<min){
+                    min = weightRecordList[i].weight
+                }
+        }
+
+        var avg = sumOfWeights/weightRecordList.size
+        binding.tvAvgValue.text = avg.toString()
+        binding.tvMinValue.text = min.toString()
+        binding.tvMaxValue.text = max.toString()
+
+
 
     }
 

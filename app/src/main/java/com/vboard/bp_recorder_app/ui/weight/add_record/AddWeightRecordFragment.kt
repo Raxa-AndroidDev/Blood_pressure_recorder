@@ -352,21 +352,31 @@ class AddWeightRecordFragment : Fragment(), ChipListCallBacks {
                 ResourcesCompat.getFont(requireContext(), R.font.poppins_bold)
 
             weightNumberpicker.maxValue = 300
-            weightNumberpicker.minValue = 20
+            weightNumberpicker.minValue = 10
 
             heightNumberpicker.maxValue = 300
-            heightNumberpicker.minValue = 20
+            heightNumberpicker.minValue = 10
 
             setWeightType(bmi)
+            Toast.makeText(requireContext(),"bmi is ${bmi}",Toast.LENGTH_SHORT).show()
+            Timber.e("bmi is ${bmi}")
 
             weightNumberpicker.setOnValueChangedListener { picker, oldVal, newVal ->
-                bmi = (newVal / (heightNumberpicker.value * heightNumberpicker.value)).toDouble()
+
+               /* val bmiValue = String.format(" %.2f", weightNumberpicker.value*703/newVal*newVal)
+                bmi = bmiValue.toDouble()*/
+                bmi =( weightNumberpicker.value.toDouble() / ((newVal/100) * (newVal/100)).toDouble())
                 setWeightType(bmi)
+                Toast.makeText(requireContext(),"bmi is ${bmi}",Toast.LENGTH_SHORT).show()
+                Timber.e("bmi is $bmi")
             }
 
             heightNumberpicker.setOnValueChangedListener { picker, oldVal, newVal ->
-                bmi = (weightNumberpicker.value / (newVal * newVal)).toDouble()
 
+        /*        val bmiValue = String.format(" %.2f", weightNumberpicker.value*703/newVal*newVal)
+               bmi = bmiValue.toDouble()*/
+             bmi = (weightNumberpicker.value.toDouble() / ((newVal/100) * (newVal/100)).toDouble())
+                Toast.makeText(requireContext(),"bmi is ,,, $bmi",Toast.LENGTH_SHORT).show()
                 Timber.e("bmi is ${bmi}")
                 setWeightType(bmi)
 
@@ -376,7 +386,7 @@ class AddWeightRecordFragment : Fragment(), ChipListCallBacks {
         }
     }
 
-    fun setWeightType(bmi: Double) {
+    private fun setWeightType(bmi: Double) {
 
         var weighttype = getWeightType(bmi)
         binding.weightNumberpicker.isSelected = true
@@ -389,10 +399,10 @@ class AddWeightRecordFragment : Fragment(), ChipListCallBacks {
                 isNumberPickersSelected(true)
                 setNumberPickerColor(R.color.very_severly_uw)
 
-                binding.tvWeightRangeDescription.text = "BMI <16.0"
+                binding.tvWeightRangeDescription.text = getString(R.string.veryseverlyuw_range)
 
-
-                for (i in 0..5) {
+weightTypesList[1].isSelected = true
+                for (i in 0 until weightTypesList.size) {
 
                     weightTypesList[i].isSelected = i == 0
 
@@ -405,11 +415,11 @@ class AddWeightRecordFragment : Fragment(), ChipListCallBacks {
 
                 isNumberPickersSelected(true)
                 setNumberPickerColor(R.color.severly_uw)
-                binding.tvWeightRangeDescription.text = "BMI 16.0-16.9"
+                binding.tvWeightRangeDescription.text = getString(R.string.severluw_range)
 
                 weightTypesList[2].isSelected = true
 
-                for (i in 0..5) {
+                for (i in 0 until weightTypesList.size) {
 
                     weightTypesList[i].isSelected = i == 1
 
@@ -422,10 +432,10 @@ class AddWeightRecordFragment : Fragment(), ChipListCallBacks {
 
                 isNumberPickersSelected(true)
                 setNumberPickerColor(R.color.underweight)
-                binding.tvWeightRangeDescription.text = "BMI 17.0-18.4"
+                binding.tvWeightRangeDescription.text = getString(R.string.underweight_range)
 
                 weightTypesList[2].isSelected = true
-                for (i in 0..7) {
+                for (i in 0 until weightTypesList.size) {
 
                     weightTypesList[i].isSelected = i == 2
 
@@ -437,9 +447,9 @@ class AddWeightRecordFragment : Fragment(), ChipListCallBacks {
 
                 isNumberPickersSelected(true)
                 setNumberPickerColor(R.color.normalweight)
-                binding.tvWeightRangeDescription.text = "BMI 18.5-24.9"
+                binding.tvWeightRangeDescription.text = getString(R.string.normalweight_range)
                 weightTypesList[2].isSelected = true
-                for (i in 0..7) {
+                for (i in 0 until weightTypesList.size) {
 
                     weightTypesList[i].isSelected = i == 3
 
@@ -452,10 +462,10 @@ class AddWeightRecordFragment : Fragment(), ChipListCallBacks {
 
                 isNumberPickersSelected(true)
                 setNumberPickerColor(R.color.overweight)
-                binding.tvWeightRangeDescription.text = "BMI 25.0-29.9"
+                binding.tvWeightRangeDescription.text = getString(R.string.overweight_range)
                 weightTypesList[2].isSelected = true
 
-                for (i in 0..7) {
+                for (i in 0 until weightTypesList.size) {
 
                     weightTypesList[i].isSelected = i == 4
 
@@ -468,9 +478,9 @@ class AddWeightRecordFragment : Fragment(), ChipListCallBacks {
 
                 isNumberPickersSelected(true)
                 setNumberPickerColor(R.color.obesestage1)
-                binding.tvWeightRangeDescription.text = "BMI 30.0-34.9"
+                binding.tvWeightRangeDescription.text = getString(R.string.obesestage1_range)
 
-                for (i in 0..7) {
+                for (i in 0 until weightTypesList.size) {
                     weightTypesList[i].isSelected = i == 5
                 }
             }
@@ -479,9 +489,9 @@ class AddWeightRecordFragment : Fragment(), ChipListCallBacks {
 
                 isNumberPickersSelected(true)
                 setNumberPickerColor(R.color.obesestage2)
-                binding.tvWeightRangeDescription.text = "BMI 35.0-39.9"
+                binding.tvWeightRangeDescription.text = getString(R.string.obesestage2_range)
 
-                for (i in 0..7) {
+                for (i in 0 until weightTypesList.size) {
                     weightTypesList[i].isSelected = i == 6
                 }
             }
@@ -490,9 +500,9 @@ class AddWeightRecordFragment : Fragment(), ChipListCallBacks {
 
                 isNumberPickersSelected(true)
                 setNumberPickerColor(R.color.obesestage3)
-                binding.tvWeightRangeDescription.text = "BMI >40.0"
+                binding.tvWeightRangeDescription.text = getString(R.string.obesestage3_range)
 
-                for (i in 0..7) {
+                for (i in 0 until weightTypesList.size) {
                     weightTypesList[i].isSelected = i == 7
                 }
             }

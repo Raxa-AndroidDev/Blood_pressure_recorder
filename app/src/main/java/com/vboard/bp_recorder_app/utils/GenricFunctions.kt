@@ -355,45 +355,61 @@ fun getWeightRangeTypesList(context: Context): ArrayList<WeightTypesModelClass> 
     val weightTypesList = arrayListOf<WeightTypesModelClass>()
     weightTypesList.add(
         WeightTypesModelClass(
-            R.color.hypotension_bp_color,
-            Constansts.bp_hypotension,
-            context.getString(R.string.hypo_bp_range),
+            R.color.very_severly_uw,
+            Constansts.verySeverlyUnderWeight,
+           context.getString(R.string.veryseverlyuw_range),
             false
         )
     )
     weightTypesList.add(
         WeightTypesModelClass(
-            R.color.normal_bp_color,
-            Constansts.bp_Normal,
-            context.getString(R.string.normal_bp_range), false
+            R.color.severly_uw,
+            Constansts.severlyUnderWeight,
+            context.getString(R.string.severluw_range), false
         )
     )
     weightTypesList.add(
         WeightTypesModelClass(
-            R.color.elevated_bp_color,
-            Constansts.bp_Elevated,
-            context.getString(R.string.elevated_bp_range), false
+            R.color.underweight,
+            Constansts.underWeight,
+            context.getString(R.string.underweight_range), false
         )
     )
     weightTypesList.add(
         WeightTypesModelClass(
-            R.color.hyper_stage1_color,
-            Constansts.bp_Hypertension1,
-            context.getString(R.string.stage1_bp_range), false
+            R.color.normalweight,
+            Constansts.normalWeight,
+            context.getString(R.string.normalweight_range), false
         )
     )
     weightTypesList.add(
         WeightTypesModelClass(
-            R.color.hyper_stage2_color,
-            Constansts.bp_Hypertension2,
-            context.getString(R.string.stage2_bp_range), false
+            R.color.overweight,
+            Constansts.overWeight,
+            context.getString(R.string.overweight_range), false
         )
     )
     weightTypesList.add(
         WeightTypesModelClass(
-            R.color.hyper_crisis_color,
-            Constansts.bp_Crisis,
-            context.getString(R.string.critical_bp_range), false
+            R.color.obesestage1,
+            Constansts.obeseClass1,
+            context.getString(R.string.obesestage1_range), false
+        )
+    )
+
+    weightTypesList.add(
+        WeightTypesModelClass(
+            R.color.obesestage2,
+            Constansts.obeseClass2,
+            context.getString(R.string.obesestage2_range), false
+        )
+    )
+
+    weightTypesList.add(
+        WeightTypesModelClass(
+            R.color.obesestage3,
+            Constansts.obeseClass3,
+            context.getString(R.string.obesestage3_range), false
         )
     )
 

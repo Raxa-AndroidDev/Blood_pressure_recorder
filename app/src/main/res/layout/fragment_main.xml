@@ -171,7 +171,7 @@
             android:id="@+id/img_weight_main"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_80sdp"
-            android:src="@drawable/weight_main"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
