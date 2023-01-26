@@ -30,12 +30,16 @@
     <string name="cm">cm</string>
     <string name="no_records_yet_add_your_first_blood_pressure_record">No Records yet. Add your first blood pressure record</string>
     <string name="notes">Notes</string>
-    <string name="underweight_range">BMI 17.0-18.4</string>
+    <string name="veryseverlyunderweight_range"><![CDATA[BMI <16.0]]></string>
+    <string name="severlyunderweight_range">BMI 16.0-16.9</string>
+    <string name="underweigth_range">BMI 17.0-18.4</string>
     <string name="normalweight_range">BMI 18.5-24.9</string>
     <string name="overweight_range">BMI 25.0-29.9</string>
-    <string name="obesestage1_range">BMI 30.0-34.9</string>
-    <string name="obesestage2_range">BMI 35.0-39.9</string>
-    <string name="obesestage3_range"><![CDATA[BMI >40.0]]></string>
-    <string name="severluw_range">BMI 16.0-16.9</string>
-    <string name="veryseverlyuw_range"><![CDATA[BMI <16.0]]></string>
+    <string name="obese1_range">BMI 30.0-34.9</string>
+    <string name="obese3_range"><![CDATA[BMI >40.0]]></string>
+    <string name="obese2_range">BMI 35.0-39.9</string>
+    <string name="cancel">Cancel</string>
+    <string name="add">Add</string>
+    <string name="name">value</string>
+    <string name="info_title"><![CDATA[Information & Knowledge]]></string>
 </resources>

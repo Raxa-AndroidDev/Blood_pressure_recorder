@@ -5,12 +5,13 @@
     <string name="sub_title">TRACKER</string>
 
 
-    <string name="arg_alarm_obj" translatable="false">AlarmObject</string>
-    <string name="bundle_alarm_obj" translatable="false">BundleAlarmObject</string>
-    <string name="alarm_title" translatable="false">My Alarm</string>
-    <string name="dayNightTheme" translatable="false">DayNightTheme</string>
-    <string name="alarmwithvibration" translatable="false">Reminder with Vibration</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="arg_alarm_obj">AlarmObject</string>
+    <string name="bundle_alarm_obj">BundleAlarmObject</string>
+    <string name="alarm_title">My Alarm</string>
+    <string name="dayNightTheme">DayNightTheme</string>
+    <string name="alarmwithvibration">Reminder with Vibration</string>
+
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tracker">Tracker</string>
     <string name="export">Export</string>
@@ -42,13 +43,17 @@
     <string name="cm">cm</string>
     <string name="no_records_yet_add_your_first_blood_pressure_record">No Records yet. Add your\n first blood pressure record</string>
     <string name="notes">Notes</string>
-    <string name="underweight_range">BMI 17.0-18.4</string>
+    <string name="veryseverlyunderweight_range"><![CDATA[BMI <16.0]]></string>
+    <string name="severlyunderweight_range">BMI 16.0-16.9</string>
+    <string name="underweigth_range">BMI 17.0-18.4</string>
     <string name="normalweight_range">BMI 18.5-24.9</string>
     <string name="overweight_range">BMI 25.0-29.9</string>
-    <string name="obesestage1_range">BMI 30.0-34.9</string>
-    <string name="obesestage2_range">BMI 35.0-39.9</string>
-    <string name="obesestage3_range"><![CDATA[BMI >40.0]]></string>
-    <string name="severluw_range">BMI 16.0-16.9</string>
-    <string name="veryseverlyuw_range"><![CDATA[BMI <16.0]]></string>
+    <string name="obese1_range">BMI 30.0-34.9</string>
+    <string name="obese3_range"><![CDATA[BMI >40.0]]></string>
+    <string name="obese2_range">BMI 35.0-39.9</string>
+    <string name="cancel">Cancel</string>
+    <string name="add">Add</string>
+    <string name="info_title"><![CDATA[Information & Knowledge]]></string>
+
 
 </resources>

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.vboard.bp_recorder_app.ui.MainFragment"
+        android:name="com.vboard.bp_recorder_app.ui.fragments.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/infoFragment"
-        android:name="com.vboard.bp_recorder_app.ui.info_module.InfoFragment"
+        android:name="com.vboard.bp_recorder_app.ui.fragments.info_module.titles.InfoMainFragment"
         android:label="fragment_info"
         tools:layout="@layout/fragment_info" >
         <deepLink
@@ -43,11 +43,14 @@
         <action
             android:id="@+id/action_infoFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_infoFragment_to_infoDetailFragment"
+            app:destination="@id/infoDetailFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/BPMainFragment"
-        android:name="com.vboard.bp_recorder_app.ui.blood_pressure.BPMainFragment"
+        android:name="com.vboard.bp_recorder_app.ui.fragments.blood_pressure.BPMainFragment"
         android:label="BPMainFragment" >
 
         <action
@@ -76,13 +79,13 @@
 
     <fragment
         android:id="@+id/addBPRecordFragment"
-        android:name="com.vboard.bp_recorder_app.ui.blood_pressure.add_record.AddBPRecordFragment"
+        android:name="com.vboard.bp_recorder_app.ui.fragments.blood_pressure.add_record.AddBPRecordFragment"
         android:label="fragment_add_b_p_record"
-        tools:layout="@layout/fragment_add_b_p_record" />
+        tools:layout="@layout/fragment_add_bp_record" />
 
     <fragment
         android:id="@+id/showBPRecordFragment"
-        android:name="com.vboard.bp_recorder_app.ui.blood_pressure.history.BPHistoryFragment"
+        android:name="com.vboard.bp_recorder_app.ui.fragments.blood_pressure.history.BPHistoryFragment"
         android:label="ShowBPRecordFragment" >
         <action
             android:id="@+id/action_showBPRecordFragment_to_addBPRecordFragment"
@@ -91,7 +94,7 @@
 
     <fragment
         android:id="@+id/heartRateFragment"
-        android:name="com.vboard.bp_recorder_app.ui.heart_rate.HeartRateMainFragment"
+        android:name="com.vboard.bp_recorder_app.ui.fragments.heart_rate.HeartRateMainFragment"
         android:label="HeartRateFragment" >
 
         <action
@@ -101,7 +104,7 @@
 
     <fragment
         android:id="@+id/BPGraphsFragment"
-        android:name="com.vboard.bp_recorder_app.ui.weight.graphs.WeightGraphsFragment"
+        android:name="com.vboard.bp_recorder_app.ui.fragments.weight.graphs.WeightGraphsFragment"
         android:label="BPGraphsFragment" />
     <fragment
         android:id="@+id/addHeartRateFragment"
@@ -114,7 +117,7 @@
 
     <fragment
         android:id="@+id/weightMainFragment"
-        android:name="com.vboard.bp_recorder_app.ui.weight.WeightMainFragment"
+        android:name="com.vboard.bp_recorder_app.ui.fragments.weight.WeightMainFragment"
         android:label="WeightMainFragment" >
         <action
             android:id="@+id/action_weightMainFragment_to_addWeightRecordFragment"
@@ -128,7 +131,11 @@
     </fragment>
     <fragment
         android:id="@+id/addWeightRecordFragment"
-        android:name="com.vboard.bp_recorder_app.ui.weight.add_record.AddWeightRecordFragment"
+        android:name="com.vboard.bp_recorder_app.ui.fragments.weight.add_record.AddWeightRecordFragment"
         android:label="AddWeightRecordFragment" />
+    <fragment
+        android:id="@+id/infoDetailFragment"
+        android:name="com.vboard.bp_recorder_app.ui.fragments.info_module.details.InfoDetailFragment"
+        android:label="InfoDetailFragment" />
 
 </navigation>

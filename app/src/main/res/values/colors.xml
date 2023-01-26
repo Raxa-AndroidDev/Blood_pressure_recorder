@@ -35,6 +35,14 @@
 
 
 
+    <color name="info_yellow_color">#ffb200</color>
+    <color name="info_red_color">#f04040</color>
+    <color name="info_light_green_color">#75c360</color>
+    <color name="info_blue_color">#5591ff</color>d
+
+
+
+
 
 
     <color name="mainbar_selected_color">#179296</color>
