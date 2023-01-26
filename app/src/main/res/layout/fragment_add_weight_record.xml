@@ -91,7 +91,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_systolic_unit"
+                    android:id="@+id/tv_weight_unit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
@@ -109,7 +109,7 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:descendantFocusability="blocksDescendants"
                     app:layout_constraintStart_toStartOf="@+id/tv_weight_np"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_systolic_unit"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_weight_unit"
                     app:np_dividerThickness="@dimen/_1sdp"
                     app:np_order="ascending"
                     app:np_selectedTextColor="@color/tab_selected_color"
@@ -127,7 +127,6 @@
                     android:theme="@style/Generic.NumberPickerTextTheme"
                     app:layout_constraintEnd_toEndOf="@id/right_guide"
                     app:layout_constraintStart_toEndOf="@+id/tv_weight_np"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -135,7 +134,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="m"
+                    android:text="cm"
                     android:textColor="#85000000"
                     android:textSize="@dimen/_10ssp"
                     app:layout_constraintEnd_toEndOf="@id/tv_height_np"
@@ -152,6 +151,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_height_unit"
                     app:np_dividerThickness="@dimen/_1sdp"
                     app:np_order="ascending"
+
                     app:np_selectedTextColor="@color/tab_selected_color"
                     app:np_selectedTextSize="@dimen/_28ssp"
                     app:np_wrapSelectorWheel="false" />
@@ -191,7 +191,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_toEndOf="@+id/img_heart_icon"
-                        android:fontFamily="@font/productsans_bold"
+                        android:fontFamily="@font/poppins_bold"
                         android:text="@string/normal"
                         android:textSize="@dimen/_16ssp"
                         app:layout_constraintStart_toEndOf="@+id/img_heart_icon"
@@ -265,7 +265,7 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:focusable="true"
-                    android:fontFamily="@font/productsans_regular"
+                    android:fontFamily="@font/poppins_regular"
                     android:text="@string/note"
                     android:textSize="@dimen/_16ssp"
                     android:theme="@style/AddRecordTextviewTheme"

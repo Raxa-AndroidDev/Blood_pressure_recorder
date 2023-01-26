@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainFragment">
+    tools:context=".ui.fragments.MainFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/main_guideline"
@@ -140,7 +140,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_25sdp"
             android:backgroundTint="@color/white"
-            android:fontFamily="@font/productsans_bold"
+            android:fontFamily="@font/poppins_bold"
             android:text="Measure and Tracker"
             android:textColor="#2b628e"
             android:textSize="@dimen/_10ssp"

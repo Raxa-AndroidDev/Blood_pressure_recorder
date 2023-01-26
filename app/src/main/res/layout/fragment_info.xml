@@ -10,17 +10,45 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.info_module.InfoFragment">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="info frag"
-
+        tools:context=".ui.fragments.info_module.titles.InfoMainFragment">
+        
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?android:actionBarSize"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:id="@+id/top_appbar">
+
+            <ImageView
+                android:paddingStart="@dimen/_18sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/icon_back"
+                android:id="@+id/img_back_icon"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:textSize="@dimen/_16ssp"
+                android:theme="@style/TopBarTitleTheme"
+                android:textFontWeight="10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/info_title"
+                android:layout_centerInParent="true"/>
+
+
+
+        </RelativeLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/info_titles_rcv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/top_appbar"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

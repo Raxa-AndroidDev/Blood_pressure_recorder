@@ -1,6 +1,6 @@
 package com.vboard.bp_recorder_app.utils;
 
-import static com.vboard.bp_recorder_app.ui.heart_rate.HeartRateMonitor.getCurrent;
+import static com.vboard.bp_recorder_app.ui.fragments.heart_rate.HeartRateMonitor.getCurrent;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -12,7 +12,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.vboard.bp_recorder_app.R;
-import com.vboard.bp_recorder_app.ui.heart_rate.HeartRateMonitor;
+import com.vboard.bp_recorder_app.ui.fragments.heart_rate.HeartRateMonitor;
 
 /**
  * Created by jcs on 13/2/18.

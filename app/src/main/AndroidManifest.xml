@@ -47,7 +47,7 @@
         </activity>
 
 
-         <activity android:name=".ui.heart_rate.HeartRateMonitor"
+         <activity android:name=".ui.fragments.heart_rate.HeartRateMonitor"
              android:label="Measure"
              android:parentActivityName=".ui.MainActivity">
 

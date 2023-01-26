@@ -10,47 +10,64 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.heart_rate.HeartRateMainFragment">
+        tools:context=".ui.heart_rate.HeartRateMonitor.HeartRateMainFragment">
+
+        <RelativeLayout
+            android:id="@+id/top_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/back_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/_18sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:src="@drawable/icon_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_toEndOf="@+id/back_arrow"
+                android:text="@string/tracker"
+                android:textSize="@dimen/_18ssp"
+                android:theme="@style/TopBarTitleTheme" />
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_measure_hr"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/tv_export"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:text="@string/export"
+                android:textSize="@dimen/_16ssp"
+                android:theme="@style/TopBarSubTitleTheme" />
+        </RelativeLayout>
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cornerRadius="@dimen/_10sdp"
-            android:text="Measure Heart Rate"
-            android:layout_marginTop="@dimen/_15sdp"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/top_appbar"
+            app:tabIndicatorColor="@color/tab_selected_color"
+            app:tabSelectedTextColor="@color/tab_selected_color" />
+
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_add_hr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cornerRadius="@dimen/_10sdp"
-            android:text="Add Heart Rate Record"
-            app:layout_constraintTop_toBottomOf="@+id/button_measure_hr"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_view_hr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cornerRadius="@dimen/_10sdp"
-            app:layout_goneMarginTop="@dimen/_10sdp"
-            android:text="View Heart Rate Record"
-            app:layout_constraintTop_toBottomOf="@+id/button_add_hr"
-           android:layout_marginTop="@dimen/_10sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-
-
+            app:layout_constraintTop_toBottomOf="@+id/tab_layout" />
 
 
 
