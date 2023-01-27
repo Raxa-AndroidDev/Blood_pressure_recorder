@@ -1,6 +1,7 @@
-package com.vboard.bp_recorder_app.ui.fragments.heart_rate.history.adapter
+package com.vboard.bp_recorder_app.ui.fragments.heart_rate.history
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -8,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -29,6 +29,8 @@ import com.vboard.bp_recorder_app.data.database.db_tables.HeartRateTable
 import com.vboard.bp_recorder_app.data.viewModels.HRViewModel
 import com.vboard.bp_recorder_app.databinding.FragmentHrHistoryBinding
 import com.vboard.bp_recorder_app.ui.MainActivity
+import com.vboard.bp_recorder_app.ui.fragments.heart_rate.HeartRateMonitor
+import com.vboard.bp_recorder_app.ui.fragments.heart_rate.history.adapter.HRHistoryAdapter
 import com.vboard.bp_recorder_app.utils.*
 import com.vboard.bp_recorder_app.utils.interfaces.ShowHRAdapterCallbacks
 import timber.log.Timber
@@ -69,6 +71,7 @@ class HRHistoryFragment : Fragment(),ShowHRAdapterCallbacks {
         binding.chartLayout.visibility = View.VISIBLE
         binding.tvViewall.visibility = View.VISIBLE
         binding.dateWiseSearchLayout.visibility = View.VISIBLE
+        binding.buttonMeasureHr.visibility = View.INVISIBLE
         viewModel = ViewModelProvider(this)[HRViewModel::class.java]
 
         showEmptyListDialog()
@@ -113,10 +116,18 @@ class HRHistoryFragment : Fragment(),ShowHRAdapterCallbacks {
         }
 
 
+        binding.buttonMeasureHr.setOnClickListener {
+
+           findNavController().navigate(R.id.action_heartRateFragment_to_measureHeartRateFragment)
+           // requireContext().startActivity(Intent(requireContext(),HeartRateMonitor::class.java))
+        }
+
         binding.buttonAddHr.setOnClickListener {
 
             val bundle = Bundle()
             bundle.putParcelable("hrtable", null)
+
+           // requireContext().startActivity(Intent(requireContext(),HeartRateMonitor::class.java),bundle)
            
 
         }
@@ -152,8 +163,10 @@ class HRHistoryFragment : Fragment(),ShowHRAdapterCallbacks {
                 Log.e("TAG", "showEmptyListDialog: ${it.size}")
                 if (it.isEmpty()) {
 
+                    binding.buttonMeasureHr.visibility = View.VISIBLE
+
                     val dialog = Dialog(requireContext())
-                    dialog.setContentView(R.layout.empty_layout)
+                    dialog.setContentView(R.layout.empty_layout_hr)
                     dialog.window!!.setLayout(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT
@@ -165,14 +178,27 @@ class HRHistoryFragment : Fragment(),ShowHRAdapterCallbacks {
                             val bundle = Bundle()
                             bundle.putParcelable("hrtable", null)
 
+                           // requireContext().startActivity(Intent(requireContext(),HeartRateMonitor::class.java),bundle)
+
                             dialog.dismiss()
                         }
+
+                    dialog.findViewById<MaterialButton>(R.id.button_measure_now_empty).setOnClickListener {
+                       // requireContext().startActivity(Intent(requireContext(),HeartRateMonitor::class.java))
+                        dialog.dismiss()
+                        findNavController().navigate(R.id.action_heartRateFragment_to_measureHeartRateFragment)
+
+                    }
 
                     dialog.setCanceledOnTouchOutside(false)
 
                     dialog.show()
 
                 }
+                else{
+                    binding.buttonMeasureHr.visibility = View.INVISIBLE
+                }
+
 
 
             }
@@ -373,11 +399,7 @@ class HRHistoryFragment : Fragment(),ShowHRAdapterCallbacks {
     override fun OnEditIconClick(heartRateTable: HeartRateTable) {
         val bundle = Bundle()
         bundle.putParcelable("weighttable", heartRateTable)
-
-        findNavController().navigate(
-            R.id.action_weightMainFragment_to_addWeightRecordFragment,
-            bundle
-        )
+       // requireContext().startActivity(Intent(requireContext(),HeartRateMonitor::class.java),bundle)
 
     }
 

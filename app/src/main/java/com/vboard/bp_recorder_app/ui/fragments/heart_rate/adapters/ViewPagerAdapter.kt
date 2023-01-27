@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.vboard.bp_recorder_app.ui.fragments.heart_rate.graph.HRGraphFragment
-import com.vboard.bp_recorder_app.ui.fragments.heart_rate.history.adapter.HRHistoryFragment
+import com.vboard.bp_recorder_app.ui.fragments.heart_rate.history.HRHistoryFragment
 
 class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {

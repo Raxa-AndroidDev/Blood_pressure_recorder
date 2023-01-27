@@ -54,6 +54,10 @@
     <string name="cancel">Cancel</string>
     <string name="add">Add</string>
     <string name="info_title"><![CDATA[Information & Knowledge]]></string>
+    <string name="measure_now">Measure Now</string>
+    <string name="no_records_yet_add_your_n_first_heart_rate_record">No Records yet. Add your\n first heart rate record</string>
+    <string name="add_data_string">+ Add Data</string>
+    <string name="splash_title"><![CDATA[Heart &\nBlood Pressure]]></string>
 
 
 </resources>

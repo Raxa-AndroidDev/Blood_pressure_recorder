@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/empty_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:background="#14000000"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tv_empty_layout_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:fontFamily="@font/poppins_semibold"
+
+        android:text="@string/no_records_yet_add_your_n_first_heart_rate_record"
+        android:textColor="@color/white" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_measure_now_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cornerRadius="@dimen/_20sdp"
+        android:textSize="@dimen/_15ssp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:gravity="center_horizontal"
+        app:icon="@drawable/thumb_icon"
+        android:paddingStart="@dimen/_30sdp"
+        android:paddingEnd="@dimen/_30sdp"
+        android:text="@string/measure_now"
+        android:theme="@style/Generic.RoundButton" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_add_now_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cornerRadius="@dimen/_20sdp"
+        android:textSize="@dimen/_15ssp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:gravity="center_horizontal"
+        android:paddingStart="@dimen/_30sdp"
+        android:paddingEnd="@dimen/_30sdp"
+        android:text="Add Manually"
+        app:icon="@drawable/ic_add_hr"
+        android:theme="@style/Generic.RoundButton" />
+
+
+</LinearLayout>

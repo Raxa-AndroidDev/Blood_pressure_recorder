@@ -1,15 +1,14 @@
 package com.vboard.bp_recorder_app.ui.fragments.heart_rate
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
@@ -23,7 +22,6 @@ import com.vboard.bp_recorder_app.ui.fragments.heart_rate.adapters.ViewPagerAdap
 import timber.log.Timber
 import java.io.File
 import java.io.FileWriter
-import java.util.*
 
 class HeartRateMainFragment : Fragment() {
 
@@ -65,25 +63,22 @@ class HeartRateMainFragment : Fragment() {
     }
 
 
-
-
     private fun handleBottombar() {
         (activity as MainActivity).binding.bottomNavView.apply {
             Timber.e("bar visibility is ${this.visibility}")
-            if ((this.isVisible)) {
+           /* if ((this.isVisible)) {
 
                 this.visibility = View.GONE
-            }
+            }*/
 
 
-
-            /*this.setOnItemSelectedListener {
+            this.setOnItemSelectedListener {
                 when (it) {
                     0 -> {
-                        findNavController().navigate(R.id.action_weightMainFragment_to_mainFragment)
+                        findNavController().navigate(R.id.action_heartRateFragment_to_mainFragment)
                     }
                     1 -> {
-                        findNavController().navigate(R.id.action_weightMainFragment_to_infoFragment)
+                        findNavController().navigate(R.id.action_heartRateFragment_to_infoFragment)
                     }
                     2 -> {
 
@@ -91,7 +86,7 @@ class HeartRateMainFragment : Fragment() {
                     }
                 }
 
-            }*/
+            }
         }
     }
 
@@ -117,9 +112,10 @@ class HeartRateMainFragment : Fragment() {
             DatabaseClass.getDBInstance(requireContext()).bpDao().fetchAllBPRecords()
                 .observe(viewLifecycleOwner) {
 
-                    if (it.isEmpty()){
-                        Toast.makeText(requireContext(),"No Data to Export", Toast.LENGTH_LONG).show()
-                    }else{
+                    if (it.isEmpty()) {
+                        Toast.makeText(requireContext(), "No Data to Export", Toast.LENGTH_LONG)
+                            .show()
+                    } else {
                         createCSV()
                     }
 
@@ -139,7 +135,7 @@ class HeartRateMainFragment : Fragment() {
         val file = File(exportDir, "Heart_Rate_Table" + ".csv")
         try {
 
-            if(file.exists()){
+            if (file.exists()) {
                 file.delete()
             }
             file.createNewFile()
@@ -159,24 +155,26 @@ class HeartRateMainFragment : Fragment() {
                 )
             )
 
-            DatabaseClass.getDBInstance(requireContext()).hrDao().fetchAllHeartRateRecords().observe(viewLifecycleOwner){ bp ->
-                bp.forEach { it ->
+            DatabaseClass.getDBInstance(requireContext()).hrDao().fetchAllHeartRateRecords()
+                .observe(viewLifecycleOwner) { bp ->
+                    bp.forEach { it ->
 
 
-                    val arrStr = arrayOf("${it.id}",
-                        it.date.toString(),
-                        it.time,
-                        it.DateAndTime, it.BPM, it.label
-                    )
+                        val arrStr = arrayOf(
+                            "${it.id}",
+                            it.date.toString(),
+                            it.time,
+                            it.DateAndTime, it.BPM, it.label
+                        )
 
 
 
-                    csvWrite.writeNext(arrStr)
+                        csvWrite.writeNext(arrStr)
+                    }
+
+                    csvWrite.close()
+
                 }
-
-                csvWrite.close()
-
-            }
 
 
 
