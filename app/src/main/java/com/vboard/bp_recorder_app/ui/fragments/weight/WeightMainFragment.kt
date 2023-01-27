@@ -66,13 +66,12 @@ lateinit var binding:FragmentWeightMainBinding
 
     private fun handleBottombar() {
         (activity as MainActivity).binding.bottomNavView.apply {
-           Timber.e("bar visibility is ${this.visibility}")
-            if ((this.isVisible)) {
+
+         /*   if ((this.isVisible)) {
 
                 this.visibility = View.GONE
-            }
+            }*/
 
-            Timber.e("bar visibility after moving to module is ${this.visibility}")
 
             this.setOnItemSelectedListener {
                 when (it) {

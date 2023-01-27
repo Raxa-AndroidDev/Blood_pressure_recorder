@@ -100,6 +100,15 @@
         <action
             android:id="@+id/action_heartRateFragment_to_addHeartRateFragment"
             app:destination="@id/addHeartRateFragment" />
+        <action
+            android:id="@+id/action_heartRateFragment_to_measureHeartRateFragment"
+            app:destination="@id/measureHeartRateFragment" />
+        <action
+            android:id="@+id/action_heartRateFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_heartRateFragment_to_infoFragment"
+            app:destination="@id/infoFragment" />
     </fragment>
 
     <fragment
@@ -137,5 +146,9 @@
         android:id="@+id/infoDetailFragment"
         android:name="com.vboard.bp_recorder_app.ui.fragments.info_module.details.InfoDetailFragment"
         android:label="InfoDetailFragment" />
+    <fragment
+        android:id="@+id/measureHeartRateFragment"
+        android:name="com.vboard.bp_recorder_app.ui.fragments.heart_rate.MeasureHeartRateFragment"
+        android:label="MeasureHeartRateFragment" />
 
 </navigation>

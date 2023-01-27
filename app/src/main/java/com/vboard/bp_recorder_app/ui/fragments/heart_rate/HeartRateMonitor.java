@@ -6,30 +6,22 @@ import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.Looper;
 import android.os.PowerManager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
 
 import com.vboard.bp_recorder_app.R;
+import com.vboard.bp_recorder_app.data.database.db_tables.HeartRateTable;
 import com.vboard.bp_recorder_app.utils.ImageProcessing;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/**
- * Created by jcs on 13/2/18.
- */
 
 public class HeartRateMonitor extends AppCompatActivity {
 
@@ -56,7 +48,6 @@ public class HeartRateMonitor extends AppCompatActivity {
         GREEN, RED
     }
 
-    ;
 
     private static TYPE currentType = TYPE.GREEN;
 
@@ -75,10 +66,34 @@ public class HeartRateMonitor extends AppCompatActivity {
     private static boolean calculatingTHR = false;
 
 
+    HeartRateTable heartRateTable = null;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.heartratemonitor);
+
+        initialization();
+
+
+        Bundle getBundle = null;
+        getBundle = this.getIntent().getExtras();
+        heartRateTable = getBundle.getParcelable("hrtable");
+
+
+    }
+
+    private void initialization() {
+
+
+        viewsInit();
+
+
+    }
+
+
+    private void viewsInit() {
 
         preview = (SurfaceView) findViewById(R.id.preview);
         previewHolder = preview.getHolder();
@@ -92,15 +107,13 @@ public class HeartRateMonitor extends AppCompatActivity {
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
 
-
-
-         timer = new CountDownTimer(20000, 20000) {
+        timer = new CountDownTimer(20000, 20000) {
             @Override
             public void onTick(long l) {
 
-                progress = progress+1;
+                progress = progress + 1;
                 heart_progressbar.setProgress(progress);
-                Log.e("TAG", "onTick: progress is"+progress);
+                Log.e("TAG", "onTick: progress is" + progress);
 
             }
 
@@ -109,8 +122,6 @@ public class HeartRateMonitor extends AppCompatActivity {
 
             }
         };
-
-
     }
 
 
@@ -143,121 +154,6 @@ public class HeartRateMonitor extends AppCompatActivity {
         camera = null;
     }
 
-    private static Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
-        @Override
-        public void onPreviewFrame(byte[] data, Camera cam) {
-
-            if (data == null) throw new NullPointerException();
-            Camera.Size size = cam.getParameters().getPreviewSize();
-            if (size == null) throw new NullPointerException();
-
-            if (!processing.compareAndSet(false, true)) return;
-
-            int width = size.width;
-            int height = size.height;
-
-            int imgAvg = ImageProcessing.decodeYUV420SPtoRedAvg(data.clone(), height, width);
-
-
-
-
-
-
-
-
-            if (imgAvg == 0 || imgAvg < 200) {
-                progress =0;
-                timer.cancel();
-                processing.set(false);
-                return;
-            }
-
-            timer.start();
-
-
-
-
-            int averageArrayAvg = 0;
-            int averageArrayCnt = 0;
-            for (int i = 0; i < averageArray.length; i++) {
-                Log.e(TAG, "onPreviewFrame: avg array count" + i);
-                if (averageArray[i] > 0) {
-                    averageArrayAvg += averageArray[i];
-                    averageArrayCnt++;
-                }
-            }
-
-            int rollingAverage = (averageArrayCnt > 0) ? (averageArrayAvg / averageArrayCnt) : 0;
-            TYPE newType = currentType;
-            if (imgAvg < rollingAverage) {
-                newType = TYPE.RED;
-                if (newType != currentType) {
-                    beats++;
-                    Log.e(TAG, "onPreviewFrame: beats" + beats);
-                    Log.e(TAG, "onPreviewFrame: beatsarray length" + beatsArray.length);
-
-
-                }
-            } else if (imgAvg > rollingAverage) {
-                newType = TYPE.GREEN;
-            }
-
-            if (averageIndex == averageArraySize) averageIndex = 0;
-            averageArray[averageIndex] = imgAvg;
-            averageIndex++;
-
-            // Transitioned from one state to another to the same
-            if (newType != currentType) {
-                Log.e(TAG, "onPreviewFrame: currenttype is " + currentType);
-                currentType = newType;
-                image.postInvalidate();
-            }
-
-            long endTime = System.currentTimeMillis();
-            double totalTimeInSecs = (endTime - startTime) / 1000d;
-
-            if (totalTimeInSecs >= 10) {
-
-                double bps = (beats / totalTimeInSecs);
-                int dpm = (int) (bps * 60d);
-                if (dpm < 30 || dpm > 180) {
-
-                    startTime = System.currentTimeMillis();
-                    beats = 0;
-                    heart_progressbar.setProgress(0);
-                    processing.set(false);
-                    return;
-                }
-
-                if (beatsIndex == beatsArraySize) beatsIndex = 0;
-                beatsArray[beatsIndex] = dpm;
-                beatsIndex++;
-                Log.e(TAG, "onPreviewFrame: beatsIndex" + beatsIndex);
-
-
-                int beatsArrayAvg = 0;
-                int beatsArrayCnt = 0;
-                for (int i = 0; i < beatsArray.length; i++) {
-                    if (beatsArray[i] > 0) {
-                        beatsArrayAvg += beatsArray[i];
-                        beatsArrayCnt++;
-                        Log.e(TAG, "onPreviewFrame: beatsarraycount" + beatsArrayCnt);
-
-
-                    }
-                }
-                int beatsAvg = (beatsArrayAvg / beatsArrayCnt);
-                heartRate = String.valueOf(beatsAvg);
-                text.setText(heartRate);
-                startTime = System.currentTimeMillis();
-                beats = 0;
-                stopCam();
-            }
-            processing.set(false);
-
-
-        }
-    };
 
     public static void stopCam() {
         camera.stopPreview();
@@ -343,5 +239,113 @@ public class HeartRateMonitor extends AppCompatActivity {
 
         return result;
     }
+
+    private static Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
+        @Override
+        public void onPreviewFrame(byte[] data, Camera cam) {
+
+            if (data == null) throw new NullPointerException();
+            Camera.Size size = cam.getParameters().getPreviewSize();
+            if (size == null) throw new NullPointerException();
+
+            if (!processing.compareAndSet(false, true)) return;
+
+            int width = size.width;
+            int height = size.height;
+
+            int imgAvg = ImageProcessing.decodeYUV420SPtoRedAvg(data.clone(), height, width);
+
+
+            if (imgAvg == 0 || imgAvg < 200) {
+                progress = 0;
+                timer.cancel();
+                processing.set(false);
+                return;
+            }
+
+            timer.start();
+
+
+            int averageArrayAvg = 0;
+            int averageArrayCnt = 0;
+            for (int i = 0; i < averageArray.length; i++) {
+                Log.e(TAG, "onPreviewFrame: avg array count" + i);
+                if (averageArray[i] > 0) {
+                    averageArrayAvg += averageArray[i];
+                    averageArrayCnt++;
+                }
+            }
+
+            int rollingAverage = (averageArrayCnt > 0) ? (averageArrayAvg / averageArrayCnt) : 0;
+            TYPE newType = currentType;
+            if (imgAvg < rollingAverage) {
+                newType = TYPE.RED;
+                if (newType != currentType) {
+                    beats++;
+                    Log.e(TAG, "onPreviewFrame: beats" + beats);
+                    Log.e(TAG, "onPreviewFrame: beatsarray length" + beatsArray.length);
+
+
+                }
+            } else if (imgAvg > rollingAverage) {
+                newType = TYPE.GREEN;
+            }
+
+            if (averageIndex == averageArraySize) averageIndex = 0;
+            averageArray[averageIndex] = imgAvg;
+            averageIndex++;
+
+            // Transitioned from one state to another to the same
+            if (newType != currentType) {
+                Log.e(TAG, "onPreviewFrame: currenttype is " + currentType);
+                currentType = newType;
+                image.postInvalidate();
+            }
+
+            long endTime = System.currentTimeMillis();
+            double totalTimeInSecs = (endTime - startTime) / 1000d;
+
+            if (totalTimeInSecs >= 10) {
+
+                double bps = (beats / totalTimeInSecs);
+                int dpm = (int) (bps * 60d);
+                if (dpm < 30 || dpm > 180) {
+
+                    startTime = System.currentTimeMillis();
+                    beats = 0;
+                    heart_progressbar.setProgress(0);
+                    processing.set(false);
+                    return;
+                }
+
+                if (beatsIndex == beatsArraySize) beatsIndex = 0;
+                beatsArray[beatsIndex] = dpm;
+                beatsIndex++;
+                Log.e(TAG, "onPreviewFrame: beatsIndex" + beatsIndex);
+
+
+                int beatsArrayAvg = 0;
+                int beatsArrayCnt = 0;
+                for (int i = 0; i < beatsArray.length; i++) {
+                    if (beatsArray[i] > 0) {
+                        beatsArrayAvg += beatsArray[i];
+                        beatsArrayCnt++;
+                        Log.e(TAG, "onPreviewFrame: beatsarraycount" + beatsArrayCnt);
+
+
+                    }
+                }
+                int beatsAvg = (beatsArrayAvg / beatsArrayCnt);
+                heartRate = String.valueOf(beatsAvg);
+                text.setText(heartRate);
+                startTime = System.currentTimeMillis();
+                beats = 0;
+                stopCam();
+            }
+            processing.set(false);
+
+
+        }
+    };
 
 }

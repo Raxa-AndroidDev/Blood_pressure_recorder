@@ -57,12 +57,18 @@ dependencies {
     // for logs
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
+    // lottie animation
+    implementation 'com.airbnb.android:lottie:5.2.0'
+
     // for admob ads
         implementation 'com.google.android.gms:play-services-ads:21.4.0'
 
 
     // for datepicker
     implementation 'com.github.Raxa-AndroidDev:SingleDateAndTimePicker:4ba89acf07'
+
+    //  for permissions
+    implementation 'com.guolindev.permissionx:permissionx:1.7.1'
 
     // for chips views
     implementation 'com.google.android.flexbox:flexbox:3.0.0'

@@ -11,6 +11,7 @@ import com.vboard.bp_recorder_app.ui.fragments.weight.WeightTypesModelClass
 import java.text.Format
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.pow
 
 
@@ -473,12 +474,12 @@ fun getInfoTitleIconsList(): ArrayList<Int> {
 
     info_icon_bg_list.add(R.drawable.icon_info_1)
     info_icon_bg_list.add(R.drawable.icon_info_2)
-    info_icon_bg_list.add(R.drawable.icon_info_8)
+    info_icon_bg_list.add(R.drawable.icon_3)
     info_icon_bg_list.add(R.drawable.icon_info_4)
     info_icon_bg_list.add(R.drawable.icon_info_5)
 
     info_icon_bg_list.add(R.drawable.icon_info_6)
-    info_icon_bg_list.add(R.drawable.icon_info_8)
+    info_icon_bg_list.add(R.drawable.icon_7)
     info_icon_bg_list.add(R.drawable.icon_info_8)
     info_icon_bg_list.add(R.drawable.icon_9)
     info_icon_bg_list.add(R.drawable.icon_10)
@@ -486,16 +487,16 @@ fun getInfoTitleIconsList(): ArrayList<Int> {
     info_icon_bg_list.add(R.drawable.icon_11)
     info_icon_bg_list.add(R.drawable.icon_12)
     info_icon_bg_list.add(R.drawable.icon_13)
-    info_icon_bg_list.add(R.drawable.icon_info_8)
-    info_icon_bg_list.add(R.drawable.icon_info_8)
+    info_icon_bg_list.add(R.drawable.icon_14)
+    info_icon_bg_list.add(R.drawable.icon_15)
 
     info_icon_bg_list.add(R.drawable.icon_16)
     info_icon_bg_list.add(R.drawable.icon_17)
-    info_icon_bg_list.add(R.drawable.icon_info_8)
+    info_icon_bg_list.add(R.drawable.icon_18)
     info_icon_bg_list.add(R.drawable.icon_19)
     info_icon_bg_list.add(R.drawable.icon_20)
 
-    info_icon_bg_list.add(R.drawable.icon_info_8)
+    info_icon_bg_list.add(R.drawable.icon_gestanioal_hypertension)
     info_icon_bg_list.add(R.drawable.icon_22)
     info_icon_bg_list.add(R.drawable.icon_23)
     info_icon_bg_list.add(R.drawable.icon_24)
@@ -548,6 +549,38 @@ fun getInfoTitlesList(): ArrayList<String> {
 
 fun getInfoDetailsData(title: String): ArrayList<InfoDetailModelClass> {
     val infoDetailList = arrayListOf<InfoDetailModelClass>()
+
+
+
+    if (title== Constansts.infoTitle1){
+
+        infoDetailList.add(InfoDetailModelClass("Types of blood pressure and concerns",""))
+        infoDetailList.add(InfoDetailModelClass("Blood pressure typically rises and falls throughout the course of the day, but if it remains high for an extended period of time, it can harm your heart and result in health issues. Hypertension, often known as high blood pressure, is elevated blood pressure.\n" +
+                "To define your blood pressure numbers, you can see the blood pressure category below.",""))
+        infoDetailList.add(InfoDetailModelClass("Hypotension","SYS < 90 or DIA < 60"))
+        infoDetailList.add(InfoDetailModelClass("Normal","SYS 90-119 and DIA 60-79"))
+        infoDetailList.add(InfoDetailModelClass("Elevated","SYS 120-129 and DIA 60-79"))
+        infoDetailList.add(InfoDetailModelClass("Hypertension•Stage 1","SYS 130-139 or DIA 80-89"))
+        infoDetailList.add(InfoDetailModelClass("Hypertension•Stage 2","SYS 140-180 or DIA 90-120"))
+        infoDetailList.add(InfoDetailModelClass("Hypertensive","SYS > 180 or DIA > 120"))
+        infoDetailList.add(InfoDetailModelClass("1.Hypotension Stage","You are likely hypotensive if your readings are less than 90/60 mmHg. Since low blood pressure typically has no negative effects and no symptoms, you do not require any treatment. \n" +
+                "However, you should get help if your blood pressure frequently decreases by over 20 mmHg without warning, drops quickly as a result of particular medications, or if you experience symptoms like exhaustion, fainting, or dizziness."))
+        infoDetailList.add(InfoDetailModelClass("2. Normal Ranges of blood pressure","Your blood pressure is normal if your readings are greater than 90/60 mmHg and less than 120/80 mmHg. A healthy lifestyle must be maintained or adopted if you want to stop hypertension from developing. \n" +
+                "Additionally, since you have a higher chance of acquiring hypertension if you have any family members who suffer from the condition, it is advised that you pay even closer attention to your lifestyle."))
+
+        infoDetailList.add(InfoDetailModelClass("3.Elevated Stage","Blood pressure is regarded as raised when it is greater than usual but falls short of 130/80 mmHg. \n" +
+                "Your likelihood of developing high blood pressure increases if your lifestyle and eating habits don't change."))
+
+        infoDetailList.add(InfoDetailModelClass("4.Hypertension Stage 1","You are in stage 1 hypertension if your diastolic or systolic pressure consistently ranges between 80 and 89 millimeters of mercury (mmHg). \n" +
+                "In general, all it takes to reduce blood pressure is an improvement in lifestyle. However, you should begin taking the appropriate medications if you have a high risk of cardiovascular disease (heart disease, stroke, etc.)."))
+
+        infoDetailList.add(InfoDetailModelClass("5.Hypertension Stage 2","When your systolic or diastolic blood pressure consistently ranges from 140 to 180 mmHg or between 90 and 120 mmHg, you have hypertension stage 2. \n" +
+                "You ought to combine one or more drugs with a change in your way of life at this point. \n" +
+                "If your blood pressure is under control after the first month of therapy and lifestyle changes, you can return to the hospital in three to six months for another reading. You should speak with a doctor about switching to alternative medicines if your blood pressure is greater or doesn't change."))
+
+        infoDetailList.add(InfoDetailModelClass("6.Hypertension Crisis","If you are checking your blood pressure at home and see your systolic reading over 180 mmHg or diastolic number above 120 mmHg, you need to calm down at first then wait a few minutes to retest it. If you are still in the range of the hypertension crisis, don't hesitate to call the emergency service or go to the hospital right now."))
+
+    }
 
     if (title == Constansts.infoTitle2) {
 

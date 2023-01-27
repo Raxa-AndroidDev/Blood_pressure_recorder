@@ -9,6 +9,11 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.android.ads.nativetemplates.NativeTemplateStyle
+import com.google.android.ads.nativetemplates.TemplateView
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.nativead.NativeAd
 import com.vboard.bp_recorder_app.R
 import com.vboard.bp_recorder_app.databinding.FragmentMainBinding
 import com.vboard.bp_recorder_app.ui.MainActivity
@@ -29,26 +34,15 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // loadNativeAd()
+         loadNativeAd()
 
         askPermission()
 
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Timber.e("main frag  resumed ")
-        (activity as MainActivity).binding.bottomNavView.apply {
-            Timber.e("bar visibility on resume is ${this.visibility}")
-            if ((this.visibility == View.GONE)) {
-
-                this.visibility = View.VISIBLE
-
-            }
-        }
 
     }
+
+
 
     private fun askPermission() {
         val permissionLauncher =
@@ -84,6 +78,7 @@ class MainFragment : Fragment() {
 
         binding.heartrateLayout.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_heartRateFragment)
+            (activity as MainActivity).binding.bottomNavView.setSelectedItem(2)
         }
 
 
@@ -91,13 +86,11 @@ class MainFragment : Fragment() {
 
         binding.weightLayout.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_weightMainFragment)
+            (activity as MainActivity).binding.bottomNavView.setSelectedItem(2)
         }
 
         (activity as MainActivity).binding.bottomNavView.apply {
-            Timber.e("bar visibility is ${this.visibility}")
-            if ((this.visibility == View.GONE)) {
-                this.visibility = View.VISIBLE
-            }
+
 
             this.setOnItemSelectedListener {
                 when (it){
@@ -123,24 +116,19 @@ class MainFragment : Fragment() {
 
     }
 
-//    private fun loadNativeAd() {
-//
-//        val adLoader:AdLoader = Builder()
-//
-//        val adLoader: AdLoader = Builder(this, "ca-app-pub-3940256099942544/2247696110")
-//            .forNativeAd(object : NativeAd.OnNativeAdLoadedListener() {
-//                fun onNativeAdLoaded(nativeAd: NativeAd?) {
-//                    val styles =
-//                        NativeTemplateStyle.Builder().build()
-//                    val template: TemplateView = findViewById(R.id.native_ad_template)
-//                    template.setStyles(styles)
-//                    template.setNativeAd(nativeAd)
-//                }
-//            })
-//            .build()
-//
-//        adLoader.loadAd(NativeTemplateStyle.Builder().build())
-//    }
+    private fun loadNativeAd() {
+
+        val adLoader: AdLoader = AdLoader.Builder(requireContext(), "ca-app-pub-3940256099942544/2247696110")
+            .forNativeAd {
+                val styles = NativeTemplateStyle.Builder().build()
+                val template: TemplateView = binding.nativeAdTemplate
+                template.setStyles(styles)
+                template.setNativeAd(it)
+            }
+            .build()
+
+        adLoader.loadAd(AdRequest.Builder().build())
+    }
 
 
 }
