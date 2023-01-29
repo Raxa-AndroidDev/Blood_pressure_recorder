@@ -17,6 +17,7 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.vboard.bp_recorder_app.R
 import com.vboard.bp_recorder_app.databinding.FragmentMainBinding
 import com.vboard.bp_recorder_app.ui.MainActivity
+import com.vboard.bp_recorder_app.utils.applyOnClick
 import timber.log.Timber
 
 
@@ -34,30 +35,30 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-         loadNativeAd()
-
-        askPermission()
-
+        loadNativeAd()
+        initListeners()
+       // askPermission()
 
 
     }
 
-
-
+// storage permissions
     private fun askPermission() {
         val permissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
 
-               permissions.entries.forEach {
-                  val isGranted = it.value
-                   if (isGranted){
-                       initListeners()
-                   }
-                   else {
-                      Toast.makeText(requireContext(),"Storage Permission Required",Toast.LENGTH_LONG).show()
-                   }
-               }
+                permissions.entries.forEach {
+                    val isGranted = it.value
+                    if (isGranted) {
 
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Storage Permission Required",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
 
 
             }
@@ -71,12 +72,18 @@ class MainFragment : Fragment() {
     }
 
     private fun initListeners() {
-        binding.bpLayout.setOnClickListener {
+
+        binding.bpLayout.applyOnClick {
             findNavController().navigate(R.id.action_mainFragment_to_BPMainFragment)
             (activity as MainActivity).binding.bottomNavView.setSelectedItem(2)
         }
 
-        binding.heartrateLayout.setOnClickListener {
+       /* binding.bpLayout.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_BPMainFragment)
+            (activity as MainActivity).binding.bottomNavView.setSelectedItem(2)
+        }*/
+
+        binding.heartrateLayout.applyOnClick {
             findNavController().navigate(R.id.action_mainFragment_to_heartRateFragment)
             (activity as MainActivity).binding.bottomNavView.setSelectedItem(2)
         }
@@ -84,48 +91,46 @@ class MainFragment : Fragment() {
 
 
 
-        binding.weightLayout.setOnClickListener {
+        binding.weightLayout.applyOnClick {
             findNavController().navigate(R.id.action_mainFragment_to_weightMainFragment)
             (activity as MainActivity).binding.bottomNavView.setSelectedItem(2)
         }
 
-        (activity as MainActivity).binding.bottomNavView.apply {
-
-
-            this.setOnItemSelectedListener {
-                when (it){
-                    0 ->{
-
-                    }
-                    1 ->{
-                        findNavController().navigate(R.id.action_mainFragment_to_infoFragment)
-                    }
-                    2 ->{
-                        findNavController().navigate(R.id.action_mainFragment_to_BPMainFragment)
-
-
-                    }
-                }
-
-            }
-        }
-
-
-
+//        (activity as MainActivity).binding.bottomNavView.apply {
+//
+//
+//            this.setOnItemSelectedListener {
+//                when (it) {
+//                    0 -> {
+//
+//                    }
+//                    1 -> {
+//                        findNavController().navigate(R.id.action_mainFragment_to_infoFragment)
+//                    }
+//                    2 -> {
+//                        findNavController().navigate(R.id.action_mainFragment_to_BPMainFragment)
+//
+//
+//                    }
+//                }
+//
+//            }
+//        }
 
 
     }
 
     private fun loadNativeAd() {
 
-        val adLoader: AdLoader = AdLoader.Builder(requireContext(), "ca-app-pub-3940256099942544/2247696110")
-            .forNativeAd {
-                val styles = NativeTemplateStyle.Builder().build()
-                val template: TemplateView = binding.nativeAdTemplate
-                template.setStyles(styles)
-                template.setNativeAd(it)
-            }
-            .build()
+        val adLoader: AdLoader =
+            AdLoader.Builder(requireContext(), "ca-app-pub-3940256099942544/2247696110")
+                .forNativeAd {
+                    val styles = NativeTemplateStyle.Builder().build()
+                    val template: TemplateView = binding.nativeAdTemplate
+                    template.setStyles(styles)
+                    template.setNativeAd(it)
+                }
+                .build()
 
         adLoader.loadAd(AdRequest.Builder().build())
     }

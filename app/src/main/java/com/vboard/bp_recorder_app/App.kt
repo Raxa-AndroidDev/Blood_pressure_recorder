@@ -8,10 +8,15 @@ import android.os.Build
 import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.gms.ads.MobileAds
+import com.prongbang.aslprocessor.annotation.AndroidSheetLocalization
 
 import timber.log.Timber
 import timber.log.Timber.DebugTree
-
+@AndroidSheetLocalization(
+    sheetId = "0",
+    documentId = "1w2jfvVXv_fuXXD469s3Lcf9r_1XAZ7ZEJrVmHDX3efs",
+    enabled = true
+)
 
 class App : Application() {
 

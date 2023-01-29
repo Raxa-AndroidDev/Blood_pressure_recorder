@@ -40,7 +40,7 @@ class WeightTypeColorsAdapter(
         holder.binding.parentLayout.layoutParams.width = width/9
         holder.binding.parentLayout.layoutParams.height = LayoutParams.WRAP_CONTENT
 
-        holder.binding.imgBpTypeColor.setColorFilter(
+       holder.binding.imgBpTypeColor.setColorFilter(
             ContextCompat.getColor(
                 context,
                 list[position].color
@@ -50,15 +50,15 @@ class WeightTypeColorsAdapter(
 
         if (list[position].isSelected) {
 
-            holder.binding.bpTypeColorLayout.backgroundTintList = ContextCompat.getColorStateList(context, R.color.tab_selected_color)
+         //   holder.binding.bpTypeColorLayout.backgroundTintList = ContextCompat.getColorStateList(context, R.color.tab_selected_color)
             holder.binding.imgColorIndicator.visibility = View.VISIBLE
         } else {
 
-            holder.binding.bpTypeColorLayout.backgroundTintList =
+           /* holder.binding.bpTypeColorLayout.backgroundTintList =
                 ContextCompat.getColorStateList(
                     context,
                     list[position].color
-                )
+                )*/
 
            // holder.binding.bpTypeColorLayout.backgroundTintList = null
 

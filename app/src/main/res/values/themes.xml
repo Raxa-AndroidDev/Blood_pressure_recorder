@@ -21,6 +21,39 @@
 
     </style>
 
+    // for top bar background
+    <style name="TopBarTheme" parent="Widget.AppCompat.TextView">
+        <item name="android:backgroundTint">@color/white</item>
+    </style>
+
+    // for titles in top bar
+    <style name="TopBarTitleTheme" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+    </style>
+
+    //for titles on main fragment cards
+    <style name="Main.CardHeadingsTheme" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+    </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <style name="Popins.Semibold.black" parent="Widget.AppCompat.TextView">
         <item name="fontFamily">@font/poppins_semibold</item>
@@ -32,16 +65,10 @@
 
 
 
-    <style name="TopBarTheme" parent="Widget.AppCompat.TextView">
-        <item name="android:backgroundTint">@color/white</item>
-
-    </style>
 
 
-    <style name="TopBarTitleTheme" parent="Widget.AppCompat.TextView">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:fontFamily">@font/poppins_semibold</item>
-    </style>
+
+
 
     <style name="TopBarSubTitleTheme" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/black</item>
@@ -49,10 +76,7 @@
     </style>
 
 
-    <style name="Main.CardHeadingsTheme" parent="Widget.AppCompat.TextView">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:fontFamily">@font/poppins_semibold</item>
-    </style>
+
 
 
     <style name="Main.SubTextsTheme" parent="Widget.AppCompat.TextView">

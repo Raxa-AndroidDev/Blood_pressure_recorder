@@ -40,11 +40,16 @@
     <string name="obese2_range">BMI 35.0-39.9</string>
     <string name="cancel">Cancel</string>
     <string name="add">Add</string>
-    <string name="name">value</string>
+
     <string name="info_title"><![CDATA[Information & Knowledge]]></string>
     <string name="measure_now">Measure Now</string>
     <string name="no_records_yet_add_your_n_first_heart_rate_record">No Records yet. Add your\n first heart rate record</string>
     <string name="add_data_string">+ Add Data</string>
     <string name="splash_title"><![CDATA[Heart &\nBlood Pressure]]></string>
     <string name="no_activity_found_exception">No activity found to open</string>
+    <string name="heart_rate">Heart Rate</string>
+    <string name="measure_and_tracker">Measure and Tracker</string>
+    <string name="new_record_title">New Record</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

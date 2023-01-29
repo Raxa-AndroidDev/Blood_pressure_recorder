@@ -33,7 +33,6 @@ class BPTypeColorsAdapter(
 
     override fun onBindViewHolder(holder: BPColorTypeViewHolder, position: Int) {
 
-
         holder.binding.imgBpTypeColor.setColorFilter(
             ContextCompat.getColor(
                 context,
@@ -42,20 +41,12 @@ class BPTypeColorsAdapter(
         )
 
 
+
         if (list[position].isSelected) {
 
-            holder.binding.bpTypeColorLayout.backgroundTintList = ContextCompat.getColorStateList(context, R.color.tab_selected_color)
+          //  holder.binding.bpTypeColorLayout.backgroundTintList = ContextCompat.getColorStateList(context, R.color.tab_selected_color)
             holder.binding.imgColorIndicator.visibility = View.VISIBLE
         } else {
-
-            holder.binding.bpTypeColorLayout.backgroundTintList =
-                ContextCompat.getColorStateList(
-                    context,
-                    list[position].color
-                )
-
-            // holder.binding.bpTypeColorLayout.backgroundTintList = null
-
 
             holder.binding.imgColorIndicator.visibility = View.INVISIBLE
         }

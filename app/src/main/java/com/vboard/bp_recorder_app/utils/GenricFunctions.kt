@@ -2,7 +2,13 @@ package com.vboard.bp_recorder_app.utils
 
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.res.Configuration
+import android.content.res.Resources
+import android.os.Handler
+import android.os.Looper
+import android.util.DisplayMetrics
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.vboard.bp_recorder_app.R
@@ -13,6 +19,26 @@ import java.text.Format
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.pow
+
+
+fun View.applyOnClick(onClickFunction: () -> Unit) {
+    setOnClickListener {
+        onClickFunction()
+        isEnabled = false
+        Handler(Looper.myLooper()!!).postDelayed({ isEnabled = true }, 2000)
+    }
+
+}
+fun setLocale(context: Context,localeCode:String){
+    val myLocale = Locale(localeCode)
+    val res: Resources = context.resources
+    val dm: DisplayMetrics = res.displayMetrics
+    val conf: Configuration = res.configuration
+    conf.setLocale(myLocale)
+    Locale.setDefault(myLocale)
+    conf.setLayoutDirection(myLocale)
+    res.updateConfiguration(conf, dm)
+}
 
 
 fun Context.showToast(message: String) {

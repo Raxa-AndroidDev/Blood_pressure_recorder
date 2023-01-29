@@ -34,15 +34,15 @@
         android:name="com.vboard.bp_recorder_app.ui.fragments.info_module.titles.InfoMainFragment"
         android:label="fragment_info"
         tools:layout="@layout/fragment_info" >
-        <deepLink
-            android:id="@+id/deepLink"
-            app:uri="BloodPressure_app_info_frag" />
+
         <action
             android:id="@+id/action_infoFragment_to_BPMainFragment"
             app:destination="@id/BPMainFragment" />
         <action
             android:id="@+id/action_infoFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+
+           />
         <action
             android:id="@+id/action_infoFragment_to_infoDetailFragment"
             app:destination="@id/infoDetailFragment" />
@@ -70,7 +70,9 @@
             app:destination="@id/infoFragment" />
         <action
             android:id="@+id/action_BPMainFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+
+            />
         <action
             android:id="@+id/action_BPMainFragment_to_addBPRecordFragment"
             app:destination="@id/addBPRecordFragment" />
@@ -105,7 +107,9 @@
             app:destination="@id/measureHeartRateFragment" />
         <action
             android:id="@+id/action_heartRateFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+
+           />
         <action
             android:id="@+id/action_heartRateFragment_to_infoFragment"
             app:destination="@id/infoFragment" />

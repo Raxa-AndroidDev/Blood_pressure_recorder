@@ -150,6 +150,14 @@ class AddWeightRecordFragment : Fragment(), ChipListCallBacks {
                 showTagsBottomSheet("default", "")
             }
 
+            tvDelete.applyOnClick {
+              showDeleteBottomSheet()
+            }
+
+            binding.btnCancelupdateRecord.setOnClickListener {
+                findNavController().popBackStack()
+            }
+
 
         }
     }
@@ -266,7 +274,7 @@ class AddWeightRecordFragment : Fragment(), ChipListCallBacks {
             binding.weightNumberpicker.value = weightTable!!.weight
             binding.heightNumberpicker.value = weightTable!!.height
 
-            label = "default"
+            label = weightTable!!.tag
 
             val myCalendar: Calendar = Calendar.getInstance()
             myCalendar.time = weightTable!!.date.toDate()
@@ -286,8 +294,14 @@ class AddWeightRecordFragment : Fragment(), ChipListCallBacks {
             bmi = calculateBMI(weightTable!!.weight, weightTable!!.height)
             weightType = weightTable!!.weightType
 
-            Timber.e("current time  is ${selectedTime} ")
             binding.btnOk.text = getString(R.string.update)
+            binding.tvAddRecord.text = getString(R.string.edit)
+            binding.tvAddRecord.visibility= View.INVISIBLE
+            binding.btnCancel.visibility = View.GONE
+
+            binding.btnCancelupdateRecord.visibility= View.VISIBLE
+            binding.tvEditRecord.visibility = View.VISIBLE
+            binding.tvDelete.visibility = View.VISIBLE
 
         } else {
             // coming from main
@@ -317,9 +331,33 @@ class AddWeightRecordFragment : Fragment(), ChipListCallBacks {
             Timber.e("current time  is ${selectedTime} ")
             binding.btnOk.text = getString(R.string.save)
 
+            binding.tvAddRecord.visibility= View.VISIBLE
+            binding.btnCancel.visibility = View.VISIBLE
+
+            binding.btnCancelupdateRecord.visibility= View.GONE
+            binding.tvEditRecord.visibility = View.GONE
+            binding.tvDelete.visibility = View.GONE
+
         }
     }
+    private fun showDeleteBottomSheet() {
+        val bottomSheetDialog = BottomSheetDialog(requireContext())
+        bottomSheetDialog.setContentView(R.layout.delete_record_bottomsheet)
 
+        bottomSheetDialog.findViewById<MaterialButton>(R.id.button_cancel)!!.setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+
+        bottomSheetDialog.findViewById<MaterialButton>(R.id.button_delete)!!.setOnClickListener {
+            viewModel.deleteSpecificWeightRecord(weightTable!!.id)
+            bottomSheetDialog.dismiss()
+            findNavController().popBackStack()
+        }
+
+        bottomSheetDialog.show()
+
+
+    }
 
     private fun showBottomSheet() {
         val bottomsheet = BottomSheetDialog(requireContext())

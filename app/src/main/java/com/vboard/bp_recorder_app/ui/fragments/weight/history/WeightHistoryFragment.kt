@@ -8,11 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager.OnBackStackChangedListener
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.components.LimitLine
@@ -32,7 +34,9 @@ import com.vboard.bp_recorder_app.ui.MainActivity
 import com.vboard.bp_recorder_app.ui.fragments.weight.history.adapter.WeightHistoryAdapter
 import com.vboard.bp_recorder_app.utils.*
 import com.vboard.bp_recorder_app.utils.interfaces.ShowWeightAdapterCallbacks
-import timber.log.Timber
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 
 
@@ -51,13 +55,14 @@ class WeightHistoryFragment : Fragment() ,ShowWeightAdapterCallbacks {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.e("test", "onCreateView: of weight history frag", )
         binding = FragmentWeightHistoryRecordBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Log.e("test", "on view created: of weight history frag", )
         init()
 
 
@@ -117,7 +122,7 @@ class WeightHistoryFragment : Fragment() ,ShowWeightAdapterCallbacks {
         }
 
 
-        binding.buttonAddWeight.setOnClickListener {
+        binding.buttonAddWeight.applyOnClick {
 
             val bundle = Bundle()
             bundle.putParcelable("weighttable", null)
@@ -151,42 +156,43 @@ class WeightHistoryFragment : Fragment() ,ShowWeightAdapterCallbacks {
     }
 
     private fun showEmptyListDialog() {
-        DatabaseClass.getDBInstance(requireContext()).weightDao().fetchAllBodyWeightRecords()
-            .observe(viewLifecycleOwner) {
-                Log.e("TAG", "showEmptyListDialog: ${it.size}", )
-                if (it.isEmpty()) {
 
-                    val dialog = Dialog(requireContext())
-                    dialog.setContentView(R.layout.empty_layout)
-                    dialog.window!!.setLayout(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT
-                    )
-                    dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+            DatabaseClass.getDBInstance(requireContext()).weightDao().fetchAllBodyWeightRecords()
+                .observe(viewLifecycleOwner) {
 
-                    dialog.findViewById<MaterialButton>(R.id.button_add_now_empty)
-                        .setOnClickListener {
-                            val bundle = Bundle()
-                            bundle.putParcelable("weighttable", null)
-                            findNavController().navigate(
-                                R.id.action_weightMainFragment_to_addWeightRecordFragment,
-                                bundle
-                            )
-                            dialog.dismiss()
-                        }
+                    if (it.isEmpty()) {
 
-                    dialog.setCanceledOnTouchOutside(false)
 
-                    dialog.show()
+                        val emptyListDialog = Dialog(requireContext())
+                        emptyListDialog.setContentView(R.layout.empty_layout)
+                        emptyListDialog.window!!.setLayout(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.MATCH_PARENT
+                        )
+                        emptyListDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+
+                        emptyListDialog.findViewById<MaterialButton>(R.id.button_add_now_empty)
+                            .setOnClickListener {
+                                val bundle = Bundle()
+                                bundle.putParcelable("weighttable", null)
+                                findNavController().navigate(
+                                    R.id.action_weightMainFragment_to_addWeightRecordFragment,
+                                    bundle
+                                )
+                                emptyListDialog.dismiss()
+                            }
+
+                        emptyListDialog.setCanceledOnTouchOutside(false)
+
+                        emptyListDialog.show()
+
+                    }
 
                 }
 
-
-            }
     }
 
     private fun dateWiseSearchView(startDate: String, endDate: String) {
-        Timber.e("start date is ${startDate} , end date is ${endDate}")
 
         viewModel.showDateWiseRecord(
             startDate.toDate(),
@@ -399,6 +405,8 @@ val XAxisLabels = arrayListOf<String>("1","2","3","4","5")
             }
 
 
+
+
         }
 
     }
@@ -418,6 +426,8 @@ val XAxisLabels = arrayListOf<String>("1","2","3","4","5")
     override fun OnItemClick(weightTable: BodyWeightTable) {
 
     }
+
+
 
 
 }

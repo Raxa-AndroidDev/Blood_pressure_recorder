@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import com.vboard.bp_recorder_app.R
+import com.vboard.bp_recorder_app.utils.setLocale
 import com.vboard.bp_recorder_app.utils.showToast
 
 
@@ -21,6 +22,7 @@ class SplashScreen : AppCompatActivity() {
         Handler(Looper.myLooper()!!).postDelayed({
             try {
                 startActivity(Intent(this, MainActivity::class.java))
+                finish()
             } catch (exception: ActivityNotFoundException) {
                 this.showToast(getString( R.string.no_activity_found_exception))
             }

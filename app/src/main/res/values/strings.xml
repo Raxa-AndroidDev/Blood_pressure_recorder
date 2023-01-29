@@ -1,8 +1,10 @@
 <resources>
-    <string name="app_name">Blood Pressure Tracker</string>
 
-    <string name="main_title">BLOOD PRESSURE</string>
+    // titles and sub titles
+
+    <string name="app_name" >BLOOD PRESSURE</string>
     <string name="sub_title">TRACKER</string>
+    <string name="splash_title">HEART &amp;\nBLOOD PRESSURE</string>
 
 
     <string name="arg_alarm_obj">AlarmObject</string>
@@ -46,7 +48,7 @@
     <string name="measure_now">Measure Now</string>
     <string name="no_records_yet_add_your_n_first_heart_rate_record">No Records yet. Add your\n first heart rate record</string>
     <string name="add_data_string">+ Add Data</string>
-    <string name="splash_title"><![CDATA[Heart &\nBlood Pressure]]></string>
+
 
 
     // BP Ranges
@@ -75,6 +77,11 @@
 
     // exceptions
     <string name="no_activity_found_exception">No activity found to open</string>
+    <string name="heart_rate">Heart Rate</string>
+    <string name="measure_and_tracker">Measure and Tracker</string>
+    <string name="new_record_title">New Record</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 
 
 </resources>
