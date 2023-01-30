@@ -45,11 +45,16 @@
     <string name="measure_now">Measure Now</string>
     <string name="no_records_yet_add_your_n_first_heart_rate_record">No Records yet. Add your\n first heart rate record</string>
     <string name="add_data_string">+ Add Data</string>
-    <string name="splash_title"><![CDATA[Heart &\nBlood Pressure]]></string>
+
     <string name="no_activity_found_exception">No activity found to open</string>
     <string name="heart_rate">Heart Rate</string>
     <string name="measure_and_tracker">Measure and Tracker</string>
     <string name="new_record_title">New Record</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="skip">Skip</string>
+    <string name="select_language_title">Select Language</string>
+    <string name="measure">Measure</string>
+    <string name="gender_title">Gender</string>
+    <string name="age">Age</string>
 </resources>

@@ -4,13 +4,13 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="16"
-6-->D:\One Wood Projects\blood pressure app\nativetemplates\src\main\AndroidManifest.xml
+6-->/Users/mac/ali android projects/BP RECORDER/nativetemplates/src/main/AndroidManifest.xml
 7        android:targetSdkVersion="30" />
-7-->D:\One Wood Projects\blood pressure app\nativetemplates\src\main\AndroidManifest.xml
+7-->/Users/mac/ali android projects/BP RECORDER/nativetemplates/src/main/AndroidManifest.xml
 8
 9    <application android:supportsRtl="true" >
-9-->D:\One Wood Projects\blood pressure app\nativetemplates\src\main\AndroidManifest.xml:3:3-5:17
-9-->D:\One Wood Projects\blood pressure app\nativetemplates\src\main\AndroidManifest.xml:3:16-42
+9-->/Users/mac/ali android projects/BP RECORDER/nativetemplates/src/main/AndroidManifest.xml:3:3-5:17
+9-->/Users/mac/ali android projects/BP RECORDER/nativetemplates/src/main/AndroidManifest.xml:3:16-42
 10    </application>
 11
 12</manifest>

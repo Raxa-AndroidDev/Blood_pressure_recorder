@@ -37,23 +37,32 @@
                 android:layout_height="1dp"
                 android:background="@color/mainbar_unselected_color" />
 
+
+
+
             <me.ibrahimsn.lib.SmoothBottomBar
                 android:id="@+id/bottom_nav_view"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
-                app:activeItem="0"
                 app:backgroundColor="@color/white"
-                app:cornerRadius="@dimen/_16sdp"
-                app:corners="top_left|bottom_right"
-                app:iconTint="@color/mainbar_unselected_color"
-                app:iconTintActive="@color/tab_selected_color"
+                app:textSize="@dimen/_10ssp"
+                app:iconSize="24dp"
                 app:indicatorColor="@color/badge_color"
-                app:indicatorRadius="@dimen/_16sdp"
+                app:sideMargins="10dp"
+                app:activeItem="0"
+                app:itemPadding="10dp"
+                app:indicatorRadius="16dp"
                 app:itemFontFamily="@font/poppins_regular"
-                app:menu="@menu/bottom_nav_menu"
                 app:textColor="@color/mainbar_unselected_color"
                 app:textColorActive="@color/tab_selected_color"
-                app:textSize="@dimen/_10ssp" />
+                app:iconTint="@color/mainbar_unselected_color"
+                app:labelVisibilityMode="labeled"
+                android:outlineAmbientShadowColor="@color/red"
+                app:iconTintActive="@color/tab_selected_color"
+                app:menu="@menu/bottom_nav_menu"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+
 
             <View
 

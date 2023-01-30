@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"/>
+        app:layout_constraintGuide_percent="0.5" />
 
     <RelativeLayout
         android:id="@+id/top_appbar"
@@ -28,8 +28,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:paddingStart="@dimen/_18sdp"
-            android:textSize="@dimen/_18ssp"
-            android:text="@string/app_name" />
+            android:paddingEnd="@dimen/_18sdp"
+            android:text="@string/app_name"
+            android:textSize="@dimen/_18ssp" />
 
 
         <ImageView
@@ -87,9 +88,9 @@
             android:layout_height="wrap_content"
             android:text="@string/heart_rate"
             android:textSize="@dimen/_19ssp"
+            app:layout_constraintBottom_toTopOf="@+id/heartrate_count_layout"
             app:layout_constraintEnd_toEndOf="@+id/btn_measure_heartrate"
-            app:layout_constraintStart_toStartOf="@+id/btn_measure_heartrate"
-            app:layout_constraintBottom_toTopOf="@+id/heartrate_count_layout" />
+            app:layout_constraintStart_toStartOf="@+id/btn_measure_heartrate" />
 
 
         <LinearLayout
@@ -98,18 +99,18 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_3sdp"
             android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@+id/btn_measure_heartrate"
+            app:layout_constraintBottom_toTopOf="@+id/btn_measure_heartrate"
             app:layout_constraintEnd_toEndOf="@+id/btn_measure_heartrate"
-            app:layout_constraintBottom_toTopOf="@+id/btn_measure_heartrate">
+            app:layout_constraintStart_toStartOf="@+id/btn_measure_heartrate">
 
 
             <TextView
                 android:id="@+id/tv_heartrate_count"
                 style="@style/Main.SubTextsTheme"
-                android:fontFamily="@font/poppins_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/_5sdp"
+                android:fontFamily="@font/poppins_medium"
                 android:text="0 Records"
                 android:textSize="@dimen/_11ssp"
                 app:drawableLeftCompat="@drawable/main_tick_icon" />
@@ -128,8 +129,8 @@
                 style="@style/Main.SubTextsTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Latest: 0"
                 android:fontFamily="@font/poppins_medium"
+                android:text="Latest: 0"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_11ssp" />
 
@@ -144,13 +145,13 @@
             android:backgroundTint="@color/white"
             android:fontFamily="@font/poppins_semibold"
             android:text="@string/measure_and_tracker"
+            android:textAllCaps="false"
             android:textColor="@color/tab_selected_color"
             android:textSize="@dimen/_9ssp"
             app:cornerRadius="@dimen/_20sdp"
-            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/heartrate_card_guide"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/heartrate_card_guide" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -159,12 +160,12 @@
         android:id="@+id/weight_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/main_card_bg"
         android:elevation="@dimen/_5sdp"
         android:paddingTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/_8sdp"
-        android:layout_marginStart="@dimen/_4sdp"
-        android:layout_marginTop="@dimen/_8sdp"
         app:layout_constraintEnd_toEndOf="@+id/heartrate_layout"
         app:layout_constraintStart_toStartOf="@+id/main_guideline"
         app:layout_constraintTop_toBottomOf="@+id/heartrate_layout">
@@ -174,7 +175,7 @@
             android:id="@+id/img_weight_main"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_80sdp"
-            android:src="@drawable/icon_weight_main"
+            android:src="@drawable/ic_weight_main"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -198,12 +199,12 @@
         android:id="@+id/bp_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
         android:background="@drawable/main_card_bg"
         android:elevation="@dimen/_5sdp"
         android:paddingTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginEnd="@dimen/_4sdp"
         app:layout_constraintEnd_toStartOf="@+id/main_guideline"
         app:layout_constraintStart_toStartOf="@+id/heartrate_layout"
         app:layout_constraintTop_toBottomOf="@+id/heartrate_layout">
@@ -213,7 +214,7 @@
             android:id="@+id/img_bp_main"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_80sdp"
-            android:src="@drawable/icon_bp_main"
+            android:src="@drawable/ic_bp_main"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -241,23 +242,12 @@
 
         <com.google.android.ads.nativetemplates.TemplateView
             android:id="@+id/native_ad_template"
-            app:gnt_template_type="@layout/gnt_medium_template_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-
+            android:layout_height="wrap_content"
+            app:gnt_template_type="@layout/gnt_medium_template_view" />
 
 
     </ScrollView>
-
-
-
-
-
-
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
-                android:text="50"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="@dimen/_30ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
                 android:paddingBottom="4dp"
-                android:text="@string/bpm"
+
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -150,7 +150,7 @@
             android:id="@+id/tv_bpm_percent_measure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Measuring ... (65%)"
+
             android:textSize="@dimen/_18ssp"
             android:textColor="@color/tab_selected_color"
             android:fontFamily="@font/poppins_semibold"
@@ -181,15 +181,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_pressfingeroncamera" />
 
-        <ImageView
-            android:id="@+id/heartrate_thumb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:src="@drawable/heartrate_thumb_white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_pressfingeroncamera" />
+
 
         <TextView
             android:id="@+id/tv_thumb_desc"
@@ -203,7 +195,7 @@
             android:text="When the finder turns Red, \n you are doing it right. "
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/heartrate_thumb" />
+            app:layout_constraintTop_toBottomOf="@+id/preview" />
 
         <TextView
             android:id="@+id/tv_how_to_measure_hr"

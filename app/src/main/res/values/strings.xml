@@ -2,9 +2,8 @@
 
     // titles and sub titles
 
-    <string name="app_name" >BLOOD PRESSURE</string>
+    <string name="app_name">BLOOD PRESSURE</string>
     <string name="sub_title">TRACKER</string>
-    <string name="splash_title">HEART &amp;\nBLOOD PRESSURE</string>
 
 
     <string name="arg_alarm_obj">AlarmObject</string>
@@ -12,7 +11,6 @@
     <string name="alarm_title">My Alarm</string>
     <string name="dayNightTheme">DayNightTheme</string>
     <string name="alarmwithvibration">Reminder with Vibration</string>
-
 
 
     <string name="tracker">Tracker</string>
@@ -50,7 +48,6 @@
     <string name="add_data_string">+ Add Data</string>
 
 
-
     // BP Ranges
     <string name="hypo_bp_range"> <![CDATA[ SYS <90 or DIA <60 ]]> </string>
     <string name="normal_bp_range">SYS 90–119 and DIA 60–79</string>
@@ -71,17 +68,19 @@
     <string name="obese2_range">BMI 35.0–39.9</string>
 
 
-
-
-
-
-    // exceptions
     <string name="no_activity_found_exception">No activity found to open</string>
     <string name="heart_rate">Heart Rate</string>
     <string name="measure_and_tracker">Measure and Tracker</string>
     <string name="new_record_title">New Record</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="skip"><font><u>Skip</u></font></string>
+    <string name="select_language_title">Select Language</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="measure">Measure</string>
+    <string name="gender_title">Gender</string>
+    <string name="age">Age</string>
 
 
 </resources>

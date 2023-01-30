@@ -8,17 +8,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.ads.nativetemplates.NativeTemplateStyle
 import com.google.android.ads.nativetemplates.TemplateView
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.nativead.NativeAd
 import com.vboard.bp_recorder_app.R
 import com.vboard.bp_recorder_app.databinding.FragmentMainBinding
 import com.vboard.bp_recorder_app.ui.MainActivity
 import com.vboard.bp_recorder_app.utils.applyOnClick
-import timber.log.Timber
+
 
 
 class MainFragment : Fragment() {
@@ -28,6 +29,7 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         binding = FragmentMainBinding.inflate(inflater)
         return binding.root
     }
@@ -37,12 +39,12 @@ class MainFragment : Fragment() {
 
         loadNativeAd()
         initListeners()
-       // askPermission()
+        // askPermission()
 
 
     }
 
-// storage permissions
+    // storage permissions
     private fun askPermission() {
         val permissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -73,49 +75,44 @@ class MainFragment : Fragment() {
 
     private fun initListeners() {
 
-        binding.bpLayout.applyOnClick {
+        binding.bpLayout.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_BPMainFragment)
             (activity as MainActivity).binding.bottomNavView.setSelectedItem(2)
         }
 
-       /* binding.bpLayout.setOnClickListener {
-            findNavController().navigate(R.id.action_mainFragment_to_BPMainFragment)
-            (activity as MainActivity).binding.bottomNavView.setSelectedItem(2)
-        }*/
 
-        binding.heartrateLayout.applyOnClick {
+        binding.heartrateLayout.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_heartRateFragment)
-            (activity as MainActivity).binding.bottomNavView.setSelectedItem(2)
+
         }
 
 
 
 
-        binding.weightLayout.applyOnClick {
+        binding.weightLayout.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_weightMainFragment)
-            (activity as MainActivity).binding.bottomNavView.setSelectedItem(2)
+
         }
 
-//        (activity as MainActivity).binding.bottomNavView.apply {
-//
-//
-//            this.setOnItemSelectedListener {
-//                when (it) {
-//                    0 -> {
-//
-//                    }
-//                    1 -> {
-//                        findNavController().navigate(R.id.action_mainFragment_to_infoFragment)
-//                    }
-//                    2 -> {
-//                        findNavController().navigate(R.id.action_mainFragment_to_BPMainFragment)
-//
-//
-//                    }
-//                }
-//
-//            }
-//        }
+
+    /*(activity as MainActivity).binding.bottomNavView.apply {
+           this.setOnItemSelectedListener {
+               when (it) {
+                   0 -> {
+
+                   }
+                   1 -> {
+                       findNavController().navigate(R.id.action_mainFragment_to_infoFragment)
+                   }
+                   2 -> {
+                       findNavController().navigate(R.id.action_mainFragment_to_BPMainFragment)
+
+
+                   }
+               }
+
+           }
+       }*/
 
 
     }

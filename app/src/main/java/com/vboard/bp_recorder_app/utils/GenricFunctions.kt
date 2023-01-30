@@ -15,9 +15,11 @@ import com.vboard.bp_recorder_app.R
 import com.vboard.bp_recorder_app.ui.fragments.blood_pressure.model_classes.BPTypesModelClass
 import com.vboard.bp_recorder_app.ui.fragments.info_module.details.InfoDetailModelClass
 import com.vboard.bp_recorder_app.ui.fragments.weight.WeightTypesModelClass
+import com.vboard.bp_recorder_app.ui.language_selection.LangSelectionModelClass
 import java.text.Format
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.pow
 
 
@@ -498,6 +500,22 @@ fun getInfoBgColorsList(): ArrayList<Int> {
 
     return info_colors_bg_list
 }
+
+
+fun getLangsList(context: Context):ArrayList<LangSelectionModelClass>{
+
+    val langsList:ArrayList<LangSelectionModelClass> = arrayListOf()
+
+    langsList.add(
+        LangSelectionModelClass(R.string.critical_bp_range,context.getString(R.string.critical_bp_range),context.getString( R.string.add)))
+
+
+
+
+    return  langsList
+
+}
+
 
 fun getInfoTitleIconsList(): ArrayList<Int> {
     var info_icon_bg_list: ArrayList<Int> = arrayListOf()

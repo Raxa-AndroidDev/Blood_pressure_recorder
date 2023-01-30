@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragments.heart_rate.ShowMeasuredRecord">
+
+
+        <RelativeLayout
+            android:id="@+id/top_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:theme="@style/TopBarTheme"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/icon_back_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_18sdp"
+                android:src="@drawable/icon_back" />
+
+            <TextView
+                android:id="@+id/main_title"
+                style="@style/TopBarTitleTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_toEndOf="@+id/icon_back_arrow"
+                android:text="@string/measure"
+                android:textSize="@dimen/_18ssp" />
+
+
+        </RelativeLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/heartrate_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/main_card_bg"
+            android:elevation="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_15sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/top_appbar">
+
+
+            <ImageView
+                android:id="@+id/img_heartwave_main"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_70sdp"
+                android:src="@drawable/heartwave_main"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/heartrate_value"
+                style="@style/Main.CardHeadingsTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_20sdp"
+                android:text="87"
+                android:textSize="@dimen/_20sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_bpm"
+                style="@style/Main.CardHeadingsTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:text="BPM"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintBottom_toBottomOf="@+id/heartrate_value"
+                app:layout_constraintStart_toEndOf="@+id/heartrate_value" />
+
+
+            <ImageView
+                android:id="@+id/heart_animation"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/heart_finger_anim"
+                app:layout_constraintStart_toEndOf="@+id/heartrate_value"
+                app:layout_constraintTop_toTopOf="@+id/heartrate_value" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_gender_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_18sdp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/gender_title"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/heartrate_layout" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_male"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_18sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:backgroundTint="@color/tab_selected_color"
+            android:fontFamily="@font/poppins_semibold"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:text="Male"
+            android:textColor="@color/white"
+            app:cornerRadius="@dimen/_10sdp"
+            app:layout_constraintEnd_toStartOf="@+id/btn_female"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_gender_title"
+            app:strokeColor="@color/tab_selected_color"
+            app:strokeWidth="@dimen/_1sdp" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_female"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_18sdp"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/poppins_semibold"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:text="Female"
+            android:textColor="@color/tab_selected_color"
+            app:cornerRadius="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_male"
+            app:layout_constraintTop_toBottomOf="@+id/tv_gender_title"
+            app:strokeColor="@color/tab_selected_color"
+            app:strokeWidth="@dimen/_1sdp" />
+
+
+        <TextView
+            android:id="@+id/tv_age_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_18sdp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/age"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_female" />
+
+
+        <TextView
+            android:id="@+id/tv_note_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_18sdp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/note"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_female" />
+
+
+        <TextView
+            android:id="@+id/tv_age_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="25"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_note_value"
+            app:layout_constraintTop_toBottomOf="@+id/tv_age_title"
+            android:layout_marginStart="@dimen/_18sdp"
+            android:background="@color/tab_selected_color"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            android:fontFamily="@font/poppins_regular"/>
+
+        <Button
+            android:id="@+id/tv_note_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@+id/tv_age_value"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_age_title"
+            android:layout_marginEnd="@dimen/_18sdp"
+            android:background="@color/tab_selected_color"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            android:fontFamily="@font/poppins_regular"
+            app:drawableRightCompat="@drawable/edit_icon"
+            app:drawableTint="@color/white"
+            android:drawablePadding="@dimen/_20sdp"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
