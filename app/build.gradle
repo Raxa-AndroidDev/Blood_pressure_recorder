@@ -103,6 +103,10 @@ dependencies {
     // graphs
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
+    //for localization
+    implementation 'com.github.prongbang:sheet-localization-annotation:1.2.0'
+    kapt 'com.github.prongbang:sheet-localization-processor:1.2.0'
+
     //Dimen
     implementation 'com.intuit.ssp:ssp-android:1.0.5'
     implementation 'com.intuit.sdp:sdp-android:1.0.5'

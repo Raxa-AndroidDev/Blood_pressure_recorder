@@ -19,27 +19,5 @@ class MainActivity : AppCompatActivity() {
         val navController = Navigation.findNavController(this, R.id.main_nav_graph)
         binding.bottomNavView.setupWithNavController(navController)
 
-
-
-
-        // will be dealt on monday
-        /* binding.bottomNavView.setOnItemSelectedListener {
-             Timber.e("ids are ${it}")
-             when(it){
-                0 ->{
-                    findNavController().navigate(Uri.parse("yourapp://BloodPressure/app/main/frag"  ))
-                 }
-                1->{
-                    findNavController().navigate(Uri.parse(  "BloodPressure_app_info_frag"  ))
-                 }
-                 2 ->{
-                     findNavController().navigate(Uri.parse(  "yourapp://BloodPressure/app/bp/frag"))
-                 }
-             }
-         }*/
-
-
     }
-
-
 }

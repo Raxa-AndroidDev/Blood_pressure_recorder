@@ -35,13 +35,14 @@ class WeightGraphsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.e("test", "on  create view: of weight graph frag", )
         binding = FragmentWeightGraphsBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Log.e("test", "on view created: of weight graph frag", )
 
 
         initViews()

@@ -24,30 +24,24 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/bp_type_color_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            app:cardCornerRadius="@dimen/_8sdp"
 
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_color_indicator">
 
 
             <ImageView
                 android:id="@+id/img_bp_type_color"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="1dp"
+                android:layout_height="wrap_content"
+
                 android:src="@drawable/bp_type_color_icon"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_color_indicator"
+        />
 
 
-        </com.google.android.material.card.MaterialCardView>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,8 +8,20 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+
+
+    <color name="splash_grey">#cdd7db</color>
+    <color name="splash_red">#f40609</color>
+
+
+
+
+
+
+
     <color name="splash_bg">#2A4CE0</color>
     <color name="red">#FD1F35</color>
+
     <color name="mediumgray">#DEDEDE</color>
     <color name="darkgray">#858585</color>
 
@@ -54,5 +66,6 @@
     <color name="tab_unselected_color">#060605</color>
 
     <color name="picker_default_divider_color">@android:color/black</color>
+    <color name="white_60">#99FFFFFF</color>
 
 </resources>

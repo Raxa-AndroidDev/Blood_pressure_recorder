@@ -24,6 +24,36 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+
+            <ImageView
+                android:id="@+id/btn_cancelupdate_record"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:src="@drawable/icon_cross" />
+
+            <TextView
+                android:id="@+id/tv_add_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_17sdp"
+                android:text="@string/new_record_title"
+                android:textSize="@dimen/_18ssp"
+                android:theme="@style/TopBarTitleTheme" />
+
+            <TextView
+                android:id="@+id/tv_edit_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/btn_cancelupdate_record"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:text="@string/edit"
+                android:textSize="@dimen/_18ssp"
+                android:theme="@style/TopBarTitleTheme" />
+
             <ImageView
                 android:id="@+id/btn_cancel"
                 android:layout_width="wrap_content"
@@ -33,14 +63,21 @@
                 android:layout_marginEnd="@dimen/_17sdp"
                 android:src="@drawable/icon_cross" />
 
+
             <TextView
+                android:id="@+id/tv_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/_17sdp"
-                android:text="New Record"
-                android:textSize="@dimen/_18ssp"
-                android:theme="@style/TopBarTitleTheme" />
+                android:layout_marginEnd="@dimen/_17sdp"
+                android:text="Delete"
+                android:textSize="@dimen/_16ssp"
+                android:theme="@style/TopBarTitleTheme"/>
+
+
+
+
 
 
         </RelativeLayout>

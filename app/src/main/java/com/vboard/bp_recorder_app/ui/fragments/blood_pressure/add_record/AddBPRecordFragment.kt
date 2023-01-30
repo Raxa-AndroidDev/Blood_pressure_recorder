@@ -38,14 +38,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class AddBPRecordFragment : Fragment(),ChipListCallBacks {
+class AddBPRecordFragment : Fragment(), ChipListCallBacks {
 
     private lateinit var binding: FragmentAddBpRecordBinding
 
     lateinit var viewModel: BPRecordViewModel
     private lateinit var adapter: BPTypeColorsAdapter
     var bptypesList: ArrayList<BPTypesModelClass> = arrayListOf()
-    var selectedChipsList:ArrayList<String>  = arrayListOf()
+    var selectedChipsList: ArrayList<String> = arrayListOf()
 
     var bloodPressureTable: BloodPressureTable? = null
 
@@ -56,7 +56,7 @@ class AddBPRecordFragment : Fragment(),ChipListCallBacks {
     var completeDate: String? = null
     var width: Int = 0
 
-    var tagsBottomSheet:BottomSheetDialog? = null
+    var tagsBottomSheet: BottomSheetDialog? = null
 
 
     override fun onCreateView(
@@ -103,16 +103,18 @@ class AddBPRecordFragment : Fragment(),ChipListCallBacks {
         if (bloodPressureTable != null) {
             // coming from history for editing
 
+
             binding.systolicNumberpicker.value = bloodPressureTable!!.systolic
             binding.diastolicNumberpicker.value = bloodPressureTable!!.diaSystolic
             binding.pulseNumberpicker.value = bloodPressureTable!!.pulse
-            label = "default"
+            label = bloodPressureTable!!.tag
 
             val myCalendar: Calendar = Calendar.getInstance()
             myCalendar.time = bloodPressureTable!!.date.toDate()
 
-            val completeDateFormat = SimpleDateFormat(Constansts.completeDateFormat, Locale.getDefault())
-            var  datetoset =  completeDateFormat.parse(bloodPressureTable!!.fulldate) as Date
+            val completeDateFormat =
+                SimpleDateFormat(Constansts.completeDateFormat, Locale.getDefault())
+            val datetoset = completeDateFormat.parse(bloodPressureTable!!.fulldate) as Date
 
             binding.singleDayPicker.setDefaultDate(datetoset)
 
@@ -120,11 +122,17 @@ class AddBPRecordFragment : Fragment(),ChipListCallBacks {
             binding.singleDayPicker.setTimeZone(TimeZone.getDefault())
 
             completeDate = bloodPressureTable!!.fulldate
-            selectedDate =  getDateToStore(myCalendar)
+            selectedDate = getDateToStore(myCalendar)
             selectedTime = getTime(myCalendar)
 
-            Timber.e("current time  is ${selectedTime} ")
             binding.btnOk.text = getString(R.string.update)
+            binding.tvAddRecord.text = getString(R.string.edit)
+            binding.tvAddRecord.visibility = View.INVISIBLE
+            binding.btnCancel.visibility = View.GONE
+
+            binding.btnCancelupdateRecord.visibility = View.VISIBLE
+            binding.tvEditRecord.visibility = View.VISIBLE
+            binding.tvDelete.visibility = View.VISIBLE
 
         } else {
             // coming from main
@@ -141,7 +149,7 @@ class AddBPRecordFragment : Fragment(),ChipListCallBacks {
 
 
 
-            selectedDate =  getDateToStore(myCalendar)
+            selectedDate = getDateToStore(myCalendar)
 
 
             completeDate = datecurrent.toString()
@@ -150,6 +158,13 @@ class AddBPRecordFragment : Fragment(),ChipListCallBacks {
 
             Timber.e("current time  is ${selectedTime} ")
             binding.btnOk.text = getString(R.string.save)
+
+            binding.tvAddRecord.visibility = View.VISIBLE
+            binding.btnCancel.visibility = View.VISIBLE
+
+            binding.btnCancelupdateRecord.visibility = View.GONE
+            binding.tvEditRecord.visibility = View.GONE
+            binding.tvDelete.visibility = View.GONE
 
         }
     }
@@ -184,8 +199,7 @@ class AddBPRecordFragment : Fragment(),ChipListCallBacks {
                     }
 
                     findNavController().popBackStack()
-                }
-                else {
+                } else {
                     Toast.makeText(
                         requireContext(),
                         "Please Fill out All fields.",
@@ -204,39 +218,59 @@ class AddBPRecordFragment : Fragment(),ChipListCallBacks {
             }
 
             tvAddNoteTitle.setOnClickListener {
-                showTagsBottomSheet("default","")
+                showTagsBottomSheet("default", "")
             }
 
+            tvDelete.applyOnClick {
 
-            //region chip group code
+                showDeleteBottomSheet()
 
-            //            chipGroup.forEach { child ->
-//                (child as? Chip)?.setOnCheckedChangeListener { _, _ ->
-//                    registerFilterChanged(chipGroup)
-//                }
-//            }
+            }
 
-            //endregion
+            binding.btnCancelupdateRecord.setOnClickListener {
+                findNavController().popBackStack()
+            }
 
 
         }
     }
 
-    private fun showTagsBottomSheet(mode:String,tag:String) {
+    private fun showDeleteBottomSheet() {
+        val bottomSheetDialog = BottomSheetDialog(requireContext())
+        bottomSheetDialog.setContentView(R.layout.delete_record_bottomsheet)
+
+        bottomSheetDialog.findViewById<MaterialButton>(R.id.button_cancel)!!.setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+
+        bottomSheetDialog.findViewById<MaterialButton>(R.id.button_delete)!!.setOnClickListener {
+            viewModel.DeleteSpecificBPRecord(bloodPressureTable!!.id)
+            bottomSheetDialog.dismiss()
+            findNavController().popBackStack()
+        }
+
+        bottomSheetDialog.show()
+
+
+    }
+
+    private fun showTagsBottomSheet(mode: String, tag: String) {
         tagsBottomSheet = BottomSheetDialog(requireContext())
         tagsBottomSheet!!.setContentView(R.layout.bp_types_bottomsheet)
 
-        val chipsList:ArrayList<String> = getChipsList(mode,tag)
+        val chipsList: ArrayList<String> = getChipsList(mode, tag)
 
         val flexboxLayoutManager = FlexboxLayoutManager(requireContext())
         flexboxLayoutManager.flexDirection = FlexDirection.ROW
         flexboxLayoutManager.justifyContent = JustifyContent.CENTER
 
-        tagsBottomSheet!!.findViewById<TextView>(R.id.tv_bp_types_bs_title)!!.text = getString(R.string.notes)
+        tagsBottomSheet!!.findViewById<TextView>(R.id.tv_bp_types_bs_title)!!.text =
+            getString(R.string.notes)
         tagsBottomSheet!!.findViewById<MaterialButton>(R.id.button_got_it)!!.apply {
             this.text = getString(R.string.save)
-            this.setTextColor(ContextCompat.getColor(requireContext(),R.color.tab_selected_color))
-            this.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.white)
+            this.setTextColor(ContextCompat.getColor(requireContext(), R.color.tab_selected_color))
+            this.backgroundTintList =
+                ContextCompat.getColorStateList(requireContext(), R.color.white)
 
             this.setOnClickListener {
                 tagsBottomSheet!!.dismiss()
@@ -252,7 +286,7 @@ class AddBPRecordFragment : Fragment(),ChipListCallBacks {
             //this.layoutManager = StaggeredGridLayoutManager(3,LinearLayoutManager.VERTICAL)
             this.layoutManager = flexboxLayoutManager
 
-            this.adapter = ChipAdapter(requireContext(),chipsList,this@AddBPRecordFragment)
+            this.adapter = ChipAdapter(requireContext(), chipsList, this@AddBPRecordFragment)
 
         }
 
@@ -264,10 +298,10 @@ class AddBPRecordFragment : Fragment(),ChipListCallBacks {
 
     private fun updateBPRecord() {
 
-        label = if (selectedChipsList!=null){
-            java.lang.String.join("# ", selectedChipsList)
-        }else {
-            "#default"
+        label = if (selectedChipsList != null) {
+            java.lang.String.join("#", selectedChipsList)
+        } else {
+            bloodPressureTable!!.tag
         }
         viewModel.UpdateBPRecord(
             BloodPressureTable(
@@ -288,9 +322,9 @@ class AddBPRecordFragment : Fragment(),ChipListCallBacks {
     }
 
     private fun storeBPRecord() {
-        label = if (selectedChipsList!=null){
-            java.lang.String.join("# ", selectedChipsList)
-        }else {
+        label = if (selectedChipsList != null) {
+            java.lang.String.join("#", selectedChipsList)
+        } else {
             "#default"
         }
 
@@ -311,7 +345,7 @@ class AddBPRecordFragment : Fragment(),ChipListCallBacks {
         Toast.makeText(requireContext(), "Successfully Added!", Toast.LENGTH_LONG).show()
 
 
-        Timber.e("stored date is ${selectedDate!!.toLong()}")
+        Timber.e("stored label is ${label!!}")
 
     }
 
@@ -326,7 +360,6 @@ class AddBPRecordFragment : Fragment(),ChipListCallBacks {
     private fun handleBottombar() {
         (activity as MainActivity).binding.bottomNavView.visibility = View.GONE
     }
-
 
 
     private fun showBottomSheet() {
@@ -348,12 +381,6 @@ class AddBPRecordFragment : Fragment(),ChipListCallBacks {
         bottomsheet.findViewById<MaterialButton>(R.id.button_got_it)!!.setOnClickListener {
             bottomsheet.dismiss()
         }
-
-
-
-
-
-
 
         bottomsheet.show()
     }
@@ -562,47 +589,41 @@ class AddBPRecordFragment : Fragment(),ChipListCallBacks {
 
     }
 
-    override fun onChipSelected(tag: String,isSelected:Boolean,position:Int) {
+    override fun onChipSelected(tag: String, isSelected: Boolean, position: Int) {
 
-        if (position == 0){
+        if (position == 0) {
             showBSToAddChip()
             tagsBottomSheet!!.dismiss()
-        }else{
-            if (isSelected){
+        } else {
+            if (isSelected) {
                 selectedChipsList.add(tag)
-            }
-            else if (!isSelected && selectedChipsList.isNotEmpty()){
+            } else if (!isSelected && selectedChipsList.isNotEmpty()) {
                 selectedChipsList.remove(tag)
             }
         }
 
 
-
-
-
     }
 
     private fun showBSToAddChip() {
-       var bottomsheet= BottomSheetDialog(requireContext())
+        var bottomsheet = BottomSheetDialog(requireContext())
         bottomsheet.setContentView(R.layout.add_tags_bottomsheet)
 
         bottomsheet.findViewById<MaterialButton>(R.id.button_ok)!!.setOnClickListener {
             bottomsheet.findViewById<EditText>(R.id.et_add_tag)!!.apply {
-                if (this.text.isNotEmpty()){
-                    val tag =  this.text.toString()
+                if (this.text.isNotEmpty()) {
+                    val tag = this.text.toString()
 
                     bottomsheet.dismiss()
-                    showTagsBottomSheet("add",tag)
-                }else{
-                    Toast.makeText(requireContext(),"No Tag Found",Toast.LENGTH_LONG).show()
+                    showTagsBottomSheet("add", tag)
+                } else {
+                    Toast.makeText(requireContext(), "No Tag Found", Toast.LENGTH_LONG).show()
                 }
             }
 
         }
-
-
         bottomsheet.findViewById<MaterialButton>(R.id.button_cancel)!!.setOnClickListener {
-            showTagsBottomSheet("default","")
+            showTagsBottomSheet("default", "")
             bottomsheet.dismiss()
         }
         bottomsheet.show()
