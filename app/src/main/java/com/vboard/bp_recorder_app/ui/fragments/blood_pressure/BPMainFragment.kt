@@ -1,28 +1,22 @@
 package com.vboard.bp_recorder_app.ui.fragments.blood_pressure
 
-import android.app.Dialog
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.tabs.TabLayoutMediator
 import com.opencsv.CSVWriter
-import com.vboard.bp_recorder_app.R
 import com.vboard.bp_recorder_app.data.database.DatabaseClass
 import com.vboard.bp_recorder_app.data.viewModels.BPRecordViewModel
 import com.vboard.bp_recorder_app.databinding.FragmentBPMainBinding
-import com.vboard.bp_recorder_app.ui.MainActivity
 import com.vboard.bp_recorder_app.ui.fragments.blood_pressure.adapter.ViewPagerAdapter
 import timber.log.Timber
 import java.io.File
@@ -79,11 +73,13 @@ class BPMainFragment : Fragment() {
         val file = File(exportDir, "bp_table" + ".csv")
         try {
 
-            if(file.exists()){
+            if (file.exists()) {
                 file.delete()
             }
             file.createNewFile()
-            val csvWrite = CSVWriter(FileWriter(file))
+
+            val charThatWillNotAppearInText = 127.toChar()
+            val csvWrite = CSVWriter(FileWriter(file),charThatWillNotAppearInText,',','.',null )
 
 
             // Coloumn Names are written
@@ -100,24 +96,30 @@ class BPMainFragment : Fragment() {
                 )
             )
 
-             DatabaseClass.getDBInstance(requireContext()).bpDao().fetchAllBPRecords().observe(viewLifecycleOwner){ bp ->
-               bp.forEach { it ->
+            DatabaseClass.getDBInstance(requireContext()).bpDao().fetchAllBPRecords()
+                .observe(viewLifecycleOwner) { bp ->
+                    bp.forEach { it ->
 
 
-                   val arrStr = arrayOf("${it.id}",
-                       it.date.toString(),
-                       it.time,
-                       it.fulldate, "${it.systolic}", "${it.diaSystolic}", "${it.pulse}", it.tag
-                   )
+                        val arrStr = arrayOf(
+                            "${it.id}",
+                            it.date.toString(),
+                            it.time,
+                            it.fulldate,
+                            "${it.systolic}",
+                            "${it.diaSystolic}",
+                            "${it.pulse}",
+                            it.tag
+                        )
 
 
-                   Timber.e("size is ${arrStr}")
-                   csvWrite.writeNext(arrStr)
-               }
+                        Timber.e("size is ${arrStr}")
+                        csvWrite.writeNext(arrStr)
+                    }
 
-                 csvWrite.close()
+                    csvWrite.close()
 
-            }
+                }
 
 
 
@@ -132,30 +134,6 @@ class BPMainFragment : Fragment() {
     }
 
     private fun handleBottombar() {
-        (activity as MainActivity).binding.bottomNavView.apply {
-
-            if (!(this.isVisible)) {
-                this.visibility = View.VISIBLE
-            }
-
-
-
-            this.setOnItemSelectedListener {
-                when (it) {
-                    0 -> {
-                        findNavController().navigate(R.id.action_BPMainFragment_to_mainFragment)
-                    }
-                    1 -> {
-                        findNavController().navigate(R.id.action_BPMainFragment_to_infoFragment)
-                    }
-                    2 -> {
-
-
-                    }
-                }
-
-            }
-        }
     }
 
     private fun tabInitialization() {
@@ -172,6 +150,7 @@ class BPMainFragment : Fragment() {
 
 
         binding.backArrow.setOnClickListener {
+
             findNavController().popBackStack()
         }
 
@@ -180,9 +159,10 @@ class BPMainFragment : Fragment() {
             DatabaseClass.getDBInstance(requireContext()).bpDao().fetchAllBPRecords()
                 .observe(viewLifecycleOwner) {
 
-                    if (it.isEmpty()){
-                        Toast.makeText(requireContext(),"No Data to Export",Toast.LENGTH_LONG).show()
-                    }else{
+                    if (it.isEmpty()) {
+                        Toast.makeText(requireContext(), "No Data to Export", Toast.LENGTH_LONG)
+                            .show()
+                    } else {
                         createCSV()
                     }
 
@@ -194,172 +174,7 @@ class BPMainFragment : Fragment() {
     }
 
 
-    /* private fun insertBPDialogue() {
-         val view = LayoutInflater.from(requireContext())
-             .inflate(R.layout.fragment_add_bp_record, null)
-         val builder = AlertDialog.Builder(requireContext())
-             .setView(view)
-             .show()
-         builder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-         val btnDate: TextView = view.findViewById(R.id.btn_datePick)
-         val btnTime: TextView = view.findViewById(R.id.btn_timePicker)
-         val tv_instructions: TextView = view.findViewById(R.id.tv_instructions)
-         val btnCancel: AppCompatButton = view.findViewById(R.id.btn_cancel)
-         val btnYes: AppCompatButton = view.findViewById(R.id.btn_ok)
-         val chipGroup: ChipGroup = view.findViewById(R.id.chip_group)
-
-         val systolicNumPicker: com.shawnlin.numberpicker.NumberPicker =
-             view.findViewById(R.id.systolic_numberpicker)
-         systolicNumPicker.maxValue = 300
-         systolicNumPicker.minValue = 20
-         systolicNumPicker.value = 115
-
-
-         val diastolicNumPicker: com.shawnlin.numberpicker.NumberPicker =
-             view.findViewById(R.id.diastolic_numberpicker)
-         diastolicNumPicker.maxValue = 300
-         diastolicNumPicker.minValue = 20
-         diastolicNumPicker.value = 79
-
-
-         val pulseNumPicker: com.shawnlin.numberpicker.NumberPicker =
-             view.findViewById(R.id.pulse_numberpicker)
-         pulseNumPicker.maxValue = 200
-         pulseNumPicker.minValue = 20
-         pulseNumPicker.value = 75
-
-
-         choosenDate = CurrentDate(myCalendar)
-
-         btnDate.text = choosenDate
-
-
-
-
-         tv_instructions.text =
-             "Your blood pressure is in good condition. Try to keep it the same way!"
-
-
-         btnDate.setOnClickListener {
-             viewModel.getUpdatedDateFromPicker(requireContext(), myCalendar)
-                 .observe(viewLifecycleOwner) {
-                     choosenDate = it
-                     btnDate.text = it
-                 }
-
-
-         }
-
-         btnTime.setOnClickListener {
-
-             viewModel.getTimeFromPicker(requireContext()).observe(viewLifecycleOwner) {
-                 choosenTime = it
-                 btnTime.text = it
-
-             }
-
-         }
-
-         systolicNumPicker.setOnValueChangedListener { picker, oldVal, newVal ->
-             systolicNumPicker.value = newVal
-             if (newVal in 0..89) {
-                 tv_instructions.text =
-                     "Your blood pressure seems a little low.If the situation continues, do not hesitate to consult your doctor."
-             }
-             if (newVal in 90..119) {
-                 tv_instructions.text =
-                     "Your blood pressure is in good condition. Try to keep it the same way!"
-             }
-             if (newVal in 120..129) {
-                 tv_instructions.text =
-                     "Your blood pressure is a little above normal.We recommend that you adopt a healthier lifestyle and measure your blood pressure more frequently."
-             }
-             if (newVal in 130..139) {
-                 tv_instructions.text =
-                     "If you have 3 or more measurements in this area, it is time to consult your doctor to improve your lifestyle."
-             }
-             if (newVal in 140..179) {
-                 tv_instructions.text =
-                     "If you have 3 or more measurements in this area, you should take care of yourself with medical treatment and lifestyle changes."
-             }
-             if (newVal in 180..250) {
-                 tv_instructions.text =
-                     "We're worried about you.Call an emergency medical service immediately!"
-
-             }
-         }
-
-         diastolicNumPicker.setOnValueChangedListener { picker, oldVal, newVal ->
-
-             if (newVal in 0..59) {
-                 tv_instructions.text =
-                     "Your blood pressure seems a little low.If the situation continues, do not hesitate to consult your doctor."
-             }
-             if (newVal in 60..79) {
-                 tv_instructions.text =
-                     "Your blood pressure is in good condition. Try to keep it the same way!"
-             }
-             if (newVal in 80..89) {
-                 tv_instructions.text =
-                     "If you have 3 or more measurements in this area, it is time to consult your doctor to improve your lifestyle."
-             }
-             if (newVal in 90..120) {
-                 tv_instructions.text =
-                     "If you have 3 or more measurements in this area, you should take care of yourself with medical treatment and lifestyle changes."
-             }
-             if (newVal in 121..250) {
-                 tv_instructions.text =
-                     "We're worried about you.Call an emergency medical service immediately!"
-
-             }
-
-         }
-
-
-
-
-
-         chipGroup.forEach { child ->
-             (child as? Chip)?.setOnCheckedChangeListener { _, _ ->
-                 registerFilterChanged(chipGroup)
-             }
-         }
-
-         btnYes.setOnClickListener {
-             if (choosenDate != null && choosenTime != null) {
-
-                 viewModel.StoreBPRecordInDB(
-                     BloodPressureTable(
-                         0,
-                         choosenDate!!,
-                         choosenTime!!,
-                         dateAndTime(),
-                         systolicNumPicker.value,
-                         diastolicNumPicker.value,
-                         pulseNumPicker.value,
-                         label
-                     )
-                 )
-                 Log.e("TAG", "insertBPDialogue: diastolic value is " + diastolicNumPicker.value)
-
-                 builder.dismiss()
-                 Toast.makeText(requireContext(), "Successfully Added!", Toast.LENGTH_LONG).show()
-
-                 findNavController().navigate(R.id.action_BPMainFragment_to_showBPRecordFragment)
-
-
-             } else {
-                 Toast.makeText(requireContext(), "Please Fill out All fields.", Toast.LENGTH_LONG)
-                     .show()
-             }
-         }
-
-         btnCancel.setOnClickListener {
-             builder.dismiss()
-         }
-
-     }*/
 
 
     private fun registerFilterChanged(chips_group: ChipGroup) {
@@ -378,6 +193,8 @@ class BPMainFragment : Fragment() {
         }
 
     }
+
+
 
 
 }

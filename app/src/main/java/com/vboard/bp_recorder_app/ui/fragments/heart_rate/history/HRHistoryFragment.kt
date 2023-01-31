@@ -230,9 +230,7 @@ class HRHistoryFragment : Fragment(),ShowHRAdapterCallbacks {
     }
 
     private fun handleBottomBar() {
-        if (!((activity as MainActivity).binding.bottomNavView.isVisible)) {
-            (activity as MainActivity).binding.bottomNavView.visibility = View.VISIBLE
-        }
+
     }
 
 

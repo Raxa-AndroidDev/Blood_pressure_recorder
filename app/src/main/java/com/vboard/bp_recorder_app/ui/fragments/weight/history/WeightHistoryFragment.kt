@@ -217,9 +217,7 @@ class WeightHistoryFragment : Fragment() ,ShowWeightAdapterCallbacks {
     }
 
     private fun handleBottomBar() {
-        if (!((activity as MainActivity).binding.bottomNavView.isVisible)) {
-            (activity as MainActivity).binding.bottomNavView.visibility = View.VISIBLE
-        }
+
     }
 
 

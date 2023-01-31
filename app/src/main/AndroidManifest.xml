@@ -24,7 +24,7 @@
         android:theme="@style/Theme.BP_Recorder_App"
         tools:targetApi="31">
         <activity
-            android:name=".LanguageSelectionActivity"
+            android:name=".ui.language_selection.LanguageSelectionActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

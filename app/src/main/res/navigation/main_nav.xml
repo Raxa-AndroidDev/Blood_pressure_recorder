@@ -23,9 +23,6 @@
         <deepLink
             android:id="@+id/deepLink"
             app:uri="yourapp://BloodPressure/app/main/frag" />
-        <action
-            android:id="@+id/action_mainFragment_to_infoFragment"
-            app:destination="@id/infoFragment" />
 
     </fragment>
 
@@ -35,14 +32,6 @@
         android:label="fragment_info"
         tools:layout="@layout/fragment_info" >
 
-        <action
-            android:id="@+id/action_infoFragment_to_BPMainFragment"
-            app:destination="@id/BPMainFragment" />
-        <action
-            android:id="@+id/action_infoFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-
-           />
         <action
             android:id="@+id/action_infoFragment_to_infoDetailFragment"
             app:destination="@id/infoDetailFragment" />
@@ -65,14 +54,6 @@
         <deepLink
             android:id="@+id/deepLink"
             app:uri="yourapp://BloodPressure/app/bp/frag" />
-        <action
-            android:id="@+id/action_BPMainFragment_to_infoFragment"
-            app:destination="@id/infoFragment" />
-        <action
-            android:id="@+id/action_BPMainFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-
-            />
         <action
             android:id="@+id/action_BPMainFragment_to_addBPRecordFragment"
             app:destination="@id/addBPRecordFragment" />
@@ -105,14 +86,6 @@
         <action
             android:id="@+id/action_heartRateFragment_to_measureHeartRateFragment"
             app:destination="@id/measureHeartRateFragment" />
-        <action
-            android:id="@+id/action_heartRateFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-
-           />
-        <action
-            android:id="@+id/action_heartRateFragment_to_infoFragment"
-            app:destination="@id/infoFragment" />
     </fragment>
 
     <fragment
@@ -135,12 +108,6 @@
         <action
             android:id="@+id/action_weightMainFragment_to_addWeightRecordFragment"
             app:destination="@id/addWeightRecordFragment" />
-        <action
-            android:id="@+id/action_weightMainFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-        <action
-            android:id="@+id/action_weightMainFragment_to_infoFragment"
-            app:destination="@id/infoFragment" />
     </fragment>
     <fragment
         android:id="@+id/addWeightRecordFragment"
@@ -162,5 +129,14 @@
         android:id="@+id/showMeasuredRecord"
         android:name="com.vboard.bp_recorder_app.ui.fragments.heart_rate.ShowMeasuredRecord"
         android:label="ShowMeasuredRecord" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.vboard.bp_recorder_app.ui.fragments.settings_module.SettingsFragment"
+        android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/demoFragment"
+        android:name="com.vboard.bp_recorder_app.DemoFragment"
+        android:label="fragment_demo"
+        tools:layout="@layout/fragment_demo" />
 
 </navigation>

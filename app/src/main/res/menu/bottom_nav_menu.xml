@@ -12,7 +12,7 @@
         android:title="Info" />
     <item
         android:id="@+id/settingsFragment"
-        android:icon="@drawable/tracker_mainbar_icon"
-        android:title="Tracker" />
+        android:icon="@drawable/settings_icon"
+        android:title="Settings" />
 
 </menu>

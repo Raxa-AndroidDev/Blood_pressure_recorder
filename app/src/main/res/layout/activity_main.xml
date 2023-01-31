@@ -57,7 +57,7 @@
                 app:textColorActive="@color/tab_selected_color"
                 app:iconTint="@color/mainbar_unselected_color"
                 app:labelVisibilityMode="labeled"
-                android:outlineAmbientShadowColor="@color/red"
+
                 app:iconTintActive="@color/tab_selected_color"
                 app:menu="@menu/bottom_nav_menu"
                 app:layout_constraintBottom_toBottomOf="parent"/>

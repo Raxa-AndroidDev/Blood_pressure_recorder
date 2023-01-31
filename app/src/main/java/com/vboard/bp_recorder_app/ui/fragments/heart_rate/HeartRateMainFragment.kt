@@ -64,30 +64,7 @@ class HeartRateMainFragment : Fragment() {
 
 
     private fun handleBottombar() {
-        (activity as MainActivity).binding.bottomNavView.apply {
-            Timber.e("bar visibility is ${this.visibility}")
-           /* if ((this.isVisible)) {
 
-                this.visibility = View.GONE
-            }*/
-
-
-            this.setOnItemSelectedListener {
-                when (it) {
-                    0 -> {
-                        findNavController().navigate(R.id.action_heartRateFragment_to_mainFragment)
-                    }
-                    1 -> {
-                        findNavController().navigate(R.id.action_heartRateFragment_to_infoFragment)
-                    }
-                    2 -> {
-
-
-                    }
-                }
-
-            }
-        }
     }
 
     private fun tabInitialization() {

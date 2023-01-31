@@ -2,7 +2,7 @@
 
     // titles and sub titles
 
-    <string name="app_name">BLOOD PRESSURE</string>
+    <string name="app_name">Heart and Blood Pressure</string>
     <string name="sub_title">TRACKER</string>
 
 
@@ -81,6 +81,8 @@
     <string name="measure">Measure</string>
     <string name="gender_title">Gender</string>
     <string name="age">Age</string>
+    <string name="version">Version</string>
+    <string name="general">General</string>
 
 
 </resources>

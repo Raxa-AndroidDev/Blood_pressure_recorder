@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import com.vboard.bp_recorder_app.R
+import com.vboard.bp_recorder_app.ui.language_selection.LanguageSelectionActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreen : AppCompatActivity() {
@@ -16,7 +17,7 @@ class SplashScreen : AppCompatActivity() {
 
 
         Handler(Looper.getMainLooper()).postDelayed({
-           val mainIntent = Intent(this, MainActivity::class.java)
+           val mainIntent = Intent(this, LanguageSelectionActivity::class.java)
             startActivity(mainIntent)
             finish()
         }, 3000)

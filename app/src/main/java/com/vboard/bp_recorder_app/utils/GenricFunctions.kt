@@ -506,8 +506,11 @@ fun getLangsList(context: Context):ArrayList<LangSelectionModelClass>{
 
     val langsList:ArrayList<LangSelectionModelClass> = arrayListOf()
 
-    langsList.add(
-        LangSelectionModelClass(R.string.critical_bp_range,context.getString(R.string.critical_bp_range),context.getString( R.string.add)))
+    langsList.add(LangSelectionModelClass(R.drawable.lang_icon_settings,"English","en"))
+    langsList.add(LangSelectionModelClass(R.drawable.lang_icon_settings,"Urdu","ur"))
+    langsList.add(LangSelectionModelClass(R.drawable.lang_icon_settings,"Arabic","ar"))
+    langsList.add(LangSelectionModelClass(R.drawable.lang_icon_settings,"Hindi","hi"))
+    langsList.add(LangSelectionModelClass(R.drawable.lang_icon_settings,"Thai","th"))
 
 
 

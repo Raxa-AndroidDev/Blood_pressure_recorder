@@ -1,19 +1,338 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- TODO: Update blank fragment layout -->
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <data>
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    </data>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/top_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:actionBarSize"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/img_back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:paddingStart="@dimen/_18sdp"
+                android:paddingEnd="@dimen/_18sdp"
+                android:src="@drawable/icon_back" />
+
+            <TextView
+                style="@style/TopBarTitleTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_toEndOf="@+id/img_back_button"
+                android:text="Settings"
+                android:textSize="@dimen/_18ssp" />
+
+
+        </RelativeLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/title_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+
+            app:cardElevation="@dimen/_3sdp"
+            app:layout_constraintTop_toBottomOf="@+id/top_appbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp">
+
+
+                <ImageView
+                    android:id="@+id/app_icon_settings"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_marginStart="@dimen/_18sdp"
+                    android:src="@drawable/icon_app_settings"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_app_title_settings"
+                    style="@style/TopBarTitleTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/app_name"
+                    android:textSize="@dimen/_16ssp"
+                    app:layout_constraintStart_toEndOf="@+id/app_icon_settings"
+                    app:layout_constraintTop_toTopOf="@+id/app_icon_settings" />
+
+                <TextView
+                    android:id="@+id/tv_app_version_settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="@string/version"
+                    android:textSize="@dimen/_11ssp"
+                    app:layout_constraintStart_toEndOf="@+id/app_icon_settings"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_app_title_settings" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingStart="@dimen/_18sdp"
+            android:paddingEnd="@dimen/_18sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layout_constraintTop_toBottomOf="@+id/title_card"
+            app:layout_constraintBottom_toTopOf="@+id/ad_container">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/tv_general_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_18sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="@string/general"
+                    android:textSize="@dimen/_15ssp"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <!--langs textview-->
+                <TextView
+                    android:id="@+id/tv_langs_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:text="Language"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16ssp"
+                    app:drawableLeftCompat="@drawable/lang_icon_settings"
+                    app:drawableRightCompat="@drawable/icon_next_screen_settings"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_general_title" />
+
+                <View
+                    android:id="@+id/view_below_lang"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/splash_grey"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_langs_settings"
+                    app:layout_constraintStart_toStartOf="@+id/tv_langs_settings"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_langs_settings" />
+
+
+                <!--export textview-->
+                <TextView
+                    android:id="@+id/tv_export_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:paddingTop="@dimen/_13sdp"
+                    android:paddingBottom="@dimen/_13sdp"
+                    android:text="Export As File"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16ssp"
+                    app:drawableLeftCompat="@drawable/export_icon_settings"
+                    app:drawableRightCompat="@drawable/icon_next_screen_settings"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_langs_settings" />
+
+                <View
+                    android:id="@+id/view_below_export"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/splash_grey"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_export_settings"
+                    app:layout_constraintStart_toStartOf="@+id/tv_export_settings"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_export_settings" />
+
+
+                <!--unit options textview-->
+                <TextView
+                    android:id="@+id/tv_unitoptions_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:paddingTop="@dimen/_13sdp"
+                    android:paddingBottom="@dimen/_13sdp"
+                    android:text="Unit Options"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16ssp"
+                    app:drawableLeftCompat="@drawable/icon_unitoptions_settings"
+                    app:drawableRightCompat="@drawable/icon_next_screen_settings"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_export_settings" />
+
+                <View
+                    android:id="@+id/view_below_unit"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/splash_grey"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_unitoptions_settings"
+                    app:layout_constraintStart_toStartOf="@+id/tv_unitoptions_settings"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_unitoptions_settings" />
+
+
+
+
+
+
+
+
+                <TextView
+                    android:id="@+id/tv_more_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_18sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="More"
+                    android:textSize="@dimen/_15ssp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view_below_unit" />
+
+
+                <!--share textview-->
+                <TextView
+                    android:id="@+id/tv_share_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:text="Share App"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16ssp"
+                    app:drawableLeftCompat="@drawable/icon_shareapp"
+                    app:drawableRightCompat="@drawable/icon_next_screen_settings"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_more_title" />
+
+                <View
+                    android:id="@+id/view_below_share"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/splash_grey"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_share_settings"
+                    app:layout_constraintStart_toStartOf="@+id/tv_share_settings"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_share_settings" />
+
+
+                <!--rate textview-->
+                <TextView
+                    android:id="@+id/tv_rate_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:paddingTop="@dimen/_13sdp"
+                    android:paddingBottom="@dimen/_13sdp"
+                    android:text="Rate Us"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16ssp"
+                    app:drawableLeftCompat="@drawable/icon_rateapp"
+                    app:drawableRightCompat="@drawable/icon_next_screen_settings"
+                    app:layout_constraintTop_toBottomOf="@+id/view_below_share" />
+
+                <View
+                    android:id="@+id/view_below_rate"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/splash_grey"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_rate_settings"
+                    app:layout_constraintStart_toStartOf="@+id/tv_rate_settings"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_rate_settings" />
+
+
+                <!--privacy policy textview-->
+                <TextView
+                    android:id="@+id/tv_privacy_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:paddingTop="@dimen/_13sdp"
+                    android:paddingBottom="@dimen/_13sdp"
+                    android:text="Privacy Policy"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16ssp"
+                    app:drawableLeftCompat="@drawable/icon_privacy"
+                    app:drawableRightCompat="@drawable/icon_next_screen_settings"
+                    app:layout_constraintTop_toBottomOf="@+id/view_below_rate" />
+
+                <View
+                    android:id="@+id/view_below_privacy"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/splash_grey"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_privacy_settings"
+                    app:layout_constraintStart_toStartOf="@+id/tv_privacy_settings"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_privacy_settings" />
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+        </ScrollView>
+
+
+
+
+
+
+        <RelativeLayout
+            android:id="@+id/ad_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Ad.."
+                android:textColor="@color/black"/>
+        </RelativeLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

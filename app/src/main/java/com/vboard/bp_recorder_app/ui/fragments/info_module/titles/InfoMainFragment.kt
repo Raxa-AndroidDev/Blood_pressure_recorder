@@ -41,8 +41,12 @@ class InfoMainFragment : Fragment(), InfoDetailsCallBack {
 
     private fun initViews() {
 
-        handleBottomBar()
+
         initRecView()
+
+        binding.imgBackIcon.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
     }
 
@@ -52,35 +56,11 @@ class InfoMainFragment : Fragment(), InfoDetailsCallBack {
         binding.infoTitlesRcv.adapter = InfoTitlesAdapter(requireContext() ,this,infoTitlesList)
     }
 
-    private fun handleBottomBar() {
-        (activity as MainActivity).binding.bottomNavView.apply {
 
-
-            if (!(this.isVisible)) {
-                Log.e("TAG", "handleBottomBar: bar visibility ${this.visibility}")
-                this.visibility = View.VISIBLE
-            }
-
-            this.setOnItemSelectedListener {
-                when (it) {
-                    0 -> {
-                        findNavController().navigate(R.id.action_infoFragment_to_mainFragment)
-                    }
-                    1 -> {}
-                    2 -> {
-                        findNavController().navigate(R.id.action_infoFragment_to_BPMainFragment)
-
-
-                    }
-                }
-
-            }
-        }
-    }
 
 
     private fun populateInfoModelClass(): ArrayList<InfoTitlesModelClass> {
-        var infoTitlesList: ArrayList<InfoTitlesModelClass> = arrayListOf()
+        val infoTitlesList: ArrayList<InfoTitlesModelClass> = arrayListOf()
 
         val colorsList = getInfoBgColorsList()
         val imagesList = getInfoTitleIconsList()
@@ -102,7 +82,7 @@ class InfoMainFragment : Fragment(), InfoDetailsCallBack {
         bundle.putInt("icon", icon)
         bundle.putString("color",color)
         bundle.putString("title",title)
-        Log.e("TAG", "OnDetailClick: title is $title", )
+
 
         findNavController().navigate(R.id.action_infoFragment_to_infoDetailFragment,bundle)
 

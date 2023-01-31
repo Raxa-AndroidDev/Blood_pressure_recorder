@@ -264,7 +264,7 @@ class AddWeightRecordFragment : Fragment(), ChipListCallBacks {
 
 
     private fun handleBottombar() {
-        (activity as MainActivity).binding.bottomNavView.visibility = View.GONE
+
     }
 
     private fun populateValues() {

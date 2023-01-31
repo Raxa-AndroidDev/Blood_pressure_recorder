@@ -28,17 +28,21 @@ import com.vboard.bp_recorder_app.databinding.FragmentBpHistoryRecordBinding
 import com.vboard.bp_recorder_app.ui.MainActivity
 import com.vboard.bp_recorder_app.ui.fragments.blood_pressure.history.adapter.BPHistoryAdapter
 import com.vboard.bp_recorder_app.utils.*
+import com.vboard.bp_recorder_app.utils.interfaces.ActivityBackPressCallback
 import com.vboard.bp_recorder_app.utils.interfaces.ShowBPAdapterCallbacks
+import timber.log.Timber
 import java.text.Format
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class BPHistoryFragment : Fragment(), ShowBPAdapterCallbacks {
+class BPHistoryFragment : Fragment(), ShowBPAdapterCallbacks, ActivityBackPressCallback{
 
     private lateinit var binding: FragmentBpHistoryRecordBinding
     private lateinit var showBPRecordViewModel: BPRecordViewModel
     private lateinit var adapter: BPHistoryAdapter
+
+    var dialog : Dialog? = null
 
     private var minCalendarInstance = Calendar.getInstance()
     private var maxCalendarInstance = Calendar.getInstance()
@@ -116,6 +120,10 @@ class BPHistoryFragment : Fragment(), ShowBPAdapterCallbacks {
             )
             constraintSet.applyTo(binding.parentLayout)
         }
+
+
+
+        (activity as MainActivity).activityBackPressCallback = this
 
 
     }
@@ -214,28 +222,31 @@ class BPHistoryFragment : Fragment(), ShowBPAdapterCallbacks {
 
                 if (it.isEmpty()) {
 
-                    val dialog = Dialog(requireContext())
-                    dialog.setContentView(R.layout.empty_layout)
-                    dialog.window!!.setLayout(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT
-                    )
-                    dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+                    dialog = Dialog(requireContext())
+                    with(dialog!!){
+                        setContentView(R.layout.empty_layout)
+                        window!!.setLayout(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.MATCH_PARENT
+                        )
+                        window!!.setBackgroundDrawableResource(android.R.color.transparent)
 
-                    dialog.findViewById<MaterialButton>(R.id.button_add_now_empty)
-                        .setOnClickListener {
-                            val bundle = Bundle()
-                            bundle.putParcelable("bloodpressuretable", null)
-                            findNavController().navigate(
-                                R.id.action_BPMainFragment_to_addBPRecordFragment,
-                                bundle
-                            )
-                            dialog.dismiss()
-                        }
+                        findViewById<MaterialButton>(R.id.button_add_now_empty)
+                            .setOnClickListener {
+                                val bundle = Bundle()
+                                bundle.putParcelable("bloodpressuretable", null)
+                                findNavController().navigate(
+                                    R.id.action_BPMainFragment_to_addBPRecordFragment,
+                                    bundle
+                                )
+                               dismiss()
+                            }
 
-                    dialog.setCanceledOnTouchOutside(false)
+                       setCanceledOnTouchOutside(false)
 
-                    dialog.show()
+                       show()
+                    }
+
 
                 }
 
@@ -271,9 +282,7 @@ class BPHistoryFragment : Fragment(), ShowBPAdapterCallbacks {
     }
 
     private fun handleBottomBar() {
-        if (!((activity as MainActivity).binding.bottomNavView.isVisible)) {
-            (activity as MainActivity).binding.bottomNavView.visibility = View.VISIBLE
-        }
+
     }
 
 
@@ -635,6 +644,16 @@ class BPHistoryFragment : Fragment(), ShowBPAdapterCallbacks {
         val formatter: Format
         formatter = SimpleDateFormat("h:mm a")
         return formatter.format(cal.time)
+    }
+
+    override fun onBackPressed() : Boolean {
+       // Timber.d("on backpress from frag")
+       // if(dialog==null){
+          //  Timber.d("the visibility is false")
+//            return false
+       // }
+
+        return true
     }
 
 
