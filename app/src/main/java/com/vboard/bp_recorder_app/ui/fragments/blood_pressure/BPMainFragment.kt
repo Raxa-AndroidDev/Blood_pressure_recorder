@@ -1,5 +1,6 @@
 package com.vboard.bp_recorder_app.ui.fragments.blood_pressure
 
+import android.Manifest
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -10,10 +11,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import com.google.android.material.tabs.TabLayoutMediator
 import com.opencsv.CSVWriter
+import com.permissionx.guolindev.PermissionX
+import com.vboard.bp_recorder_app.R
 import com.vboard.bp_recorder_app.data.database.DatabaseClass
 import com.vboard.bp_recorder_app.data.viewModels.BPRecordViewModel
 import com.vboard.bp_recorder_app.databinding.FragmentBPMainBinding
@@ -21,7 +22,6 @@ import com.vboard.bp_recorder_app.ui.fragments.blood_pressure.adapter.ViewPagerA
 import timber.log.Timber
 import java.io.File
 import java.io.FileWriter
-import java.util.*
 
 class BPMainFragment : Fragment() {
 
@@ -29,11 +29,6 @@ class BPMainFragment : Fragment() {
     lateinit var viewModel: BPRecordViewModel
 
     val tabList = arrayOf("History", "Analysis")
-    val myCalendar: Calendar = Calendar.getInstance()
-    var choosenDate: String? = null
-    var choosenTime: String? = null
-
-    var label: String = "default"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,7 +74,7 @@ class BPMainFragment : Fragment() {
             file.createNewFile()
 
             val charThatWillNotAppearInText = 127.toChar()
-            val csvWrite = CSVWriter(FileWriter(file),charThatWillNotAppearInText,',','.',null )
+            val csvWrite = CSVWriter(FileWriter(file), charThatWillNotAppearInText, ',', '.', null)
 
 
             // Coloumn Names are written
@@ -156,45 +151,55 @@ class BPMainFragment : Fragment() {
 
 
         binding.tvExport.setOnClickListener {
-            DatabaseClass.getDBInstance(requireContext()).bpDao().fetchAllBPRecords()
-                .observe(viewLifecycleOwner) {
 
-                    if (it.isEmpty()) {
-                        Toast.makeText(requireContext(), "No Data to Export", Toast.LENGTH_LONG)
-                            .show()
-                    } else {
-                        createCSV()
+            PermissionX.init(requireActivity())
+                .permissions(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE)
+                .onExplainRequestReason { scope, deniedList ->
+                    scope.showRequestReasonDialog(
+                        deniedList,
+                        getString(R.string.storage_permission_desc),
+                        getString(R.string.ok),
+                        getString(R.string.cancel)
+                    )
+                }
+                .onForwardToSettings { scope, deniedList ->
+                    scope.showForwardToSettingsDialog(
+                        deniedList,
+                        getString(R.string.storage_permission_desc),
+                        getString(R.string.ok),
+                        getString(R.string.cancel)
+                    )
+                } .request { allGranted, grantedList, deniedList ->
+
+                    if (allGranted) {
+                        DatabaseClass.getDBInstance(requireContext()).bpDao().fetchAllBPRecords()
+                            .observe(viewLifecycleOwner) {
+
+                                if (it.isEmpty()) {
+                                    Toast.makeText(requireContext(), "No Data to Export", Toast.LENGTH_LONG)
+                                        .show()
+                                } else {
+                                    createCSV()
+                                }
+
+                            }
                     }
+
 
                 }
 
+
+
+
+
+
+
+
+
         }
 
 
     }
-
-
-
-
-
-    private fun registerFilterChanged(chips_group: ChipGroup) {
-        val ids = chips_group.checkedChipIds
-
-        val titles = mutableListOf<CharSequence>()
-
-        ids.forEach { id ->
-            titles.add(chips_group.findViewById<Chip>(id).text)
-        }
-
-        label = if (titles.isNotEmpty()) {
-            titles.joinToString(", ")
-        } else {
-            ""
-        }
-
-    }
-
-
 
 
 }

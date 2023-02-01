@@ -27,7 +27,6 @@ import com.vboard.bp_recorder_app.R
 import com.vboard.bp_recorder_app.data.database.db_tables.BloodPressureTable
 import com.vboard.bp_recorder_app.data.viewModels.BPRecordViewModel
 import com.vboard.bp_recorder_app.databinding.FragmentAddBpRecordBinding
-import com.vboard.bp_recorder_app.ui.MainActivity
 import com.vboard.bp_recorder_app.ui.fragments.blood_pressure.add_record.adapters.BPTypeColorsAdapter
 import com.vboard.bp_recorder_app.ui.fragments.blood_pressure.add_record.adapters.BPTypesAdapter
 import com.vboard.bp_recorder_app.ui.fragments.blood_pressure.model_classes.BPTypesModelClass

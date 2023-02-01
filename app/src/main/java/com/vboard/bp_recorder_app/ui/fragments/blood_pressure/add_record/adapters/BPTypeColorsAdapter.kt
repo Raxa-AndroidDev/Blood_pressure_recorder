@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.vboard.bp_recorder_app.R
 import com.vboard.bp_recorder_app.databinding.ItemBptypeColorsLayoutBinding
 import com.vboard.bp_recorder_app.ui.fragments.blood_pressure.model_classes.BPTypesModelClass
 

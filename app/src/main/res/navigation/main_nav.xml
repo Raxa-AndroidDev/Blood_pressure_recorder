@@ -119,7 +119,7 @@
         android:label="InfoDetailFragment" />
     <fragment
         android:id="@+id/measureHeartRateFragment"
-        android:name="com.vboard.bp_recorder_app.ui.fragments.heart_rate.MeasureHeartRateFragment"
+        android:name="com.vboard.bp_recorder_app.ui.fragments.heart_rate.measure.MeasureHeartRateFragment"
         android:label="MeasureHeartRateFragment" >
         <action
             android:id="@+id/action_measureHeartRateFragment_to_showMeasuredRecord"
@@ -127,7 +127,7 @@
     </fragment>
     <fragment
         android:id="@+id/showMeasuredRecord"
-        android:name="com.vboard.bp_recorder_app.ui.fragments.heart_rate.ShowMeasuredRecord"
+        android:name="com.vboard.bp_recorder_app.ui.fragments.heart_rate.measure.ShowMeasuredRecord"
         android:label="ShowMeasuredRecord" />
     <fragment
         android:id="@+id/settingsFragment"

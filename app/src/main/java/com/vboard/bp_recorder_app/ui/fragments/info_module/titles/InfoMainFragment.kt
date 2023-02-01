@@ -1,17 +1,14 @@
 package com.vboard.bp_recorder_app.ui.fragments.info_module.titles
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vboard.bp_recorder_app.R
 import com.vboard.bp_recorder_app.databinding.FragmentInfoBinding
-import com.vboard.bp_recorder_app.ui.MainActivity
 import com.vboard.bp_recorder_app.ui.fragments.info_module.details.InfoDetailsCallBack
 import com.vboard.bp_recorder_app.utils.getInfoBgColorsList
 import com.vboard.bp_recorder_app.utils.getInfoTitleIconsList
@@ -51,12 +48,10 @@ class InfoMainFragment : Fragment(), InfoDetailsCallBack {
     }
 
     private fun initRecView() {
-       val infoTitlesList =  populateInfoModelClass()
+        val infoTitlesList = populateInfoModelClass()
         binding.infoTitlesRcv.layoutManager = LinearLayoutManager(requireContext())
-        binding.infoTitlesRcv.adapter = InfoTitlesAdapter(requireContext() ,this,infoTitlesList)
+        binding.infoTitlesRcv.adapter = InfoTitlesAdapter(requireContext(), this, infoTitlesList)
     }
-
-
 
 
     private fun populateInfoModelClass(): ArrayList<InfoTitlesModelClass> {
@@ -76,15 +71,15 @@ class InfoMainFragment : Fragment(), InfoDetailsCallBack {
         return infoTitlesList
     }
 
-    override fun OnDetailClick(icon: Int, color: String,title:String) {
-       val bundle = Bundle()
+    override fun OnDetailClick(icon: Int, color: String, title: String) {
+        val bundle = Bundle()
 
         bundle.putInt("icon", icon)
-        bundle.putString("color",color)
-        bundle.putString("title",title)
+        bundle.putString("color", color)
+        bundle.putString("title", title)
 
 
-        findNavController().navigate(R.id.action_infoFragment_to_infoDetailFragment,bundle)
+        findNavController().navigate(R.id.action_infoFragment_to_infoDetailFragment, bundle)
 
     }
 

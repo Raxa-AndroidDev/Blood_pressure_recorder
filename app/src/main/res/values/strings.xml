@@ -68,6 +68,18 @@
     <string name="obese2_range">BMI 35.0–39.9</string>
 
 
+    // Heart rate Ranges
+    <string name="hr_low_range"><![CDATA[BPM <60]]>  </string>
+    <string name="hr_normal_range">BPM 60.0–100</string>
+    <string name="hr_high_range"><![CDATA[BPM >100]]></string>
+
+    // Heart rate
+    <string name="hr_low">Low </string>
+    <string name="hr_normal">Normal</string>
+    <string name="hr_high">High</string>
+
+
+
     <string name="no_activity_found_exception">No activity found to open</string>
     <string name="heart_rate">Heart Rate</string>
     <string name="measure_and_tracker">Measure and Tracker</string>
@@ -76,13 +88,16 @@
     <string name="delete">Delete</string>
     <string name="skip"><font><u>Skip</u></font></string>
     <string name="select_language_title">Select Language</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="measure">Measure</string>
     <string name="gender_title">Gender</string>
     <string name="age">Age</string>
     <string name="version">Version</string>
     <string name="general">General</string>
+    <string name="camera_permission_desc">Camera permission is required to measure heart rate</string>
+    <string name="camera_permission_settigns">You need to allow camera permissions in Settings manually</string>
+    <string name="ok">OK</string>
+    <string name="storage_permission_desc">Storage Permission required to export data</string>
 
 
 </resources>

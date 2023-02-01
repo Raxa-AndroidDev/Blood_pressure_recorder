@@ -12,8 +12,8 @@ import timber.log.Timber
 
 
 class MainActivity : AppCompatActivity() {
-     var binding: ActivityMainBinding? = null
-      var activityBackPressCallback:ActivityBackPressCallback? = null
+    var binding: ActivityMainBinding? = null
+    var activityBackPressCallback: ActivityBackPressCallback? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
 
             Timber.d("destination id id ${destination.id}")
-            if(destination.id == R.id.mainFragment || destination.id == R.id.infoFragment || destination.id == R.id.settingsFragment) {
+            if (destination.id == R.id.mainFragment || destination.id == R.id.infoFragment || destination.id == R.id.settingsFragment) {
 
                 binding!!.bottomNavView.visibility = View.VISIBLE
             } else {
@@ -37,16 +37,13 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-
-
-
     }
 
     override fun onBackPressed() {
         //Timber.d("on backpress from activity")
-       // if(activityBackPressCallback == null || activityBackPressCallback!!.onBackPressed()){
-            super.onBackPressed()
-       // }
+        // if(activityBackPressCallback == null || activityBackPressCallback!!.onBackPressed()){
+        super.onBackPressed()
+        // }
     }
 
 

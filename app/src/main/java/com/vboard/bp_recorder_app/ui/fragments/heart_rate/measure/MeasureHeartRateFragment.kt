@@ -1,19 +1,14 @@
-package com.vboard.bp_recorder_app.ui.fragments.heart_rate
+package com.vboard.bp_recorder_app.ui.fragments.heart_rate.measure
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.hardware.Camera
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.PowerManager
-import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.permissionx.guolindev.PermissionX
@@ -76,65 +71,61 @@ class MeasureHeartRateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        preview = binding.preview
-        previewHolder = preview!!.holder
+
         image = binding.image
         text = binding.text
         heart_progressbar = binding.heartProgressbar
 
 
-        if (isCameraPermissionAllowed()) {
-
-            initViews()
-
-        }
-
-    }
-
-    private fun isCameraPermissionAllowed(): Boolean {
-
-        var permissionStatus = false
         PermissionX.init(requireActivity())
             .permissions(Manifest.permission.CAMERA)
             .onExplainRequestReason { scope, deniedList ->
                 scope.showRequestReasonDialog(
                     deniedList,
-                    "Core fundamental are based on these permissions",
-                    "OK",
-                    "Cancel"
+                    getString(R.string.camera_permission_desc),
+                    getString(R.string.ok),
+                    getString(R.string.cancel)
                 )
             }
             .onForwardToSettings { scope, deniedList ->
                 scope.showForwardToSettingsDialog(
                     deniedList,
-                    "You need to allow camera permissions in Settings manually",
-                    "OK",
-                    "Cancel"
+                    getString(R.string.camera_permission_settigns),
+                    getString(R.string.ok),
+                    getString(R.string.cancel)
                 )
             }
             .request { allGranted, grantedList, deniedList ->
-                permissionStatus = allGranted
-                initViews()
+
+                if (allGranted) {
+
+                    findNavController().navigate(R.id.action_measureHeartRateFragment_to_showMeasuredRecord)
+                   // initViews()
+                }
+
 
             }
 
-        return permissionStatus
+
     }
 
 
     private fun initViews() {
 
+        preview = binding.preview
+        previewHolder = preview!!.holder
+
         previewHolder!!.addCallback(surfaceCallback)
         previewHolder!!.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
 
-         val pm = requireActivity().getSystemService(Context.POWER_SERVICE) as PowerManager
-         wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "app:DoNotDimScreen")
+        val pm = requireActivity().getSystemService(Context.POWER_SERVICE) as PowerManager
+        wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "app:DoNotDimScreen")
 
         timer = object : CountDownTimer(20000, 20000) {
             override fun onTick(l: Long) {
                 progress += 1
                 heart_progressbar!!.progress = progress
-                Timber.e( "onTick: progress is $progress")
+                Timber.e("onTick: progress is $progress")
             }
 
             override fun onFinish() {}
@@ -194,8 +185,8 @@ class MeasureHeartRateFragment : Fragment() {
                 timer!!.cancel()
                 processing.set(false)
 
-               // binding.heartrateMeasureHeartanim.pauseAnimation()
-               // binding.measureHearrateWaveAnim.pauseAnimation()
+                // binding.heartrateMeasureHeartanim.pauseAnimation()
+                // binding.measureHearrateWaveAnim.pauseAnimation()
 
                 return@PreviewCallback
             }
@@ -205,12 +196,10 @@ class MeasureHeartRateFragment : Fragment() {
             binding.measureHearrateWaveAnim.playAnimation()
 
 
-
-
             var averageArrayAvg = 0
             var averageArrayCnt = 0
             for (i in averageArray.indices) {
-                Timber.d( "onPreviewFrame: avg array count is $i")
+                Timber.d("onPreviewFrame: avg array count is $i")
                 if (averageArray[i] > 0) {
                     averageArrayAvg += averageArray[i]
                     averageArrayCnt++
@@ -222,8 +211,8 @@ class MeasureHeartRateFragment : Fragment() {
                 newType = TYPE.RED
                 if (newType != currentType) {
                     beats++
-                    Timber.d( "onPreviewFrame: beats $beats")
-                    Timber.d( "onPreviewFrame: beatsarray length  ${ beatsArray.size}")
+                    Timber.d("onPreviewFrame: beats $beats")
+                    Timber.d("onPreviewFrame: beatsarray length  ${beatsArray.size}")
                 }
             } else if (imgAvg > rollingAverage) {
                 newType = TYPE.GREEN
@@ -236,12 +225,11 @@ class MeasureHeartRateFragment : Fragment() {
 
             // Transitioned from one state to another to the same
             if (newType != currentType) {
-                Timber.d( "onPreviewFrame: currenttype is $currentType")
+                Timber.d("onPreviewFrame: currenttype is $currentType")
 
                 currentType = newType
                 image!!.postInvalidate()
             }
-
 
 
             val endTime = System.currentTimeMillis()
@@ -254,7 +242,7 @@ class MeasureHeartRateFragment : Fragment() {
                     beats = 0.0
                     heart_progressbar!!.progress = 0
 
-                   // binding.heartrateMeasureHeartanim.pauseAnimation()
+                    // binding.heartrateMeasureHeartanim.pauseAnimation()
                     //binding.measureHearrateWaveAnim.pauseAnimation()
 
                     processing.set(false)
@@ -264,7 +252,7 @@ class MeasureHeartRateFragment : Fragment() {
                 if (beatsIndex == beatsArraySize) beatsIndex = 0
                 beatsArray[beatsIndex] = dpm
                 beatsIndex++
-                Timber.d( "onPreviewFrame: beatsIndex $beatsIndex")
+                Timber.d("onPreviewFrame: beatsIndex $beatsIndex")
                 var beatsArrayAvg = 0
                 var beatsArrayCnt = 0
                 for (i in beatsArray.indices) {
@@ -284,9 +272,8 @@ class MeasureHeartRateFragment : Fragment() {
                 findNavController().navigate(R.id.action_measureHeartRateFragment_to_showMeasuredRecord)
 
 
-
                 //binding.heartrateMeasureHeartanim.pauseAnimation()
-               // binding.measureHearrateWaveAnim.pauseAnimation()
+                // binding.measureHearrateWaveAnim.pauseAnimation()
             }
             processing.set(false)
         }
@@ -295,8 +282,6 @@ class MeasureHeartRateFragment : Fragment() {
         camera!!.stopPreview()
 
     }
-
-
 
 
     private fun getSmallestPreviewSize(
@@ -322,14 +307,13 @@ class MeasureHeartRateFragment : Fragment() {
 
     override fun onDestroyView() {
 
-        camera!!.setPreviewCallback(null)
-        camera!!.stopPreview()
-        camera!!.release()
-        camera = null
+        //camera!!.setPreviewCallback(null)
+       // camera!!.stopPreview()
+       // camera!!.release()
+       // camera = null
 
         super.onDestroyView()
     }
-
 
 
 

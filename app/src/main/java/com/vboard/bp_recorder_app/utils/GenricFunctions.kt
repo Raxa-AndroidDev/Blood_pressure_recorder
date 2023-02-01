@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.vboard.bp_recorder_app.R
 import com.vboard.bp_recorder_app.ui.fragments.blood_pressure.model_classes.BPTypesModelClass
+import com.vboard.bp_recorder_app.ui.fragments.heart_rate.measure.HRTypesModelClass
 import com.vboard.bp_recorder_app.ui.fragments.info_module.details.InfoDetailModelClass
 import com.vboard.bp_recorder_app.ui.fragments.weight.WeightTypesModelClass
 import com.vboard.bp_recorder_app.ui.language_selection.LangSelectionModelClass
@@ -383,6 +384,36 @@ fun getBPRangeTypesList(context: Context): ArrayList<BPTypesModelClass> {
             context.getString(R.string.critical_bp_range), false
         )
     )
+
+
+    return bpTypesList
+}
+
+fun getHRRangeTypesList(context: Context): ArrayList<HRTypesModelClass> {
+    val bpTypesList = arrayListOf<HRTypesModelClass>()
+    bpTypesList.add(
+        HRTypesModelClass(
+            R.color.hypotension_bp_color,
+           context.getString(R.string.hr_low),
+            context.getString(R.string.hr_low_range),
+            false
+        )
+    )
+    bpTypesList.add(
+        HRTypesModelClass(
+            R.color.normal_bp_color,
+            context.getString(R.string.hr_normal),
+            context.getString(R.string.hr_normal_range), false
+        )
+    )
+    bpTypesList.add(
+        HRTypesModelClass(
+            R.color.hyper_crisis_color,
+            context.getString(R.string.hr_high),
+            context.getString(R.string.hr_high_range), false
+        )
+    )
+
 
 
     return bpTypesList

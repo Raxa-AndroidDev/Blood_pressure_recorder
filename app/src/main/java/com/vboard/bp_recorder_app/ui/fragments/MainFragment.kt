@@ -34,41 +34,12 @@ class MainFragment : Fragment() {
 
         loadNativeAd()
         initListeners()
-        // askPermission()
-
 
 
 
     }
 
-    // storage permissions
-    private fun askPermission() {
-        val permissionLauncher =
-            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
 
-                permissions.entries.forEach {
-                    val isGranted = it.value
-                    if (isGranted) {
-
-                    } else {
-                        Toast.makeText(
-                            requireContext(),
-                            "Storage Permission Required",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                }
-
-
-            }
-
-        permissionLauncher.launch(
-            arrayOf(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-        )
-    }
 
     private fun initListeners() {
 
@@ -107,8 +78,6 @@ class MainFragment : Fragment() {
 
         adLoader.loadAd(AdRequest.Builder().build())
     }
-
-
 
 
 }
